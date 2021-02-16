@@ -18,6 +18,5 @@ playChess chessBoard currPlayer nextPlayer =
             playChess chessBoard nextPlayer currPlayer             -- Continue playing. nextPplayer is now current player.
             
 
--- Starts a new game of chess
--- TODO: implement this
-main = putStr "Not Implemented" -- playChess FRESH_BOARD 
+-- Starts a new game of chess where human player goes first
+main = playChess freshBoard humanPlayer aiPlayer

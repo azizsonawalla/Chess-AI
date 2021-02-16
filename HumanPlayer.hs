@@ -6,8 +6,8 @@ import ChessBoard
 -- Shows the human player the board, asks for next move, and changes the board accordingly.
 -- Returns changed board after human player's move
 -- TODO: Implement this
-humanTurn :: ChessBoard -> IO ChessBoard
-humanTurn chessBoard = 
+humanPlayer :: ChessBoard -> IO ChessBoard
+humanPlayer chessBoard = 
     do 
         putStrLn "Your turn:"
         return chessBoard

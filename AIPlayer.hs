@@ -6,8 +6,8 @@ import ChessBoard
 -- Calculates the best next move and changes the board accordingly.
 -- Returns the changed board after playing the move.
 -- TODO: Implement this
-aiTurn :: ChessBoard -> IO ChessBoard
-aiTurn chessBoard = 
+aiPlayer :: ChessBoard -> IO ChessBoard
+aiPlayer chessBoard = 
     do 
         putStrLn "AI's turn. Please wait."
         return chessBoard
