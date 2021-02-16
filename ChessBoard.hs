@@ -29,10 +29,10 @@ legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
 legalMoves chessBoard chessPieceColour = []
 
 
--- Returns true if the given move is valid on the given board
+-- Returns true if the given move is valid on the given board, for the given colour
 -- TODO: implement this
-validMove :: ChessBoard -> ChessMove -> Bool
-validMove _ _ = False
+validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
+validMove _ _ _ = False
 
 
 -- Returns the chess piece at the given position as a Maybe
