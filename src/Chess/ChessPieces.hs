@@ -18,5 +18,8 @@ legalMovesForPieceAtPos (Rook colour) chessBoard position = []
 -- TODO: Implement this (moves for Bishop at the given position)
 legalMovesForPieceAtPos (Bishop colour) chessBoard position = []
 
+-- TODO: Implement this (moves for Knight at the given position)
+legalMovesForPieceAtPos (Knight colour) chessBoard position = []
+
 -- TODO: Implement this (moves for Pawn at the given position)
 legalMovesForPieceAtPos (Pawn colour) chessBoard position = []

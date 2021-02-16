@@ -18,7 +18,7 @@ data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMo
 
 
 -- The current state of a chess game
-data GameState = Ongoing | Over deriving (Eq)
+data GameState = Ongoing | Over deriving (Eq, Show)
 
 
 -- A Chess Board
@@ -28,7 +28,7 @@ data ChessBoard = ChessBoard [(ChessPosition, ChessPiece)] GameState deriving (E
 
 
 -- The two sides/colours on a chess board
-data ChessPieceColour = White | Black deriving (Eq)
+data ChessPieceColour = White | Black deriving (Eq, Show)
 
 
 -- All pieces on a chess board
@@ -37,5 +37,6 @@ data ChessPiece =
     | Queen ChessPieceColour
     | Rook ChessPieceColour
     | Bishop ChessPieceColour
+    | Knight ChessPieceColour
     | Pawn ChessPieceColour
-     deriving (Eq)
+     deriving (Eq, Show)
