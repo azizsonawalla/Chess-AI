@@ -1,1 +1,6 @@
-# chess-ai
+# Chess-AI
+
+## Requirements
+
+* GHC
+* Cabal

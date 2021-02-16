@@ -12,7 +12,7 @@ instance Show ChessBoard where
 -- Returns the string representation of a chessboard
 -- TODO: implement this
 chessBoardAsString :: ChessBoard -> [Char]
-chessBoardAsString chessBoard = "Not implemented"
+chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
 
 
 -- Makes the given move on the given chessboard.
