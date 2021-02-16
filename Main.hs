@@ -12,7 +12,7 @@ playChess chessBoard currPlayer nextPlayer =
         chessBoard <- currPlayer chessBoard                        -- Current player makes a move
         if (gameOver chessBoard)                                   -- If game is over, stop
         then do
-            putStrLn "Thanks for playing!"
+            putStrLn "Thanks for playing! Goodbye."
             return ()
         else
             playChess chessBoard nextPlayer currPlayer             -- Continue playing. nextPplayer is now current player.
