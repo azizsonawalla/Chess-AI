@@ -10,7 +10,7 @@ instance Show ChessBoard where
 
 
 -- Returns the string representation of a chessboard
--- TODO: implement + test this (2 hours).
+-- TODO: implement + test this (2 hours). [Cynthia]
 -- Note: one way to implement this is to have a 'template' string (possibly stored in a txt file) and then simply
 --       replace a placeholder in each square with the piece that is currently there.
 chessBoardAsString :: ChessBoard -> [Char]
@@ -20,20 +20,20 @@ chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
 -- WARNING: Assumes given move is valid!
--- TODO: implement + test this (1.5 hours)
+-- TODO: implement + test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
 makeMove chessBoard move = chessBoard                 -- If the piece to move is a pawn, make sure to set it's boolean value to false
 
 
 -- Returns all legal moves for the given side on the given chess board
--- TODO: implement + test this (1.5 hour).
+-- TODO: implement + test this (1.5 hour). [Aziz]
 -- Note: one way to implement is to iterate over all pieces of the given colour on the board and call legalMovesForPieceAtPos
 legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
 legalMoves chessBoard chessPieceColour = []
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: implement + test this (0.5 hour). You can use legalMoves above.
+-- TODO: implement + test this (0.5 hour). You can use legalMoves above. [Yiyi]
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
 validMove _ _ _ = False
 

@@ -20,13 +20,13 @@ playChess chessBoard firstPlayer secondPlayer =
 handleNextTurn :: ChessBoard -> ChessPlayerWithSide -> ChessPlayerWithSide -> IO ()           
 handleNextTurn chessBoard currPlayer nextPlayer  = 
     do
-        chessBoard <- currPlayer chessBoard                        -- Current player makes a move
-        if (gameOver chessBoard)                                   -- If game is over, stop
+        chessBoard <- currPlayer chessBoard                                 -- Current player makes a move
+        if (gameOver chessBoard)                                            -- If game is over, stop
         then do
             putStrLn "Thanks for playing! Goodbye."
             return ()
         else
-            handleNextTurn chessBoard nextPlayer currPlayer             -- Continue playing. nextPplayer is now current player. 
+            handleNextTurn chessBoard nextPlayer currPlayer                 -- Continue playing. nextPlayer is now current player. 
 
 
 -- Starts a new game of chess where human player goes first (i.e. human is on white side)

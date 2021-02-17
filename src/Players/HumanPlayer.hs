@@ -42,13 +42,13 @@ handleValidInput moveStr chessPieceColour chessBoard =
 
 -- Checks if the given string has a valid format for a chess move
 -- Valid format = [a-h][1-8] to [a-h][1-8]
--- TODO: implement + test this (1 hour)
+-- TODO: implement + test this (1 hour) [Yiyi]
 validMoveString :: String -> Bool
 validMoveString str = False
 
 
 -- Converts a chess move from the "[a-h][1-8] to [a-h][1-8]" format to a ChessMove
 -- WARNING: Assumes that the string is in a valid format
--- TODO: Implement + test this (1.5 hour)
+-- TODO: Implement + test this (1.5 hour) [Cynthia]
 stringToChessMove :: String -> ChessMove
 stringToChessMove _ = ChessMove ('A', 0) ('A', 0)

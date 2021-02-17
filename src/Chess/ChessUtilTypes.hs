@@ -15,7 +15,7 @@ type ChessPosition = (Char, Int)
 
 -- A Chess move from one position to the other
 data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq, Show)  -- ChessMove from to
--- TODO: custom implementation of Show ChessMove (0.5 hour)
+-- TODO: custom implementation of Show ChessMove (0.5 hour) [Aziz]
 
 
 -- The current state of a chess game
