@@ -14,7 +14,8 @@ type ChessPosition = (Char, Int)
 
 
 -- A Chess move from one position to the other
-data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMove from to
+data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq, Show)  -- ChessMove from to
+-- TODO: custom implementation of Show ChessMove (0.5 hour)
 
 
 -- The current state of a chess game
@@ -38,5 +39,5 @@ data ChessPiece =
     | Rook ChessPieceColour
     | Bishop ChessPieceColour
     | Knight ChessPieceColour
-    | Pawn ChessPieceColour
+    | Pawn ChessPieceColour Bool          -- boolean indicates first move. True = pawn moving for the first time.
      deriving (Eq, Show)

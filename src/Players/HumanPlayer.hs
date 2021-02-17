@@ -7,7 +7,6 @@ import ChessBoard
 -- Facilitates the human player's move on the chess board.
 -- Shows the human player the board, asks for next move, and changes the board accordingly.
 -- Returns changed board after human player's move
--- TODO: test this
 humanPlayer :: ChessPlayer
 humanPlayer chessPieceColour chessBoard = 
     do 
@@ -21,7 +20,6 @@ humanPlayer chessPieceColour chessBoard =
 
 
 -- Handles the case where the human player enters an input with invalid format
--- TODO: test this
 handleInvalidInput :: String -> ChessPieceColour -> ChessBoard -> IO ChessBoard
 handleInvalidInput moveStr chessPieceColour chessBoard =
     do
@@ -30,7 +28,6 @@ handleInvalidInput moveStr chessPieceColour chessBoard =
 
 
 -- Handles the case where the human player enters an input with a valid format
--- TODO: test this
 handleValidInput :: String -> ChessPieceColour -> ChessBoard -> IO ChessBoard
 handleValidInput moveStr chessPieceColour chessBoard = 
     do
@@ -45,13 +42,13 @@ handleValidInput moveStr chessPieceColour chessBoard =
 
 -- Checks if the given string has a valid format for a chess move
 -- Valid format = [a-h][1-8] to [a-h][1-8]
--- TODO: implement this
+-- TODO: implement + test this (1 hour)
 validMoveString :: String -> Bool
 validMoveString str = False
 
 
 -- Converts a chess move from the "[a-h][1-8] to [a-h][1-8]" format to a ChessMove
 -- WARNING: Assumes that the string is in a valid format
--- TODO: Implement this
+-- TODO: Implement + test this (1.5 hour)
 stringToChessMove :: String -> ChessMove
 stringToChessMove _ = ChessMove ('A', 0) ('A', 0)

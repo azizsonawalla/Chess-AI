@@ -10,27 +10,30 @@ instance Show ChessBoard where
 
 
 -- Returns the string representation of a chessboard
--- TODO: implement this
+-- TODO: implement + test this (2 hours).
+-- Note: one way to implement this is to have a 'template' string (possibly stored in a txt file) and then simply
+--       replace a placeholder in each square with the piece that is currently there.
 chessBoardAsString :: ChessBoard -> [Char]
 chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
 
 
--- Makes the given move on the given chessboard.
--- Returns the board with the move made
+-- Makes the given move on the given chessboard. Returns the board with the move made
+-- If there is a piece at the destination square, then that piece will be replaced
 -- WARNING: Assumes given move is valid!
--- TODO: implement this
+-- TODO: implement + test this (1.5 hours)
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove chessBoard move = chessBoard
+makeMove chessBoard move = chessBoard                 -- If the piece to move is a pawn, make sure to set it's boolean value to false
 
 
 -- Returns all legal moves for the given side on the given chess board
--- TODO: implement this
+-- TODO: implement + test this (1.5 hour).
+-- Note: one way to implement is to iterate over all pieces of the given colour on the board and call legalMovesForPieceAtPos
 legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
 legalMoves chessBoard chessPieceColour = []
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: implement this
+-- TODO: implement + test this (0.5 hour). You can use legalMoves above.
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
 validMove _ _ _ = False
 
@@ -53,14 +56,14 @@ freshBoard = ChessBoard
     , (('F', 1), Bishop White)
     , (('G', 1), Knight White)
     , (('H', 1), Rook White)
-    , (('A', 2), Pawn White)
-    , (('B', 2), Pawn White)
-    , (('C', 2), Pawn White)
-    , (('D', 2), Pawn White)
-    , (('E', 2), Pawn White)
-    , (('F', 2), Pawn White)
-    , (('G', 2), Pawn White)
-    , (('H', 2), Pawn White)
+    , (('A', 2), Pawn White True)
+    , (('B', 2), Pawn White True)
+    , (('C', 2), Pawn White True)
+    , (('D', 2), Pawn White True)
+    , (('E', 2), Pawn White True)
+    , (('F', 2), Pawn White True)
+    , (('G', 2), Pawn White True)
+    , (('H', 2), Pawn White True)
     , (('A', 8), Rook Black)
     , (('B', 8), Knight Black)
     , (('C', 8), Bishop Black)
@@ -69,12 +72,12 @@ freshBoard = ChessBoard
     , (('F', 8), Bishop Black)
     , (('G', 8), Knight Black)
     , (('H', 8), Rook Black)
-    , (('A', 7), Pawn Black)
-    , (('B', 7), Pawn Black)
-    , (('C', 7), Pawn Black)
-    , (('D', 7), Pawn Black)
-    , (('E', 7), Pawn Black)
-    , (('F', 7), Pawn Black)
-    , (('G', 7), Pawn Black)
-    , (('H', 7), Pawn Black) ] 
+    , (('A', 7), Pawn Black True)
+    , (('B', 7), Pawn Black True)
+    , (('C', 7), Pawn Black True)
+    , (('D', 7), Pawn Black True)
+    , (('E', 7), Pawn Black True)
+    , (('F', 7), Pawn Black True)
+    , (('G', 7), Pawn Black True)
+    , (('H', 7), Pawn Black True) ] 
     Ongoing
