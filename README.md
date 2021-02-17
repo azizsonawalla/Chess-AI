@@ -1,2 +1,21 @@
 # Chess-AI
-Chess in Haskell with an AI player
+
+## Requirements
+
+* GHC
+* Cabal
+
+
+## Usage
+
+To run the game:
+
+```
+cabal run Chess-AI
+```
+
+To run tests:
+
+```
+cabal test all
+```
