@@ -56,4 +56,4 @@ legalNextPosForPieceAtPos (Pawn colour firstMove) chessBoard position = []
 -- Returns a list of ChessMoves from the given start position to all the destination positions
 -- TODO: Implement + test this (1 hour) [Aziz]
 buildMoves :: ChessPosition -> [ChessPosition] -> [ChessMove]
-buildMoves startPosition endPositions = []
+buildMoves startPosition endPositions = map (\ endPosition -> ChessMove startPosition endPosition) endPositions
