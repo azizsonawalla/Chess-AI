@@ -11,10 +11,13 @@ type ChessPlayer = (ChessPieceColour -> ChessBoard -> IO ChessBoard)
 -- A position on the Chess board
 -- Uses algebraic notation for rows and columns: https://en.wikipedia.org/wiki/Algebraic_notation_(chess)
 type ChessPosition = (Char, Int)
+chessPositionToString (char, num) = char:(show num)
 
 
 -- A Chess move from one position to the other
 data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMove from to
+instance Show ChessMove where
+  show (ChessMove start end) = (chessPositionToString start)++" to "++(chessPositionToString end)
 
 
 -- The current state of a chess game
@@ -38,5 +41,5 @@ data ChessPiece =
     | Rook ChessPieceColour
     | Bishop ChessPieceColour
     | Knight ChessPieceColour
-    | Pawn ChessPieceColour
+    | Pawn ChessPieceColour Bool          -- boolean indicates first move. True = pawn moving for the first time.
      deriving (Eq, Show)

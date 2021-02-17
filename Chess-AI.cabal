@@ -31,3 +31,19 @@ test-suite ChessBoard
   main-is:           ChessBoardTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
+
+test-suite ChessPieces
+  type:              exitcode-stdio-1.0
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  hs-source-dirs:    test src src/Chess src/Players
+  main-is:           ChessPiecesTest.hs
+  build-depends:     base, HTF
+  default-language:  Haskell2010
+
+test-suite ChessUtilTypes
+  type:              exitcode-stdio-1.0
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  hs-source-dirs:    test src src/Chess src/Players
+  main-is:           ChessUtilTypesTest.hs
+  build-depends:     base, HTF
+  default-language:  Haskell2010
