@@ -11,11 +11,13 @@ type ChessPlayer = (ChessPieceColour -> ChessBoard -> IO ChessBoard)
 -- A position on the Chess board
 -- Uses algebraic notation for rows and columns: https://en.wikipedia.org/wiki/Algebraic_notation_(chess)
 type ChessPosition = (Char, Int)
+chessPositionToString (char, num) = char:(show num)
 
 
 -- A Chess move from one position to the other
-data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq, Show)  -- ChessMove from to
--- TODO: custom implementation of Show ChessMove (0.5 hour) [Aziz]
+data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMove from to
+instance Show ChessMove where
+  show (ChessMove start end) = (chessPositionToString start)++" to "++(chessPositionToString end)
 
 
 -- The current state of a chess game
