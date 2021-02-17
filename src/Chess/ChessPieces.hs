@@ -56,3 +56,13 @@ legalNextPosForPieceAtPos (Pawn colour firstMove) chessBoard position = []
 -- Returns a list of ChessMoves from the given start position to all the destination positions
 buildMoves :: ChessPosition -> [ChessPosition] -> [ChessMove]
 buildMoves startPosition endPositions = map (\ endPosition -> ChessMove startPosition endPosition) endPositions
+
+
+-- Returns the colour of the given ChessPiece
+getPieceColour :: ChessPiece -> ChessPieceColour
+getPieceColour (Pawn colour _) = colour
+getPieceColour (King colour) = colour
+getPieceColour (Queen colour) = colour
+getPieceColour (Rook colour) = colour
+getPieceColour (Bishop colour) = colour
+getPieceColour (Knight colour) = colour

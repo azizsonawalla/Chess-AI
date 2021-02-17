@@ -26,10 +26,10 @@ makeMove chessBoard move = chessBoard                 -- If the piece to move is
 
 
 -- Returns all legal moves for the given side on the given chess board
--- TODO: implement + test this (1.5 hour). [Aziz]
--- Note: one way to implement is to iterate over all pieces of the given colour on the board and call legalMovesForPieceAtPos
+-- TODO: test this [Aziz] -- waiting for legalNextPosForPieceAtPos implementations
 legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
-legalMoves chessBoard chessPieceColour = []
+legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> allMoves ++ (legalMovesForPieceAtPos piece chessBoard position)) [] filteredPieces
+    where (ChessBoard filteredPieces state) = filterChessBoard chessBoard chessPieceColour
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
@@ -46,13 +46,18 @@ getPieceAt position (ChessBoard pieces _) = lookup position pieces
 gameOver (ChessBoard _ state) = state == Over
 
 
+-- Returns a version of the chessboard with only the pieces of the given colour
+filterChessBoard :: ChessBoard -> ChessPieceColour -> ChessBoard
+filterChessBoard (ChessBoard ogPieces state) colour = ChessBoard (filter (\ (position, piece) -> (getPieceColour piece) == colour) ogPieces) state
+
+
 -- A fresh Chess Board with all the pieces in the starting position
 freshBoard = ChessBoard 
     [ (('A', 1), Rook White)
     , (('B', 1), Knight White)
     , (('C', 1), Bishop White)
-    , (('D', 1), King White)
-    , (('E', 1), Queen White)
+    , (('D', 1), Queen White)
+    , (('E', 1), King White)
     , (('F', 1), Bishop White)
     , (('G', 1), Knight White)
     , (('H', 1), Rook White)
@@ -67,8 +72,8 @@ freshBoard = ChessBoard
     , (('A', 8), Rook Black)
     , (('B', 8), Knight Black)
     , (('C', 8), Bishop Black)
-    , (('D', 8), King Black)
-    , (('E', 8), Queen Black)
+    , (('D', 8), Queen Black)
+    , (('E', 8), King Black)
     , (('F', 8), Bishop Black)
     , (('G', 8), Knight Black)
     , (('H', 8), Rook Black)
