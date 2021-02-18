@@ -26,7 +26,7 @@ executable Chess-AI
 
 test-suite ChessBoard
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
   hs-source-dirs:    test src src/Chess src/Players
   main-is:           ChessBoardTest.hs
   build-depends:     base, HTF
@@ -34,7 +34,7 @@ test-suite ChessBoard
 
 test-suite ChessPieces
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
   hs-source-dirs:    test src src/Chess src/Players
   main-is:           ChessPiecesTest.hs
   build-depends:     base, HTF
@@ -42,7 +42,7 @@ test-suite ChessPieces
 
 test-suite ChessUtilTypes
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
   hs-source-dirs:    test src src/Chess src/Players
   main-is:           ChessUtilTypesTest.hs
   build-depends:     base, HTF

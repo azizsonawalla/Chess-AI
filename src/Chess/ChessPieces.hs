@@ -4,11 +4,14 @@ import ChessUtilTypes
 
 
 -- Returns all the legal moves for the given piece, at the given position, on the given chess board
+-- Warning: Assumes that the given ChessPiece is at the given ChessPosition
+-- TODO: test
 legalMovesForPieceAtPos :: ChessPiece -> ChessBoard -> ChessPosition -> [ChessMove]
 legalMovesForPieceAtPos piece board startPosition = buildMoves startPosition (legalNextPosForPieceAtPos piece board startPosition)
 
 
 -- Returns the list of positions that the given piece, at the given position, can move to on the chess board
+-- Warning: Assumes that the given ChessPiece is at the given ChessPosition
 legalNextPosForPieceAtPos :: ChessPiece -> ChessBoard -> ChessPosition -> [ChessPosition]
 
 -- King can move exactly one square horizontally, vertically, or diagonally (ignore castling for now).
@@ -50,7 +53,7 @@ legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
 --     - If the pawn is moving for the first time, it can move 2-squares forward if there is nothing blocking it. 
 --       It may also capture/kill a piece at the destination square this way.
 -- TODO: Implement + test this (moves for Pawn at the given position) (1.5 hour) [Aziz]
-legalNextPosForPieceAtPos (Pawn colour firstMove) chessBoard position = []
+legalNextPosForPieceAtPos (Pawn colour) chessBoard position = []
 
 
 -- Returns a list of ChessMoves from the given start position to all the destination positions
@@ -60,7 +63,7 @@ buildMoves startPosition endPositions = map (\ endPosition -> ChessMove startPos
 
 -- Returns the colour of the given ChessPiece
 getPieceColour :: ChessPiece -> ChessPieceColour
-getPieceColour (Pawn colour _) = colour
+getPieceColour (Pawn colour) = colour
 getPieceColour (King colour) = colour
 getPieceColour (Queen colour) = colour
 getPieceColour (Rook colour) = colour

@@ -4,7 +4,7 @@ import ChessPieces
 import ChessUtilTypes
 
 
--- Define Show for a ChessBoard
+-- -- Define Show for a ChessBoard
 instance Show ChessBoard where
     show board = chessBoardAsString board
 
@@ -19,10 +19,11 @@ chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
 
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
+-- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
 -- TODO: implement + test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove chessBoard move = chessBoard                 -- If the piece to move is a pawn, make sure to set it's boolean value to false
+makeMove chessBoard move = chessBoard
 
 
 -- Returns all legal moves for the given side on the given chess board
@@ -50,39 +51,30 @@ gameOver (ChessBoard _ state) = state == Over
 filterChessBoard :: ChessBoard -> ChessPieceColour -> ChessBoard
 filterChessBoard (ChessBoard ogPieces state) colour = ChessBoard (filter (\ (position, piece) -> (getPieceColour piece) == colour) ogPieces) state
 
+-- Converts FEN to ChessBoard. TODO: Docs [Aziz]
+fenToChessBoard forsythStr = (ChessBoard pieces Ongoing) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) forsythStr))
+getFirst (a, b, c) = a
+cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+addPieces :: ([(ChessPosition, ChessPiece)], Int, Int) -> Char -> ([(ChessPosition, ChessPiece)], Int, Int)
+addPieces (pieces, row, col) char
+    | char=='/'     = (pieces, row-1, 0)
+    | char=='p'     = addPiece row col pieces (Pawn Black) 
+    | char=='P'     = addPiece row col pieces (Pawn White)
+    | char=='n'     = addPiece row col pieces (Knight Black)
+    | char=='N'     = addPiece row col pieces (Knight White)
+    | char=='b'     = addPiece row col pieces (Bishop Black)
+    | char=='B'     = addPiece row col pieces (Bishop White)
+    | char=='r'     = addPiece row col pieces (Rook Black)
+    | char=='R'     = addPiece row col pieces (Rook White)
+    | char=='q'     = addPiece row col pieces (Queen Black)
+    | char=='Q'     = addPiece row col pieces (Queen White)
+    | char=='k'     = addPiece row col pieces (King Black)
+    | char=='K'     = addPiece row col pieces (King White)
+    | char=='8'     = (pieces, row, col) -- ignore 8s
+    | otherwise     = (pieces, row, col + ((read::String->Int) [char]))
+addPiece row col pieces newPiece = (newpieces, row, col+1) 
+    where newpieces = ((cols !! col, row), newPiece):pieces
+
 
 -- A fresh Chess Board with all the pieces in the starting position
-freshBoard = ChessBoard 
-    [ (('A', 1), Rook White)
-    , (('B', 1), Knight White)
-    , (('C', 1), Bishop White)
-    , (('D', 1), Queen White)
-    , (('E', 1), King White)
-    , (('F', 1), Bishop White)
-    , (('G', 1), Knight White)
-    , (('H', 1), Rook White)
-    , (('A', 2), Pawn White True)
-    , (('B', 2), Pawn White True)
-    , (('C', 2), Pawn White True)
-    , (('D', 2), Pawn White True)
-    , (('E', 2), Pawn White True)
-    , (('F', 2), Pawn White True)
-    , (('G', 2), Pawn White True)
-    , (('H', 2), Pawn White True)
-    , (('A', 8), Rook Black)
-    , (('B', 8), Knight Black)
-    , (('C', 8), Bishop Black)
-    , (('D', 8), Queen Black)
-    , (('E', 8), King Black)
-    , (('F', 8), Bishop Black)
-    , (('G', 8), Knight Black)
-    , (('H', 8), Rook Black)
-    , (('A', 7), Pawn Black True)
-    , (('B', 7), Pawn Black True)
-    , (('C', 7), Pawn Black True)
-    , (('D', 7), Pawn Black True)
-    , (('E', 7), Pawn Black True)
-    , (('F', 7), Pawn Black True)
-    , (('G', 7), Pawn Black True)
-    , (('H', 7), Pawn Black True) ] 
-    Ongoing
+freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
