@@ -48,6 +48,12 @@ validMove _ _ _ = False
 getPieceAt :: ChessPosition -> ChessBoard -> Maybe ChessPiece
 getPieceAt position (ChessBoard pieces _) = lookup position pieces
 
+
+-- Returns true if there is no piece on the board at the given position
+isEmpty :: ChessPosition -> ChessBoard -> Bool
+isEmpty position board = (getPieceAt position board) == Nothing
+
+
 -- Returns true if the chessboard has been closed to indicate the game is over
 gameOver (ChessBoard _ state) = state == Over
 

@@ -53,7 +53,10 @@ legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
 --     - If the pawn is moving for the first time, it can move 2-squares forward if there is nothing blocking it. 
 --       It may also capture/kill a piece at the destination square this way.
 -- TODO: Implement + test this (moves for Pawn at the given position) (1.5 hour) [Aziz]
-legalNextPosForPieceAtPos (Pawn colour) chessBoard position = []
+legalNextPosForPieceAtPos (Pawn White) chessBoard (col, 2) = [] -- start position white pawn
+legalNextPosForPieceAtPos (Pawn White) chessBoard (col, row) = [] -- non-start position white pawn
+legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, 7) = [] -- start position black pawn
+legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = [] -- non-start position black pawn
 
 
 -- Returns a list of ChessMoves from the given start position to all the destination positions
