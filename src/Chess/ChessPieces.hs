@@ -1,6 +1,9 @@
 module ChessPieces where
 
 import ChessUtilTypes
+import FENotation
+import Data.List
+import Data.Maybe
 
 
 -- Returns all the legal moves for the given piece, at the given position, on the given chess board
@@ -53,7 +56,15 @@ legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
 --     - If the pawn is moving for the first time, it can move 2-squares forward if there is nothing blocking it. 
 --       It may also capture/kill a piece at the destination square this way.
 -- TODO: Implement + test this (moves for Pawn at the given position) (1.5 hour) [Aziz]
-legalNextPosForPieceAtPos (Pawn White) chessBoard (col, 2) = [] -- start position white pawn
+legalNextPosForPieceAtPos (Pawn White) chessBoard (col, 2) = up1 ++ up2 ++ topLeft ++ topRight  -- start position white pawn
+                                                            where up1 = if up1SquareEmpty then [(col, 3)] else []
+                                                                  up2 = if up2SquaresEmpty then [(col, 4)] else []
+                                                                  topLeft = if topLeftHasBlackPiece then [getTopLeftPos (col, 2)] else []
+                                                                  topRight = if topRightHasBlackPiece then [getTopRightPos (col, 2)] else []
+                                                                  up2SquaresEmpty = up1SquareEmpty && (isEmpty (col, 4) chessBoard)
+                                                                  up1SquareEmpty = isEmpty (col, 3) chessBoard
+                                                                  topLeftHasBlackPiece = (col /= 'A') && (not (isEmpty (getTopLeftPos (col, 2)) chessBoard)) && ((getColourOfPieceAt (getTopLeftPos (col, 2)) chessBoard) == (Just Black))
+                                                                  topRightHasBlackPiece = (col /= 'H') && (not (isEmpty (getTopRightPos (col, 2)) chessBoard)) && ((getColourOfPieceAt (getTopRightPos (col, 2)) chessBoard) == (Just Black))
 legalNextPosForPieceAtPos (Pawn White) chessBoard (col, row) = [] -- non-start position white pawn
 legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, 7) = [] -- start position black pawn
 legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = [] -- non-start position black pawn
@@ -62,6 +73,36 @@ legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = [] -- non-start p
 -- Returns a list of ChessMoves from the given start position to all the destination positions
 buildMoves :: ChessPosition -> [ChessPosition] -> [ChessMove]
 buildMoves startPosition endPositions = map (\ endPosition -> ChessMove startPosition endPosition) endPositions
+
+
+-- Returns the chess piece at the given position as a Maybe
+getPieceAt :: ChessPosition -> ChessBoard -> Maybe ChessPiece
+getPieceAt position (ChessBoard pieces _) = lookup position pieces
+
+
+-- Returns the chess piece at the given position as a Maybe
+-- TODO: test this
+getColourOfPieceAt :: ChessPosition -> ChessBoard -> Maybe ChessPieceColour
+getColourOfPieceAt position chessBoard = if piece /= Nothing then Just (getPieceColour (fromJust piece)) else Nothing where piece = getPieceAt position chessBoard 
+
+
+-- Returns true if there is no piece on the board at the given position
+isEmpty :: ChessPosition -> ChessBoard -> Bool
+isEmpty position board = (getPieceAt position board) == Nothing
+
+
+-- Returns the position at the top-left diagonal of the given position
+-- Warning: given position should not be in column 'A' or in row 8
+-- TODO: test this
+getTopLeftPos :: ChessPosition -> ChessPosition
+getTopLeftPos (col, row) = (leftCol, row+1) where leftCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) - 1)
+
+
+-- Returns the position at the top-right diagonal of the given position
+-- Warning: given position should not be in column 'H' or in row 8
+-- TODO: test this
+getTopRightPos :: ChessPosition -> ChessPosition
+getTopRightPos (col, row) = (rightCol, row+1) where rightCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) + 1)
 
 
 -- Returns the colour of the given ChessPiece
