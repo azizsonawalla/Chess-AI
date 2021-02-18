@@ -113,31 +113,31 @@ test_legalNextPosForPieceAtPos_Pawn =
         -- H7 pawn at starting position with same colour piece one square away (board8)
         assertEqual board8_H7 (legalNextPosForPieceAtPos (Pawn Black) board8 ('H', 7))
 
-      --   -- White:
-      --       -- Non starting position no pieces in front (board9)
-      --   assertEqual board9_A3 (legalNextPosForPieceAtPos (Pawn White) board9 ('A', 3))
-      --       -- Non starting position same colour pieces directly in front (board9)
-      --   assertEqual board9_G3 (legalNextPosForPieceAtPos (Pawn White) board9 ('G', 3))
-      --       -- Non starting position same colour pieces diagonally in front (board9)
-      --   assertEqual board9_D4 (legalNextPosForPieceAtPos (Pawn White) board9 ('D', 4))
-      --       -- Non starting position opposite colour pieces directly in front (board9)
-      --   assertEqual board9_F6 (legalNextPosForPieceAtPos (Pawn White) board9 ('F', 6))
-      --       -- Non starting position opposite colour pieces diagonally in front (board9)
-      --   assertEqual board9_B6 (legalNextPosForPieceAtPos (Pawn White) board9 ('B', 6))
+        -- White:
+            -- Non starting position no pieces in front (board9)
+        assertEqual board9_A3 (legalNextPosForPieceAtPos (Pawn White) board9 ('A', 3))
+            -- Non starting position same colour pieces directly in front (board9)
+        assertEqual board9_G3 (legalNextPosForPieceAtPos (Pawn White) board9 ('G', 3))
+            -- Non starting position same colour pieces diagonally in front (board9)
+        assertEqual board9_D4 (legalNextPosForPieceAtPos (Pawn White) board9 ('D', 4))
+            -- Non starting position opposite colour pieces directly in front (board9)
+        assertEqual board9_F6 (legalNextPosForPieceAtPos (Pawn White) board9 ('F', 6))
+            -- Non starting position opposite colour pieces diagonally in front (board9)
+        assertEqual board9_B6 (legalNextPosForPieceAtPos (Pawn White) board9 ('B', 6))
 
-      --   -- Black:
-      --       -- Non starting position no space in front
-      --   assertEqual board10_D1 (legalNextPosForPieceAtPos (Pawn Black) board10 ('D', 1))
-      --       -- Non starting position same colour pieces directly in front
-      --   assertEqual board10_E2 (legalNextPosForPieceAtPos (Pawn Black) board10 ('E', 2))
-      --       -- Non starting position same colour pieces diagonally in front
-      --   assertEqual board10_B3 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 3))
-      --       -- Non starting position opposite colour pieces directly in front
-      --   assertEqual board10_H4 (legalNextPosForPieceAtPos (Pawn Black) board10 ('H', 4))
-      --       -- Non starting position opposite colour pieces diagonally in front
-      --   assertEqual board10_F6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('F', 6))
-      --       -- Non starting position no pieces in front
-      --   assertEqual board10_B6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 6))
+        -- Black:
+            -- Non starting position no space in front
+        assertEqual board10_D1 (legalNextPosForPieceAtPos (Pawn Black) board10 ('D', 1))
+            -- Non starting position same colour pieces directly in front
+        assertEqual board10_E2 (legalNextPosForPieceAtPos (Pawn Black) board10 ('E', 2))
+            -- Non starting position same colour pieces diagonally in front
+        assertEqual board10_B3 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 3))
+            -- Non starting position opposite colour pieces directly in front
+        assertEqual board10_H4 (legalNextPosForPieceAtPos (Pawn Black) board10 ('H', 4))
+            -- Non starting position opposite colour pieces diagonally in front
+        assertEqual board10_F6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('F', 6))
+            -- Non starting position no pieces in front
+        assertEqual board10_B6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 6))
 
 
 test_getPieceAt = 
