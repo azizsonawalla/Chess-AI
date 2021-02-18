@@ -4,11 +4,18 @@ import ChessBoard
 import ChessUtilTypes
 import FENotation
 
-
--- freshboard = https://lichess.org/editor/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR_w_KQkq_-_0_1
+-- Possible moves for pieces on the freshBoard
+freshBoard_A2 = [('A', 3), ('A', 4)] -- positions that the piece at A2 can move to
+freshBoard_E2 = [('E', 3), ('E', 4)]
+freshBoard_H2 = [('H', 3), ('H', 4)]
+freshBoard_A7 = [('A', 6), ('A', 5)]
+freshBoard_E7 = [('E', 6), ('E', 5)]
+freshBoard_H7 = [('H', 6), ('H', 5)]
 
 -- https://lichess.org/editor/8/8/8/8/8/8/8/R7_w_-_-_0_1
 board1 = fenToChessBoard "8/8/8/8/8/8/8/R7"
+board1_A1 = [ ('A', 2) , ('A', 3) , ('A', 4) , ('A', 5) , ('A', 6) , ('A', 7) , ('A', 8) , ('B', 1) , ('C', 1) , ('D', 1) , ('E', 1) , ('F', 1) , ('G', 1) , ('H', 1) ]
+
 
 -- https://lichess.org/editor/3k4/8/2q2p2/8/8/8/R7/4B2N_w_-_-_0_1
 board2 = fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N"

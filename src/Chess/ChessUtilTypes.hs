@@ -11,7 +11,7 @@ type ChessPlayer = (ChessPieceColour -> ChessBoard -> IO ChessBoard)
 
 -- A position on the Chess board
 -- Uses algebraic notation for rows and columns: https://en.wikipedia.org/wiki/Algebraic_notation_(chess)
-type ChessPosition = (Char, Int)
+type ChessPosition = (Char, Integer)
 chessPositionToString (char, num) = char:(show num)
 
 

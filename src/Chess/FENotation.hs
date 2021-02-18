@@ -18,7 +18,7 @@ chessBoardCols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
 
 -- Adds the corresponding ChessPieces to the accumulator based on the char from a FEN string
 -- Also increments row and col accordingly
-addPieces :: ([(ChessPosition, ChessPiece)], Int, Int) -> Char -> ([(ChessPosition, ChessPiece)], Int, Int)
+addPieces :: ([(ChessPosition, ChessPiece)], Integer, Integer) -> Char -> ([(ChessPosition, ChessPiece)], Integer, Integer)
 addPieces (pieces, row, col) char
     | char=='/'     = (pieces, row-1, 0)
     | char=='p'     = addPiece row col pieces (Pawn Black) 
@@ -34,10 +34,10 @@ addPieces (pieces, row, col) char
     | char=='k'     = addPiece row col pieces (King Black)
     | char=='K'     = addPiece row col pieces (King White)
     | char=='8'     = (pieces, row, col) -- ignore 8s
-    | otherwise     = (pieces, row, col + ((read::String->Int) [char]))
+    | otherwise     = (pieces, row, col + ((read::String->Integer) [char]))
 
 
 -- Adds the given piece to the accumulator
-addPiece :: Int -> Int -> [(ChessPosition, ChessPiece)] -> ChessPiece -> ([(ChessPosition, ChessPiece)], Int, Int)
+addPiece :: Integer -> Integer -> [(ChessPosition, ChessPiece)] -> ChessPiece -> ([(ChessPosition, ChessPiece)], Integer, Integer)
 addPiece row col pieces newPiece = (newpieces, row, col+1) 
-    where newpieces = ((chessBoardCols !! col, row), newPiece):pieces
+    where newpieces = ((chessBoardCols !! (fromInteger col), row), newPiece):pieces

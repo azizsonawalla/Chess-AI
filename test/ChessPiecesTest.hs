@@ -21,9 +21,10 @@ test_getPieceColour =
         assertEqual Black (getPieceColour (Pawn Black))
 
 
--- test_legalNextPosForPieceAtPos_Pawn = 
---     do
+test_legalNextPosForPieceAtPos_Pawn = 
+    do
         -- A2 pawn at starting position (freshboard)
+        assertEqual freshBoard_A2 (legalNextPosForPieceAtPos (Pawn White) freshBoard ('A', 2))
         -- A2 pawn at starting position with opposite piece in front (board3)
         -- A2 pawn at starting position with same colour piece in front (board4)
         -- A2 pawn at starting position with opposite piece diagonally in front (board5)
@@ -32,6 +33,7 @@ test_getPieceColour =
         -- A2 pawn at starting position with same colour piece one square away (board8)
 
         -- E2 pawn at starting position (freshboard)
+        assertEqual freshBoard_E2 (legalNextPosForPieceAtPos (Pawn White) freshBoard ('E', 2))
         -- E2 pawn at starting position with opposite piece in front (board3)
         -- E2 pawn at starting position with same colour piece in front (board4)
         -- E2 pawn at starting position with opposite piece diagonally in front (board5)
@@ -40,6 +42,7 @@ test_getPieceColour =
         -- E2 pawn at starting position with same colour piece one square away (board8)
 
         -- H2 pawn at starting position (freshboard)
+        assertEqual freshBoard_H2 (legalNextPosForPieceAtPos (Pawn White) freshBoard ('H', 2))
         -- H2 pawn at starting position with opposite piece in front (board3)
         -- H2 pawn at starting position with same colour piece in front (board4)
         -- H2 pawn at starting position with opposite piece diagonally in front (board5)
@@ -48,6 +51,7 @@ test_getPieceColour =
         -- H2 pawn at starting position with same colour piece one square away (board8)
         
         -- A7 pawn at starting position (freshboard)
+        assertEqual freshBoard_A7 (legalNextPosForPieceAtPos (Pawn Black) freshBoard ('A', 7))
         -- A7 pawn at starting position with opposite piece in front (board3)
         -- A7 pawn at starting position with same colour piece in front (board4)
         -- A7 pawn at starting position with opposite piece diagonally in front (board5)
@@ -56,6 +60,7 @@ test_getPieceColour =
         -- A7 pawn at starting position with same colour piece one square away (board8)
 
         -- E7 pawn at starting position (freshboard)
+        assertEqual freshBoard_E7 (legalNextPosForPieceAtPos (Pawn Black) freshBoard ('E', 7))
         -- E7 pawn at starting position with opposite piece in front (board3)
         -- E7 pawn at starting position with same colour piece in front (board4)
         -- E7 pawn at starting position with opposite piece diagonally in front (board5)
@@ -64,6 +69,7 @@ test_getPieceColour =
         -- E7 pawn at starting position with same colour piece one square away (board8)
 
         -- H7 pawn at starting position (freshboard)
+        assertEqual freshBoard_H7 (legalNextPosForPieceAtPos (Pawn Black) freshBoard ('H', 7))
         -- H7 pawn at starting position with opposite piece in front (board3)
         -- H7 pawn at starting position with same colour piece in front (board4)
         -- H7 pawn at starting position with opposite piece diagonally in front (board5)
