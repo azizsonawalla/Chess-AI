@@ -2,6 +2,7 @@ module TestChessBoards where
 
 import ChessBoard
 import ChessUtilTypes
+import FENotation
 
 
 -- freshboard = https://lichess.org/editor/rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR_w_KQkq_-_0_1

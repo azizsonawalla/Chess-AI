@@ -18,32 +18,40 @@ extra-source-files:  CHANGELOG.md, README.md
 
 executable Chess-AI
   main-is:             Main.hs
-  other-modules:       AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer
+  other-modules:       AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer Util FENotation
   -- other-extensions:
   build-depends:       base >=4.14 && <4.15
-  hs-source-dirs:      src src/Chess src/Players
+  hs-source-dirs:      src src/Chess src/Players src/Util
   default-language:    Haskell2010
 
 test-suite ChessBoard
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
-  hs-source-dirs:    test src src/Chess src/Players
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards Util FENotation
+  hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessBoardTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
 
 test-suite ChessPieces
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
-  hs-source-dirs:    test src src/Chess src/Players
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards Util FENotation
+  hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessPiecesTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
 
 test-suite ChessUtilTypes
   type:              exitcode-stdio-1.0
-  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards
-  hs-source-dirs:    test src src/Chess src/Players
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards Util FENotation
+  hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessUtilTypesTest.hs
+  build-depends:     base, HTF
+  default-language:  Haskell2010
+
+test-suite FENotation
+  type:              exitcode-stdio-1.0
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards Util FENotation
+  hs-source-dirs:    test src src/Chess src/Players src/Util
+  main-is:           FENotationTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010

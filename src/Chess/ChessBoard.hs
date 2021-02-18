@@ -2,11 +2,16 @@ module ChessBoard where
 
 import ChessPieces
 import ChessUtilTypes
+import FENotation
 
 
 -- -- Define Show for a ChessBoard
 instance Show ChessBoard where
     show board = chessBoardAsString board
+
+
+-- A fresh Chess Board with all the pieces in the starting position
+freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
 
 -- Returns the string representation of a chessboard
@@ -50,31 +55,3 @@ gameOver (ChessBoard _ state) = state == Over
 -- Returns a version of the chessboard with only the pieces of the given colour
 filterChessBoard :: ChessBoard -> ChessPieceColour -> ChessBoard
 filterChessBoard (ChessBoard ogPieces state) colour = ChessBoard (filter (\ (position, piece) -> (getPieceColour piece) == colour) ogPieces) state
-
--- Converts FEN to ChessBoard. TODO: Docs [Aziz]
-fenToChessBoard forsythStr = (ChessBoard pieces Ongoing) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) forsythStr))
-getFirst (a, b, c) = a
-cols = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
-addPieces :: ([(ChessPosition, ChessPiece)], Int, Int) -> Char -> ([(ChessPosition, ChessPiece)], Int, Int)
-addPieces (pieces, row, col) char
-    | char=='/'     = (pieces, row-1, 0)
-    | char=='p'     = addPiece row col pieces (Pawn Black) 
-    | char=='P'     = addPiece row col pieces (Pawn White)
-    | char=='n'     = addPiece row col pieces (Knight Black)
-    | char=='N'     = addPiece row col pieces (Knight White)
-    | char=='b'     = addPiece row col pieces (Bishop Black)
-    | char=='B'     = addPiece row col pieces (Bishop White)
-    | char=='r'     = addPiece row col pieces (Rook Black)
-    | char=='R'     = addPiece row col pieces (Rook White)
-    | char=='q'     = addPiece row col pieces (Queen Black)
-    | char=='Q'     = addPiece row col pieces (Queen White)
-    | char=='k'     = addPiece row col pieces (King Black)
-    | char=='K'     = addPiece row col pieces (King White)
-    | char=='8'     = (pieces, row, col) -- ignore 8s
-    | otherwise     = (pieces, row, col + ((read::String->Int) [char]))
-addPiece row col pieces newPiece = (newpieces, row, col+1) 
-    where newpieces = ((cols !! col, row), newPiece):pieces
-
-
--- A fresh Chess Board with all the pieces in the starting position
-freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
