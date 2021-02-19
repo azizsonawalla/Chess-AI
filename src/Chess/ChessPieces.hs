@@ -72,8 +72,8 @@ legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = down1 ++ (if row 
                                                                    bottomRight = if bottomRightHasWhitePiece then [getBottomRightPos (col, row)] else []
                                                                    bottom2SquaresEmpty = bottom1SquareEmpty && (isEmpty (col, row-2) chessBoard)
                                                                    bottom1SquareEmpty = isEmpty (col, row-1) chessBoard
-                                                                   bottomLeftHasWhitePiece = (col /= 'A') && (not (isEmpty (getBottomLeftPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getBottomLeftPos (col, row)) chessBoard) == (Just White))
-                                                                   bottomRightHasWhitePiece = (col /= 'H') && (not (isEmpty (getBottomRightPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getBottomRightPos (col, row)) chessBoard) == (Just White))
+                                                                   bottomLeftHasWhitePiece = (col /= 'A') && (row /= 1) && (not (isEmpty (getBottomLeftPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getBottomLeftPos (col, row)) chessBoard) == (Just White))
+                                                                   bottomRightHasWhitePiece = (col /= 'H') && (row /= 1) && (not (isEmpty (getBottomRightPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getBottomRightPos (col, row)) chessBoard) == (Just White))
 
 
 -- Returns a list of ChessMoves from the given start position to all the destination positions
