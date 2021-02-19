@@ -80,7 +80,7 @@ board9_A3 = [('A', 4)]
 board9_G3 = [('G', 4), ('H', 4)]
 board9_D4 = []
 board9_F6 = []
-board9_B6 = []
+board9_B6 = [('B', 7)]
 
 -- https://lichess.org/editor/8/8/1p3p2/5N2/7p/1p4R1/1b2p3/3p4_w_-_-_0_1
 board10 = fenToChessBoard "8/8/1p3p2/5N2/7p/1p4R1/1b2p3/3p4"
