@@ -19,50 +19,23 @@ freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 chessBoardAsString :: ChessBoard -> [Char]
 chessBoardAsString chessBoard = "\n*--*--* Current Chess Board *--*--*\n\n"
                         ++ "     (A)(B)(C)(D)(E)(F)(G)(H) \n\n" 
-                        ++ "(1)  "  ++ retrievePieceAt ('A',1) chessBoard
-                                    ++ retrievePieceAt ('B',1) chessBoard 
-                                    ++ retrievePieceAt ('C',1) chessBoard 
-                                    ++ retrievePieceAt ('D',1) chessBoard 
-                                    ++ retrievePieceAt ('E',1) chessBoard 
-                                    ++ retrievePieceAt ('F',1) chessBoard 
-                                    ++ retrievePieceAt ('G',1) chessBoard 
-                                    ++ retrievePieceAt ('H',1) chessBoard 
+                        ++ "(8)  "  ++ retrievePieceAt ('A',8) chessBoard
+                                    ++ retrievePieceAt ('B',8) chessBoard 
+                                    ++ retrievePieceAt ('C',8) chessBoard 
+                                    ++ retrievePieceAt ('D',8) chessBoard 
+                                    ++ retrievePieceAt ('E',8) chessBoard 
+                                    ++ retrievePieceAt ('F',8) chessBoard 
+                                    ++ retrievePieceAt ('G',8) chessBoard 
+                                    ++ retrievePieceAt ('H',8) chessBoard 
                         ++ "\n" 
-                        ++ "(2)  "  ++ retrievePieceAt ('A',2) chessBoard
-                                    ++ retrievePieceAt ('B',2) chessBoard 
-                                    ++ retrievePieceAt ('C',2) chessBoard 
-                                    ++ retrievePieceAt ('D',2) chessBoard 
-                                    ++ retrievePieceAt ('E',2) chessBoard 
-                                    ++ retrievePieceAt ('F',2) chessBoard 
-                                    ++ retrievePieceAt ('G',2) chessBoard 
-                                    ++ retrievePieceAt ('H',2) chessBoard 
-                        ++ "\n"
-                        ++ "(3)  "  ++ retrievePieceAt ('A',3) chessBoard
-                                    ++ retrievePieceAt ('B',3) chessBoard 
-                                    ++ retrievePieceAt ('C',3) chessBoard 
-                                    ++ retrievePieceAt ('D',3) chessBoard 
-                                    ++ retrievePieceAt ('E',3) chessBoard 
-                                    ++ retrievePieceAt ('F',3) chessBoard 
-                                    ++ retrievePieceAt ('G',3) chessBoard 
-                                    ++ retrievePieceAt ('H',3) chessBoard 
-                        ++ "\n"
-                        ++ "(4)  "  ++ retrievePieceAt ('A',4) chessBoard
-                                    ++ retrievePieceAt ('B',4) chessBoard 
-                                    ++ retrievePieceAt ('C',4) chessBoard 
-                                    ++ retrievePieceAt ('D',4) chessBoard 
-                                    ++ retrievePieceAt ('E',4) chessBoard 
-                                    ++ retrievePieceAt ('F',4) chessBoard 
-                                    ++ retrievePieceAt ('G',4) chessBoard 
-                                    ++ retrievePieceAt ('H',4) chessBoard 
-                        ++ "\n"
-                        ++ "(5)  "  ++ retrievePieceAt ('A',5) chessBoard
-                                    ++ retrievePieceAt ('B',5) chessBoard 
-                                    ++ retrievePieceAt ('C',5) chessBoard 
-                                    ++ retrievePieceAt ('D',5) chessBoard 
-                                    ++ retrievePieceAt ('E',5) chessBoard 
-                                    ++ retrievePieceAt ('F',5) chessBoard 
-                                    ++ retrievePieceAt ('G',5) chessBoard 
-                                    ++ retrievePieceAt ('H',5) chessBoard 
+                        ++ "(7)  "  ++ retrievePieceAt ('A',7) chessBoard
+                                    ++ retrievePieceAt ('B',7) chessBoard 
+                                    ++ retrievePieceAt ('C',7) chessBoard 
+                                    ++ retrievePieceAt ('D',7) chessBoard 
+                                    ++ retrievePieceAt ('E',7) chessBoard 
+                                    ++ retrievePieceAt ('F',7) chessBoard 
+                                    ++ retrievePieceAt ('G',7) chessBoard 
+                                    ++ retrievePieceAt ('H',7) chessBoard 
                         ++ "\n"
                         ++ "(6)  "  ++ retrievePieceAt ('A',6) chessBoard
                                     ++ retrievePieceAt ('B',6) chessBoard 
@@ -73,23 +46,52 @@ chessBoardAsString chessBoard = "\n*--*--* Current Chess Board *--*--*\n\n"
                                     ++ retrievePieceAt ('G',6) chessBoard 
                                     ++ retrievePieceAt ('H',6) chessBoard 
                         ++ "\n"
-                        ++ "(7)  "  ++ retrievePieceAt ('A',7) chessBoard
-                                    ++ retrievePieceAt ('B',7) chessBoard 
-                                    ++ retrievePieceAt ('C',7) chessBoard 
-                                    ++ retrievePieceAt ('D',7) chessBoard 
-                                    ++ retrievePieceAt ('E',7) chessBoard 
-                                    ++ retrievePieceAt ('F',7) chessBoard 
-                                    ++ retrievePieceAt ('G',7) chessBoard 
-                                    ++ retrievePieceAt ('H',7) chessBoard 
+                        ++ "(5)  "  ++ retrievePieceAt ('A',5) chessBoard
+                                    ++ retrievePieceAt ('B',5) chessBoard 
+                                    ++ retrievePieceAt ('C',5) chessBoard 
+                                    ++ retrievePieceAt ('D',5) chessBoard 
+                                    ++ retrievePieceAt ('E',5) chessBoard 
+                                    ++ retrievePieceAt ('F',5) chessBoard 
+                                    ++ retrievePieceAt ('G',5) chessBoard 
+                                    ++ retrievePieceAt ('H',5) chessBoard 
                         ++ "\n"
-                        ++ "(8)  "  ++ retrievePieceAt ('A',8) chessBoard
-                                    ++ retrievePieceAt ('B',8) chessBoard 
-                                    ++ retrievePieceAt ('C',8) chessBoard 
-                                    ++ retrievePieceAt ('D',8) chessBoard 
-                                    ++ retrievePieceAt ('E',8) chessBoard 
-                                    ++ retrievePieceAt ('F',8) chessBoard 
-                                    ++ retrievePieceAt ('G',8) chessBoard 
-                                    ++ retrievePieceAt ('H',8) chessBoard 
+                        ++ "(4)  "  ++ retrievePieceAt ('A',4) chessBoard
+                                    ++ retrievePieceAt ('B',4) chessBoard 
+                                    ++ retrievePieceAt ('C',4) chessBoard 
+                                    ++ retrievePieceAt ('D',4) chessBoard 
+                                    ++ retrievePieceAt ('E',4) chessBoard 
+                                    ++ retrievePieceAt ('F',4) chessBoard 
+                                    ++ retrievePieceAt ('G',4) chessBoard 
+                                    ++ retrievePieceAt ('H',4) chessBoard 
+                        ++ "\n"
+                        ++ "(3)  "   ++ retrievePieceAt ('A',3) chessBoard
+                                    ++ retrievePieceAt ('B',3) chessBoard 
+                                    ++ retrievePieceAt ('C',3) chessBoard 
+                                    ++ retrievePieceAt ('D',3) chessBoard 
+                                    ++ retrievePieceAt ('E',3) chessBoard 
+                                    ++ retrievePieceAt ('F',3) chessBoard 
+                                    ++ retrievePieceAt ('G',3) chessBoard 
+                                    ++ retrievePieceAt ('H',3) chessBoard 
+                        ++ "\n"
+                        ++ "(2)  "  ++ retrievePieceAt ('A',2) chessBoard
+                                    ++ retrievePieceAt ('B',2) chessBoard 
+                                    ++ retrievePieceAt ('C',2) chessBoard 
+                                    ++ retrievePieceAt ('D',2) chessBoard 
+                                    ++ retrievePieceAt ('E',2) chessBoard 
+                                    ++ retrievePieceAt ('F',2) chessBoard 
+                                    ++ retrievePieceAt ('G',2) chessBoard 
+                                    ++ retrievePieceAt ('H',2) chessBoard 
+                        
+                        ++ "\n"
+                        ++ "(1)  "  ++ retrievePieceAt ('A',1) chessBoard
+                                    ++ retrievePieceAt ('B',1) chessBoard 
+                                    ++ retrievePieceAt ('C',1) chessBoard 
+                                    ++ retrievePieceAt ('D',1) chessBoard 
+                                    ++ retrievePieceAt ('E',1) chessBoard 
+                                    ++ retrievePieceAt ('F',1) chessBoard 
+                                    ++ retrievePieceAt ('G',1) chessBoard 
+                                    ++ retrievePieceAt ('H',1) chessBoard 
+                        
                         ++ "\n\n" 
 
 retrievePieceAt:: ChessPosition -> ChessBoard -> [Char]

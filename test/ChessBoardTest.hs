@@ -4,6 +4,8 @@ import Test.Framework
 import ChessBoard
 import ChessUtilTypes
 import TestChessBoards
+import System.IO
+import FENotation
 
 test_gameOver = 
     do
@@ -24,9 +26,11 @@ test_filter =
 
 test_chessBoardAsString = 
     do
-        -- freshboard
+        -- fresh board
+        freshBoard <- readFile "freshboard_string.txt" 
         assertEqual freshBoard (chessBoardAsString (fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
-    where
-        freshBoard <- readFile "fresh_board_string.txt" 
+        -- random board
+        randomBoard <- readFile "randomboard_string.txt" 
+        assertEqual randomBoard (chessBoardAsString (fenToChessBoard "k7/q1P2BN1/1P1p3b/P6r/5pp1/4p2r/1K6/1R6"))
 
 main = htfMain htf_thisModulesTests
