@@ -52,11 +52,11 @@ validMoveString str = False
 -- WARNING: Assumes that the string is in a valid format
 stringToChessMove :: String -> ChessMove
 stringToChessMove string = 
-    ChessMove (stringToChessMoveHelper fromPosition) (stringToChessMoveHelper toPosition)
+    ChessMove (readChessPosition fromPosition) (readChessPosition toPosition)
     where
         fromPosition = take 2 [ x | x <- string, x /=' ', x /='t', x/='o']
         toPosition = drop 2 [ x | x <- string, x /=' ', x /='t', x/='o'] 
 
-stringToChessMoveHelper :: [Char] -> (Char, Integer)
-stringToChessMoveHelper string = (string !! 0, toInteger (digitToInt (string !! 1)))
+readChessPosition :: [Char] -> (Char, Integer)
+readChessPosition string = (string !! 0, toInteger (digitToInt (string !! 1)))
 

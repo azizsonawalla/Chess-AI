@@ -129,3 +129,19 @@ getPieceColour (Queen colour) = colour
 getPieceColour (Rook colour) = colour
 getPieceColour (Bishop colour) = colour
 getPieceColour (Knight colour) = colour
+
+
+chessPieceStrings = [((King   White), "[ K ]")
+                    ,((Queen  White), "[ Q ]")
+                    ,((Rook   White), "[ R ]")
+                    ,((Bishop White), "[ B ]")
+                    ,((Knight White), "[ N ]")
+                    ,((Pawn   White), "[ P ]")
+                    ,((King   Black), "[ k ]")
+                    ,((Queen  Black), "[ q ]")
+                    ,((Rook   Black), "[ r ]")
+                    ,((Bishop Black), "[ b ]")
+                    ,((Knight Black), "[ n ]")
+                    ,((Pawn   Black), "[ p ]")]
+getPieceAsString:: ChessPosition -> ChessBoard -> [Char]
+getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"  where piece = getPieceAt position board
