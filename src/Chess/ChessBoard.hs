@@ -4,7 +4,6 @@ import ChessPieces
 import ChessUtilTypes
 import FENotation
 import Data.Maybe
-import Debug.Trace
 
 
 -- -- Define Show for a ChessBoard
@@ -17,17 +16,8 @@ freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
 
 -- Returns the string representation of a chessboard
--- Note: one way to implement this is to have a 'template' string (possibly stored in a txt file) and then simply
---       replace a placeholder in each square with the piece that is currently there.
-testboard = (ChessBoard [ (('A', 1), Rook White) ] Ongoing)
-
 chessBoardAsString :: ChessBoard -> [Char]
-chessBoardAsString chessBoard = 
-    do
-        trace ("printing: \n") updatedBoard
-        where
-        --  process and print board
-            updatedBoard   =    "\n*--*--* Current Chess Board *--*--*\n\n"
+chessBoardAsString chessBoard = "\n*--*--* Current Chess Board *--*--*\n\n"
                         ++ "     (1)(2)(3)(4)(5)(6)(7)(8) \n\n" 
                         ++ "(A)  "  ++ retrievePieceAt ('A',1) chessBoard
                                     ++ retrievePieceAt ('A',2) chessBoard 
