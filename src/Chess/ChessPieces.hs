@@ -55,17 +55,18 @@ legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
 --     - It can move diagonally forward (left or right) only if there is a piece of the other colour in the destination square
 --     - If the pawn is moving for the first time, it can move 2-squares forward if there is nothing blocking it. 
 --       It may also capture/kill a piece at the destination square this way.
--- TODO: Implement + test this (moves for Pawn at the given position) (1.5 hour) [Aziz]
-legalNextPosForPieceAtPos (Pawn White) chessBoard (col, row) = up1 ++ (if row == 2 then up2 else []) ++ topLeft ++ topRight
-                                                             where up1 = if up1SquareEmpty && (row < 8) then [(col, row+1)] else []
-                                                                   up2 = if up2SquaresEmpty && (row < 7) then [(col, row+2)] else []
-                                                                   topLeft = if topLeftHasBlackPiece then [getTopLeftPos (col, row)] else []
-                                                                   topRight = if topRightHasBlackPiece then [getTopRightPos (col, row)] else []
-                                                                   up2SquaresEmpty = up1SquareEmpty && (isEmpty (col, row+2) chessBoard)
-                                                                   up1SquareEmpty = isEmpty (col, row+1) chessBoard
-                                                                   topLeftHasBlackPiece = (col /= 'A') && (row /= 8) && (not (isEmpty (getTopLeftPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getTopLeftPos (col, row)) chessBoard) == (Just Black))
-                                                                   topRightHasBlackPiece = (col /= 'H') && (row /= 8) && (not (isEmpty (getTopRightPos (col, row)) chessBoard)) && ((getColourOfPieceAt (getTopRightPos (col, row)) chessBoard) == (Just Black))
-legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = down1 ++ (if row == 7 then down2 else []) ++ bottomLeft ++ bottomRight  -- start position black pawn
+legalNextPosForPieceAtPos (Pawn White) chessBoard (col, row) = moveUp1 ++ (if row == 2 then moveUp2 else []) ++ moveLeft ++ moveRight
+                                                             where moveUp1 = if top1Empty && (row < 8) then [(col, row+1)] else []
+                                                                   moveUp2 = if top2Empty && (row < 7) then [(col, row+2)] else []
+                                                                   moveLeft = if topLeftHasBlackPiece then [getTopLeftPos (col, row)] else []
+                                                                   moveRight = if topRightHasBlackPiece then [getTopRightPos (col, row)] else []
+                                                                   top2Empty = top1Empty && (isEmpty (col, row+2) chessBoard)
+                                                                   top1Empty = isEmpty (col, row+1) chessBoard
+                                                                   topLeftHasBlackPiece = (col /= 'A') && (row /= 8) && (not (isEmpty topLeft chessBoard)) && ((getColourOfPieceAt topLeft chessBoard) == (Just Black))
+                                                                   topRightHasBlackPiece = (col /= 'H') && (row /= 8) && (not (isEmpty topRight chessBoard)) && ((getColourOfPieceAt topRight chessBoard) == (Just Black))
+                                                                   topLeft = getTopLeftPos (col, row)
+                                                                   topRight = getTopRightPos (col, row)
+legalNextPosForPieceAtPos (Pawn Black) chessBoard (col, row) = down1 ++ (if row == 7 then down2 else []) ++ bottomLeft ++ bottomRight
                                                              where down1 = if bottom1SquareEmpty && (row > 1) then [(col, row-1)] else []
                                                                    down2 = if bottom2SquaresEmpty && (row > 2) then [(col, row-2)] else []
                                                                    bottomLeft = if bottomLeftHasWhitePiece then [getBottomLeftPos (col, row)] else []
@@ -87,7 +88,6 @@ getPieceAt position (ChessBoard pieces _) = lookup position pieces
 
 
 -- Returns the chess piece at the given position as a Maybe
--- TODO: test this
 getColourOfPieceAt :: ChessPosition -> ChessBoard -> Maybe ChessPieceColour
 getColourOfPieceAt position chessBoard = if piece /= Nothing then Just (getPieceColour (fromJust piece)) else Nothing where piece = getPieceAt position chessBoard 
 
@@ -99,28 +99,24 @@ isEmpty position board = (getPieceAt position board) == Nothing
 
 -- Returns the position at the top-left diagonal of the given position
 -- Warning: given position should not be in column 'A' or in row 8
--- TODO: test this
 getTopLeftPos :: ChessPosition -> ChessPosition
 getTopLeftPos (col, row) = (leftCol, row+1) where leftCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) - 1)
 
 
 -- Returns the position at the top-right diagonal of the given position
 -- Warning: given position should not be in column 'H' or in row 8
--- TODO: test this
 getTopRightPos :: ChessPosition -> ChessPosition
 getTopRightPos (col, row) = (rightCol, row+1) where rightCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) + 1)
 
 
 -- Returns the position at the bottom-left diagonal of the given position
 -- Warning: given position should not be in column 'A' or in row 1
--- TODO: test this
 getBottomLeftPos :: ChessPosition -> ChessPosition
 getBottomLeftPos (col, row) = (leftCol, row-1) where leftCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) - 1)
 
 
 -- Returns the position at the bottom-right diagonal of the given position
 -- Warning: given position should not be in column 'H' or in row 1
--- TODO: test this
 getBottomRightPos :: ChessPosition -> ChessPosition
 getBottomRightPos (col, row) = (rightCol, row-1) where rightCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) + 1)
 
