@@ -3,11 +3,12 @@ module ChessBoard where
 import ChessPieces
 import ChessUtilTypes
 import FENotation
+import Debug.Trace
 
 
 -- -- Define Show for a ChessBoard
-instance Show ChessBoard where
-    show board = chessBoardAsString board
+-- instance Show ChessBoard where
+--     show board = chessBoardAsString board
 
 
 -- A fresh Chess Board with all the pieces in the starting position
@@ -18,9 +19,41 @@ freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 -- TODO: implement + test this (2 hours). [Cynthia]
 -- Note: one way to implement this is to have a 'template' string (possibly stored in a txt file) and then simply
 --       replace a placeholder in each square with the piece that is currently there.
-chessBoardAsString :: ChessBoard -> [Char]
-chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
+testboard = (ChessBoard [ (('A', 1), Rook White) ] Ongoing)
 
+chessBoardAsString :: ChessBoard -> IO ()
+chessBoardAsString (ChessBoard [(position, piece)] _) = 
+    do
+        putStr board
+        where
+            empty = "[  ]"
+            whiteKing = "[\x2654]"
+            whiteQueen = "[\x2655]"
+            whiteRook = "[\x2656]"
+            whiteBishop = "[\x2657]"
+            whiteKnight = "[\x2658]"
+            whitePawn = "[\x2659]"
+
+            blackKing = "[\x265A]"
+            blackQueen = "[\x265B]"
+            blackRook = "[\x265C]"
+            blackBishop = "[\x265D]"
+            blackKnight = "[\x265E]"
+            blackPawn = "[\x265F]"
+
+        --  process and print board
+            board   =    "\n*--*--* Current Chess Board *--*--*\n\n"
+                        ++ "     (1)(2)(3)(4)(5)(6)(7)(8) \n\n" 
+                        ++ "(A)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n" 
+                        ++ "(B)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(C)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(D)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(E)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(F)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(G)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n"
+                        ++ "(H)  " ++ concat [whitePawn | i <- [1..8]] ++ "\n" 
+                        ++ "\n"
+                        
 
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
