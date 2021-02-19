@@ -55,3 +55,11 @@ test-suite FENotation
   main-is:           FENotationTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
+  
+test-suite HumanPlayer
+  type:              exitcode-stdio-1.0
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes HumanPlayer TestChessBoards Util FENotation
+  hs-source-dirs:    test src src/Chess src/Players src/Util
+  main-is:           ChessPiecesTest.hs
+  build-depends:     base, HTF
+  default-language:  Haskell2010
