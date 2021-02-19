@@ -21,4 +21,12 @@ test_filter =
                                 , (('C', 6), Queen Black)
                                 , (('D', 8), King Black) ] Ongoing) (filterChessBoard board2 Black)
 
+
+test_chessBoardAsString = 
+    do
+        -- freshboard
+        assertEqual freshBoard (chessBoardAsString (fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+    where
+        freshBoard <- readFile "fresh_board_string.txt" 
+
 main = htfMain htf_thisModulesTests
