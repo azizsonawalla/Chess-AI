@@ -20,6 +20,18 @@ test_getPieceColour =
         assertEqual White (getPieceColour (Knight White))
         assertEqual Black (getPieceColour (Pawn Black))
 
+test_legalNextPosForPieceAtPos_Bishop = 
+    do
+        -- freshboard
+        assertEqual freshBoard_C1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('C', 1))
+        assertEqual freshBoard_F1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('F', 1))
+        assertEqual freshBoard_C8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('C', 8))
+        assertEqual freshBoard_F8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('F', 8))
+        -- board2
+        assertEqual board2_E1 (legalNextPosForPieceAtPos (Bishop White) board2 ('E', 1))
+        -- board3
+        assertEqual board3_EE (legalNextPosForPieceAtPos (Bishop Black) board3 ('E', 3))
+
 
 test_legalNextPosForPieceAtPos_Pawn = 
     do
