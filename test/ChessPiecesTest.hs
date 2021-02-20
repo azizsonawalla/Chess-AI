@@ -29,6 +29,24 @@ test_legalNextPosForPieceAtPos_King =
         assertEqual [] (legalNextPosForPieceAtPos (King Black) freshBoard ('E', 8))
         -- D8 black king with no adjacent pieces
         assertEqual board2_D8 (legalNextPosForPieceAtPos (King Black) board2 ('D', 8))
+        -- A1 white king in left corner with no adjacent pieces
+        assertEqual board12_A1 (legalNextPosForPieceAtPos (King White) board12 ('A', 1))
+        -- E5 black king in middle of board enemy bishop above, friendly Queen below and friendly pawn top left
+        assertEqual board12_E5 (legalNextPosForPieceAtPos (King Black) board12 ('E', 5))
+
+
+test_legalNextPosForPieceAtPos_Rook = 
+    do
+        -- A1 white rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('A', 1))
+        -- H1 white rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('H', 1))
+        -- H8 black rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('H', 8))
+        -- A8 black rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('A', 8))
+        -- A2 white rook with no adjacent pieces
+        assertEqual board2_A2 (legalNextPosForPieceAtPos (Rook Black) board2 ('A', 2))
 
 
 test_legalNextPosForPieceAtPos_Pawn = 

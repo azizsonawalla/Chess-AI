@@ -63,22 +63,27 @@ legalNextPosForPieceAtPos (King colour) chessBoard (col, row)  =
 --     3. Return a concatenation of the moves calculated in 1 and 2
 legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
 
+
 -- Rook can move any number of vacant squares vertically or horizontally (ignore castlling for now).
 -- Rook cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Rook must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Rook at the given position) (2 hour) [Aziz]
-legalNextPosForPieceAtPos (Rook colour) chessBoard position = []
+legalNextPosForPieceAtPos (Rook colour) chessBoard position = 
+      foldl (\ allPos rowAndCol -> allPos ++ (filterFreeMoves rowAndCol (Rook colour) chessBoard)) [] rowAndCols
+      where rowAndCols = [(getTopColumn position), (getBottomColumn position), (getLeftRow position), (getRightRow position)]
 
 -- Bishop can move any number of vacant squares in any diagonal direction.
 -- Bishop cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Bishop must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Bishop at the given position) (2 hour) [Cynthia]
-legalNextPosForPieceAtPos (Bishop colour) chessBoard position = []
+legalNextPosForPieceAtPos (Bishop colour) chessBoard position = 
+      foldl (\ allPos currDiagonal -> allPos ++ (filterFreeMoves currDiagonal (Bishop colour) chessBoard)) [] diagonals
+      where diagonals = [(getBottomLeftDiagonal position), (getTopLeftDiagonal position), (getBottomRightDiagonal position), (getTopRightDiagonal position)]
+
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
 -- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Yiyi]
 legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
+
 
 -- The pawn moves by the following rules:
 --     - It can only move forwards
@@ -161,6 +166,77 @@ getBottomLeftPos (col, row) = (leftCol, row-1) where leftCol = chessBoardCols !!
 -- Warning: given position should not be in column 'H' or in row 1
 getBottomRightPos :: ChessPosition -> ChessPosition
 getBottomRightPos (col, row) = (rightCol, row-1) where rightCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) + 1)
+
+
+-- Returns all the squares on the top of the given position (not including self)
+getTopColumn :: ChessPosition -> [ChessPosition]
+getTopColumn (char,num) = zip (take (8 - (fromIntegral num)) (repeat char)) (rowsAbove (char,num))
+
+
+-- Returns all the squares on the bottom of the given position (not including self)
+getBottomColumn :: ChessPosition -> [ChessPosition]
+getBottomColumn (char,num) = zip (take ((fromIntegral num) - 1) (repeat char)) (rowsBelow (char,num))
+
+
+-- Returns all the squares on the left of the given position (not including self)
+getLeftRow :: ChessPosition -> [ChessPosition]
+getLeftRow (char,num) = zip (colsToLeft (char,num)) (take (length (colsToLeft (char,num))) (repeat num))
+
+
+-- Returns all the squares on the right of the given position (not including self)
+getRightRow :: ChessPosition -> [ChessPosition]
+getRightRow (char,num) = zip (colsToRight (char,num)) (take (length (colsToRight (char,num))) (repeat num))
+
+-- Returns all the squares on the top-left diagonal of the given position (not including self)
+getTopLeftDiagonal :: ChessPosition -> [ChessPosition]
+getTopLeftDiagonal position = zip (reverse (colsToLeft position)) (rowsAbove position)
+
+
+-- Returns all the squares on the top-right diagonal of the given position (not including self)
+getTopRightDiagonal :: ChessPosition -> [ChessPosition]
+getTopRightDiagonal position = zip (colsToRight position) (rowsAbove position)
+
+
+-- Returns all the squares on the bottom-left diagonal of the given position (not including self)
+getBottomLeftDiagonal :: ChessPosition -> [ChessPosition]
+getBottomLeftDiagonal position = zip (reverse (colsToLeft position)) (reverse (rowsBelow position))
+
+
+-- Returns all the squares on the bottom-right diagonal of the given position (not including self)
+getBottomRightDiagonal :: ChessPosition -> [ChessPosition]
+getBottomRightDiagonal position = zip (colsToRight position) (reverse (rowsBelow position))
+
+
+-- Returns the list of columns to the left of the given position (not including self)
+colsToLeft :: ChessPosition -> [Char]
+colsToLeft (col, _) = if col == 'A' then [] else (init ['A'..col])
+
+
+-- Returns the list of columns to the right of the given position (not including self)
+colsToRight :: ChessPosition -> [Char]
+colsToRight (col, _) = if col == 'H' then [] else (tail [col..'H'])
+
+
+-- Returns the list of rows above the given position (not including self)
+rowsAbove :: ChessPosition -> [Integer]
+rowsAbove (_, row) = if row == 8 then [] else (tail [row..8])
+
+
+-- Returns the list of rows below the given position (not including self)
+rowsBelow :: ChessPosition -> [Integer]
+rowsBelow (_, row) = if row == 1 then [] else (init [1..row])
+
+
+-- Get positions preceding (and including) one with enemy piece, or preceding (but not including) one with friendly piece (whichever is earlier)
+filterFreeMoves :: [ChessPosition] -> ChessPiece -> ChessBoard -> [ChessPosition]
+filterFreeMoves [] _ _ = []
+filterFreeMoves (curr:rest) piece chessBoard = 
+      if (currHasEnemy || currHasFriendly)
+      then (if currHasEnemy then [curr] else [])
+      else curr:(filterFreeMoves rest piece chessBoard) 
+      where currHasEnemy = (currColour /= Nothing) && ((fromJust currColour) /= (getPieceColour piece))
+            currHasFriendly = (currColour /= Nothing) && ((fromJust currColour) == (getPieceColour piece))
+            currColour = getColourOfPieceAt curr chessBoard
 
 
 -- Returns the colour of the given ChessPiece
