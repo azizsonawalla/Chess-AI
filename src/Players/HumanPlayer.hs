@@ -2,6 +2,7 @@ module HumanPlayer where
 
 import ChessUtilTypes
 import ChessBoard
+import Data.Char
 
 
 -- Facilitates the human player's move on the chess board.
@@ -49,6 +50,14 @@ validMoveString str = False
 
 -- Converts a chess move from the "[a-h][1-8] to [a-h][1-8]" format to a ChessMove
 -- WARNING: Assumes that the string is in a valid format
--- TODO: Implement + test this (1.5 hour) [Cynthia]
 stringToChessMove :: String -> ChessMove
-stringToChessMove _ = ChessMove ('A', 0) ('A', 0)
+stringToChessMove string = 
+    ChessMove (readChessPosition fromPosition) (readChessPosition toPosition)
+    where
+        fromPosition = take 2 [ x | x <- lowerString, x /=' ', x /='t', x/='o']
+        toPosition = drop 2 [ x | x <- lowerString, x /=' ', x /='t', x/='o'] 
+        lowerString = [toLower ch | ch <- string]
+
+readChessPosition :: [Char] -> (Char, Integer)
+readChessPosition string = (string !! 0, toInteger (digitToInt (string !! 1)))
+

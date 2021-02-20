@@ -4,6 +4,8 @@ import Test.Framework
 import ChessBoard
 import ChessUtilTypes
 import TestChessBoards
+import System.IO
+import FENotation
 
 test_gameOver = 
     do
@@ -20,5 +22,21 @@ test_filter =
         assertEqual (ChessBoard [ (('F', 6), Pawn Black)
                                 , (('C', 6), Queen Black)
                                 , (('D', 8), King Black) ] Ongoing) (filterChessBoard board2 Black)
+
+
+test_chessBoardAsString = 
+    do
+        -- fresh board
+        freshBoard <- readFile "test/resources/freshboard_string.txt" 
+        assertEqual freshBoard (chessBoardAsString (fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"))
+        -- random board 1
+        randomBoard <- readFile "test/resources/randomboard_string.txt" 
+        assertEqual randomBoard (chessBoardAsString (fenToChessBoard "k7/q1P2BN1/1P1p3b/P6r/5pp1/4p2r/1K6/1R6"))
+        -- random board 2
+        randomBoard2 <- readFile "test/resources/randomboard2_string.txt" 
+        assertEqual randomBoard2 (chessBoardAsString (fenToChessBoard "8/K4P2/p5b1/p2k2nq/1P1p3B/R1pp4/N2PP2Q/1n6"))
+        -- empty board 
+        randomBoard2 <- readFile "test/resources/emptyboard_string.txt" 
+        assertEqual randomBoard2 (chessBoardAsString (fenToChessBoard "8/8/8/8/8/8/8/8"))
 
 main = htfMain htf_thisModulesTests
