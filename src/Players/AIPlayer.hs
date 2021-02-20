@@ -17,7 +17,8 @@ aiPlayer chessPieceColour chessBoard =
 
 -- Analyzes the board and returns the best move to make
 -- chessboard (ChessBoard):    the current board
--- colour (ChessPieceColour):  the colour/side of the current player 
--- TODO: Implement + test this. First round = randomly selected move (1 hour) [Aziz]. Second round = minmax algorithm
+-- colour (ChessPieceColour):  the colour/side of the current player
+-- TODO: Second round = minmax algorithm
 getBestMove :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMove chessboard colour = ChessMove ('A', 0) ('A', 0)
+getBestMove chessBoard pieceColour = moves !! middleIdx where moves = legalMoves chessBoard pieceColour   -- TODO: handle case where moves is empty
+                                                              middleIdx = div (length moves) 2
