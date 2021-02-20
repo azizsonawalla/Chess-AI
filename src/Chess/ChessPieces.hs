@@ -36,7 +36,9 @@ legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
 -- Rook cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Rook must stop at that square (i.e. kill the piece, cannot jump)
 -- TODO: Implement + test this (moves for Rook at the given position) (2 hour) [Cynthia]
-legalNextPosForPieceAtPos (Rook colour) chessBoard position = []
+legalNextPosForPieceAtPos (Rook colour) chessBoard position = [] -- Note: the implementation of this can be exactly the same as the Bishop's below but
+                                                                 --       instead of getBottomLeftDiagonal, getTopLeftDiagonal, etc. use functions like
+                                                                 --       getBottomColumn, getTopColumn, getLeftRow, getRightRow (you'll have to write these)
 
 -- Bishop can move any number of vacant squares in any diagonal direction.
 -- Bishop cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
