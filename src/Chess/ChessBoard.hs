@@ -18,81 +18,11 @@ chessBoardAsString :: ChessBoard -> [Char]
 chessBoardAsString chessBoard = 
                         "\n    *--*--*   Current Chess Board   *--*--*\n\n"
                         ++ "      (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) \n\n" 
-                        ++ "(8)  "  ++ getPieceAsString ('A',8) chessBoard
-                                    ++ getPieceAsString ('B',8) chessBoard 
-                                    ++ getPieceAsString ('C',8) chessBoard 
-                                    ++ getPieceAsString ('D',8) chessBoard 
-                                    ++ getPieceAsString ('E',8) chessBoard 
-                                    ++ getPieceAsString ('F',8) chessBoard 
-                                    ++ getPieceAsString ('G',8) chessBoard 
-                                    ++ getPieceAsString ('H',8) chessBoard 
+                        ++ (foldl (\boardStr rowNum -> boardStr ++ (chessBoardRowAsString rowNum chessBoard)) "" [8, 7, 6, 5, 4, 3, 2, 1])     
                         ++ "\n" 
-                        ++ "(7)  "  ++ getPieceAsString ('A',7) chessBoard
-                                    ++ getPieceAsString ('B',7) chessBoard 
-                                    ++ getPieceAsString ('C',7) chessBoard 
-                                    ++ getPieceAsString ('D',7) chessBoard 
-                                    ++ getPieceAsString ('E',7) chessBoard 
-                                    ++ getPieceAsString ('F',7) chessBoard 
-                                    ++ getPieceAsString ('G',7) chessBoard 
-                                    ++ getPieceAsString ('H',7) chessBoard 
-                        ++ "\n"
-                        ++ "(6)  "  ++ getPieceAsString ('A',6) chessBoard
-                                    ++ getPieceAsString ('B',6) chessBoard 
-                                    ++ getPieceAsString ('C',6) chessBoard 
-                                    ++ getPieceAsString ('D',6) chessBoard 
-                                    ++ getPieceAsString ('E',6) chessBoard 
-                                    ++ getPieceAsString ('F',6) chessBoard 
-                                    ++ getPieceAsString ('G',6) chessBoard 
-                                    ++ getPieceAsString ('H',6) chessBoard 
-                        ++ "\n"
-                        ++ "(5)  "  ++ getPieceAsString ('A',5) chessBoard
-                                    ++ getPieceAsString ('B',5) chessBoard 
-                                    ++ getPieceAsString ('C',5) chessBoard 
-                                    ++ getPieceAsString ('D',5) chessBoard 
-                                    ++ getPieceAsString ('E',5) chessBoard 
-                                    ++ getPieceAsString ('F',5) chessBoard 
-                                    ++ getPieceAsString ('G',5) chessBoard 
-                                    ++ getPieceAsString ('H',5) chessBoard 
-                        ++ "\n"
-                        ++ "(4)  "  ++ getPieceAsString ('A',4) chessBoard
-                                    ++ getPieceAsString ('B',4) chessBoard 
-                                    ++ getPieceAsString ('C',4) chessBoard 
-                                    ++ getPieceAsString ('D',4) chessBoard 
-                                    ++ getPieceAsString ('E',4) chessBoard 
-                                    ++ getPieceAsString ('F',4) chessBoard 
-                                    ++ getPieceAsString ('G',4) chessBoard 
-                                    ++ getPieceAsString ('H',4) chessBoard 
-                        ++ "\n"
-                        ++ "(3)  "   ++ getPieceAsString ('A',3) chessBoard
-                                    ++ getPieceAsString ('B',3) chessBoard 
-                                    ++ getPieceAsString ('C',3) chessBoard 
-                                    ++ getPieceAsString ('D',3) chessBoard 
-                                    ++ getPieceAsString ('E',3) chessBoard 
-                                    ++ getPieceAsString ('F',3) chessBoard 
-                                    ++ getPieceAsString ('G',3) chessBoard 
-                                    ++ getPieceAsString ('H',3) chessBoard 
-                        ++ "\n"
-                        ++ "(2)  "  ++ getPieceAsString ('A',2) chessBoard
-                                    ++ getPieceAsString ('B',2) chessBoard 
-                                    ++ getPieceAsString ('C',2) chessBoard 
-                                    ++ getPieceAsString ('D',2) chessBoard 
-                                    ++ getPieceAsString ('E',2) chessBoard 
-                                    ++ getPieceAsString ('F',2) chessBoard 
-                                    ++ getPieceAsString ('G',2) chessBoard 
-                                    ++ getPieceAsString ('H',2) chessBoard 
-                        
-                        ++ "\n"
-                        ++ "(1)  "  ++ getPieceAsString ('A',1) chessBoard
-                                    ++ getPieceAsString ('B',1) chessBoard 
-                                    ++ getPieceAsString ('C',1) chessBoard 
-                                    ++ getPieceAsString ('D',1) chessBoard 
-                                    ++ getPieceAsString ('E',1) chessBoard 
-                                    ++ getPieceAsString ('F',1) chessBoard 
-                                    ++ getPieceAsString ('G',1) chessBoard 
-                                    ++ getPieceAsString ('H',1) chessBoard     
-                        ++ "\n\n" 
 
-
+chessBoardRowAsString :: Integer -> ChessBoard -> String
+chessBoardRowAsString rowNum chessBoard = "(" ++ (show rowNum) ++ ")  "  ++ (foldl (\ rowStr position -> rowStr ++ (getPieceAsString position chessBoard)) "" [(col, rowNum) | col <- "ABCDEFGH"]) ++ "\n"
 
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
