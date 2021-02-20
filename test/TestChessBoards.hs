@@ -19,6 +19,7 @@ board1_A1 = [ ('A', 2) , ('A', 3) , ('A', 4) , ('A', 5) , ('A', 6) , ('A', 7) , 
 
 -- https://lichess.org/editor/3k4/8/2q2p2/8/8/8/R7/4B2N_w_-_-_0_1
 board2 = fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N"
+board2_D8 = [('D', 7), ('C', 8), ('E', 8), ('C', 7), ('E', 7)]
 
 -- https://lichess.org/editor/8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8_w_-_-_0_1
 board3 = fenToChessBoard "8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8"

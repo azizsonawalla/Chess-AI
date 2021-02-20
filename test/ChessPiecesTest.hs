@@ -21,6 +21,16 @@ test_getPieceColour =
         assertEqual Black (getPieceColour (Pawn Black))
 
 
+test_legalNextPosForPieceAtPos_King = 
+    do
+        -- E1 white king at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (King White) freshBoard ('E', 1))
+        -- E8 black king at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (King Black) freshBoard ('E', 8))
+        -- D8 black king with no adjacent pieces
+        assertEqual board2_D8 (legalNextPosForPieceAtPos (King Black) board2 ('D', 8))
+
+
 test_legalNextPosForPieceAtPos_Pawn = 
     do
         -- A2 pawn at starting position (freshboard)
