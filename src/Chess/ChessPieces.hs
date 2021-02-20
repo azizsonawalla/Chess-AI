@@ -35,14 +35,15 @@ legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
 -- Rook can move any number of vacant squares vertically or horizontally (ignore castlling for now).
 -- Rook cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Rook must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Rook at the given position) (2 hour) [Aziz]
+-- TODO: Implement + test this (moves for Rook at the given position) (2 hour) [Cynthia]
 legalNextPosForPieceAtPos (Rook colour) chessBoard position = []
 
 -- Bishop can move any number of vacant squares in any diagonal direction.
 -- Bishop cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Bishop must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Bishop at the given position) (2 hour) [Cynthia]
-legalNextPosForPieceAtPos (Bishop colour) chessBoard position = []
+legalNextPosForPieceAtPos (Bishop colour) chessBoard position = 
+      foldl (\ allPos currDiagonal -> allPos ++ (filterFreeMoves currDiagonal (Bishop colour) chessBoard)) [] diagonals
+      where diagonals = [(getBottomLeftDiagonal position), (getTopLeftDiagonal position), (getBottomRightDiagonal position), (getTopRightDiagonal position)]
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
@@ -159,6 +160,18 @@ rowsAbove (_, row) = if row == 8 then [] else (tail [row..8])
 -- Returns the list of rows below the given position (not including self)
 rowsBelow :: ChessPosition -> [Integer]
 rowsBelow (_, row) = if row == 1 then [] else (init [1..row])
+
+
+-- Get positions preceding (and including) one with enemy piece, or preceding (but not including) one with friendly piece (whichever is earlier)
+filterFreeMoves :: [ChessPosition] -> ChessPiece -> ChessBoard -> [ChessPosition]
+filterFreeMoves [] _ _ = []
+filterFreeMoves (curr:rest) piece chessBoard = 
+      if (currHasEnemy || currHasFriendly)
+      then (if currHasEnemy then [curr] else [])
+      else curr:(filterFreeMoves rest piece chessBoard) 
+      where currHasEnemy = (currColour /= Nothing) && ((fromJust currColour) /= (getPieceColour piece))
+            currHasFriendly = (currColour /= Nothing) && ((fromJust currColour) == (getPieceColour piece))
+            currColour = getColourOfPieceAt curr chessBoard
 
 
 -- Returns the colour of the given ChessPiece
