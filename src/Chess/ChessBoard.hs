@@ -3,24 +3,26 @@ module ChessBoard where
 import ChessPieces
 import ChessUtilTypes
 import FENotation
+import Data.Maybe
 
 
 -- -- Define Show for a ChessBoard
 instance Show ChessBoard where
     show board = chessBoardAsString board
 
-
 -- A fresh Chess Board with all the pieces in the starting position
 freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 
-
 -- Returns the string representation of a chessboard
--- TODO: implement + test this (2 hours). [Cynthia]
--- Note: one way to implement this is to have a 'template' string (possibly stored in a txt file) and then simply
---       replace a placeholder in each square with the piece that is currently there.
 chessBoardAsString :: ChessBoard -> [Char]
-chessBoardAsString chessBoard = "<ASCII Representation of Chess Board>"
+chessBoardAsString chessBoard = 
+                        "\n    *--*--*   Current Chess Board   *--*--*\n\n"
+                        ++ "      (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) \n\n" 
+                        ++ (foldl (\boardStr rowNum -> boardStr ++ (chessBoardRowAsString rowNum chessBoard)) "" [8, 7, 6, 5, 4, 3, 2, 1])     
+                        ++ "\n" 
 
+chessBoardRowAsString :: Integer -> ChessBoard -> String
+chessBoardRowAsString rowNum chessBoard = "(" ++ (show rowNum) ++ ")  "  ++ (foldl (\ rowStr position -> rowStr ++ (getPieceAsString position chessBoard)) "" [(col, rowNum) | col <- "ABCDEFGH"]) ++ "\n"
 
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
