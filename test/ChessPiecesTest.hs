@@ -20,17 +20,32 @@ test_getPieceColour =
         assertEqual White (getPieceColour (Knight White))
         assertEqual Black (getPieceColour (Pawn Black))
 
-test_legalNextPosForPieceAtPos_Bishop = 
+test_getTopLeftDiagonal = 
     do
-        -- freshboard
-        assertEqual freshBoard_C1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('C', 1))
-        assertEqual freshBoard_F1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('F', 1))
-        assertEqual freshBoard_C8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('C', 8))
-        assertEqual freshBoard_F8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('F', 8))
-        -- board2
-        assertEqual board2_E1 (legalNextPosForPieceAtPos (Bishop White) board2 ('E', 1))
-        -- board3
-        assertEqual board3_EE (legalNextPosForPieceAtPos (Bishop Black) board3 ('E', 3))
+        assertEqual [('C', 3), ('B', 4), ('A', 5)] (getTopLeftDiagonal ('D', 2))
+
+-- test_legalNextPosForPieceAtPos_Bishop = 
+--     do
+--         -- freshboard
+--         assertEqual freshBoard_C1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('C', 1))
+--         assertEqual freshBoard_F1 (legalNextPosForPieceAtPos (Bishop White) freshBoard ('F', 1))
+--         assertEqual freshBoard_C8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('C', 8))
+--         assertEqual freshBoard_F8 (legalNextPosForPieceAtPos (Bishop Black) freshBoard ('F', 8))
+--         -- board2
+--         assertEqual board2_E1 (legalNextPosForPieceAtPos (Bishop White) board2 ('E', 1))
+--         -- board3
+--         assertEqual board3_E3 (legalNextPosForPieceAtPos (Bishop Black) board3 ('E', 3))
+--         -- board1
+--         assertEqual board11_D2 (legalNextPosForPieceAtPos (Bishop White) board11 ('D', 2))
+--         assertEqual board11_H2 (legalNextPosForPieceAtPos (Bishop Black) board11 ('H', 2))
+--         assertEqual board11_A3 (legalNextPosForPieceAtPos (Bishop White) board11 ('A', 3))
+--         assertEqual board11_B4 (legalNextPosForPieceAtPos (Bishop White) board11 ('B', 4))
+--         assertEqual board11_F4 (legalNextPosForPieceAtPos (Bishop White) board11 ('F', 4))
+--         assertEqual board11_D6 (legalNextPosForPieceAtPos (Bishop Black) board11 ('D', 6))
+--         assertEqual board11_H6 (legalNextPosForPieceAtPos (Bishop White) board11 ('H', 6))
+--         assertEqual board11_A7 (legalNextPosForPieceAtPos (Bishop Black) board11 ('A', 7))
+--         assertEqual board11_C7 (legalNextPosForPieceAtPos (Bishop White) board11 ('C', 7))
+--         assertEqual board11_F8 (legalNextPosForPieceAtPos (Bishop Black) board11 ('F', 8))
 
 
 test_legalNextPosForPieceAtPos_Pawn = 
