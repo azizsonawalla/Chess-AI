@@ -40,7 +40,6 @@ makeMove cb@(ChessBoard pieces state) (ChessMove from to)
 
         
 
-
 isCheckMate :: ChessBoard -> ChessPieceColour -> Bool
 isCheckMate checkBoard colour = False
 
