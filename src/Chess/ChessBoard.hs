@@ -30,8 +30,19 @@ chessBoardRowAsString rowNum chessBoard = "(" ++ (show rowNum) ++ ")  "  ++ (fol
 -- WARNING: Assumes given move is valid!
 -- TODO: implement + test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove chessBoard move = chessBoard
+makeMove cb@(ChessBoard pieces state) (ChessMove from to)
+    | (isEmpty to cb) =
+        ChessBoard ((filter (\ (position, piece) -> piece /= pieceFrom) pieces) ++ [(to, pieceFrom)]) newState
+    | otherwise =
+        ChessBoard ((filter (\ (position, piece) -> piece /= pieceFrom && piece /= fromJust (getPieceAt to cb)) pieces) ++ [(to, pieceFrom)]) newState 
+    where pieceFrom = fromJust (getPieceAt from cb)
+          newState = if (isCheckMate cb (getPieceColour pieceFrom)) then Over else state
 
+        
+
+
+isCheckMate :: ChessBoard -> ChessPieceColour -> Bool
+isCheckMate checkBoard colour = False
 
 -- Returns all legal moves for the given side on the given chess board
 -- TODO: test this [Aziz] -- waiting for legalNextPosForPieceAtPos implementations
