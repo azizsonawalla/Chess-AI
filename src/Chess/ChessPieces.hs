@@ -175,12 +175,12 @@ getTopColumn (char,num) = zip (take (8 - (fromIntegral num)) (repeat char)) (row
 
 -- Returns all the squares on the bottom of the given position (not including self)
 getBottomColumn :: ChessPosition -> [ChessPosition]
-getBottomColumn (char,num) = zip (take ((fromIntegral num) - 1) (repeat char)) (rowsBelow (char,num))
+getBottomColumn (char,num) = zip ((take ((fromIntegral num) - 1) (repeat char))) (reverse (rowsBelow (char,num)))
 
 
 -- Returns all the squares on the left of the given position (not including self)
 getLeftRow :: ChessPosition -> [ChessPosition]
-getLeftRow (char,num) = zip (colsToLeft (char,num)) (take (length (colsToLeft (char,num))) (repeat num))
+getLeftRow (char,num) = zip (reverse (colsToLeft (char,num))) (take (length (colsToLeft (char,num))) (repeat num))
 
 
 -- Returns all the squares on the right of the given position (not including self)
