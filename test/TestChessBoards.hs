@@ -11,6 +11,10 @@ freshBoard_H2 = [('H', 3), ('H', 4)]
 freshBoard_A7 = [('A', 6), ('A', 5)]
 freshBoard_E7 = [('E', 6), ('E', 5)]
 freshBoard_H7 = [('H', 6), ('H', 5)]
+freshBoard_C1 = []
+freshBoard_F1 = []
+freshBoard_C8 = []
+freshBoard_F8 = []
 
 -- https://lichess.org/editor/8/8/8/8/8/8/8/R7_w_-_-_0_1
 board1 = fenToChessBoard "8/8/8/8/8/8/8/R7"
@@ -19,6 +23,7 @@ board1_A1 = [ ('A', 2) , ('A', 3) , ('A', 4) , ('A', 5) , ('A', 6) , ('A', 7) , 
 
 -- https://lichess.org/editor/3k4/8/2q2p2/8/8/8/R7/4B2N_w_-_-_0_1
 board2 = fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N"
+board2_E1 = [('F', 2), ('G', 3), ('H', 4), ('D', 2), ('C', 3), ('B', 4), ('A', 5)]
 
 -- https://lichess.org/editor/8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8_w_-_-_0_1
 board3 = fenToChessBoard "8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8"
@@ -28,6 +33,7 @@ board3_H2 = []
 board3_A7 = []
 board3_E7 = []
 board3_H7 = []
+board3_E3 = [('D', 2), ('C', 1), ('F', 2), ('G', 1), ('D', 4), ('C', 5), ('B', 6), ('F', 4), ('G', 5), ('H', 6)]
 
 -- https://lichess.org/editor/8/p3p2p/p3b2r/8/8/R3Q2N/P3P2P/8_w_-_-_0_1
 board4 = fenToChessBoard "8/p3p2p/p3b2r/8/8/R3Q2N/P3P2P/8"
@@ -90,3 +96,16 @@ board10_B3 = []
 board10_H4 = [('H', 3), ('G', 3)]
 board10_F6 = []
 board10_B6 = [('B', 5)]
+
+-- https://lichess.org/editor/5b2/b1B5/3b3B/8/1B3B2/B7/3B3b/8_w_-_-_0_1
+board11 = fenToChessBoard "5b2/b1B5/3b3B/8/1B3B2/B7/3B3b/8"
+board11_D2 = [('C', 3), ('E', 3), ('C', 1), ('E', 1)]
+board11_H2 = [('G', 1), ('G', 3), ('F', 4)]
+board11_A3 = [('B', 2), ('C', 1)]
+board11_B4 = [('C', 3), ('D', 6), ('C', 5), ('A', 5)]
+board11_F4 = [('E', 3), ('E', 5), ('D', 6), ('G', 3), ('H', 2), ('G', 5)]
+board11_D6 = [('E', 5), ('F', 4), ('C', 5), ('B', 4), ('C', 7), ('E', 7)]
+board11_H6 = [('G', 5), ('G', 7), ('F', 8)]
+board11_A7 = [('B', 8), ('B', 6), ('C', 5), ('D', 4), ('E', 3), ('F', 2), ('G', 1)]
+board11_C7 = [('B', 8), ('B', 6), ('A', 5), ('D', 6), ('D', 8)]
+board11_F8 = [('E', 7), ('G', 7), ('H', 6)]
