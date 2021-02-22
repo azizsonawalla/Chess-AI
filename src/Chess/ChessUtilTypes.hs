@@ -6,7 +6,8 @@ import Data.List (sort)
 
 -- A chess player
 -- Takes a chess board + chess colour, makes a move for that colour, and returns a new chessboard
-type ChessPlayer = (ChessPieceColour -> ChessBoard -> IO ChessBoard)
+type MoveFunction = (ChessPieceColour -> ChessBoard -> IO (ChessBoard, ChessMove))
+data ChessPlayer = ChessPlayer String ChessPieceColour MoveFunction
 
 
 -- A position on the Chess board

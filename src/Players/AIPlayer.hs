@@ -6,13 +6,13 @@ import ChessBoard
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
 -- Returns the changed board after playing the move.
-aiPlayer :: ChessPlayer
-aiPlayer chessPieceColour chessBoard = 
+aiMoveFunction :: MoveFunction
+aiMoveFunction chessPieceColour chessBoard = 
     do 
         putStrLn "AI's turn. Please wait."
         let move = getBestMove chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
-        return newChessBoard
+        return (newChessBoard, move)
 
 
 -- Analyzes the board and returns the best move to make
