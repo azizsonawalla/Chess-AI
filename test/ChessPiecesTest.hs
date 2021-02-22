@@ -69,13 +69,13 @@ test_legalNextPosForPieceAtPos_King =
 test_legalNextPosForPieceAtPos_Rook = 
     do
         -- A1 white rook at starting position (freshboard)
-        -- assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('A', 1))
-        -- -- H1 white rook at starting position (freshboard)
-        -- assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('H', 1))
-        -- -- H8 black rook at starting position (freshboard)
-        -- assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('H', 8))
-        -- -- A8 black rook at starting position (freshboard)
-        -- assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('A', 8))
+        assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('A', 1))
+        -- H1 white rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook White) freshBoard ('H', 1))
+        -- H8 black rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('H', 8))
+        -- A8 black rook at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Rook Black) freshBoard ('A', 8))
         -- A1 white rook only piece on board
         assertEqual board1_A1 (legalNextPosForPieceAtPos (Rook White) board1 ('A', 1))
         -- A2 white rook with no adjacent pieces
