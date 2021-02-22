@@ -49,7 +49,7 @@ legalNextPosForPieceAtPos (Bishop colour) chessBoard position =
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
--- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Yiyi]
+-- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Aziz]
 legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
 
 -- The pawn moves by the following rules:
