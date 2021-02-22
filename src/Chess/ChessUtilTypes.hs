@@ -1,5 +1,7 @@
 module ChessUtilTypes where
 import Data.List (sort)
+import Data.Char
+import Util
 
 {- !!All data types are in this module to avoid cyclic imports!! -}
 
@@ -14,6 +16,10 @@ data ChessPlayer = ChessPlayer String ChessPieceColour MoveFunction
 -- Uses algebraic notation for rows and columns: https://en.wikipedia.org/wiki/Algebraic_notation_(chess)
 type ChessPosition = (Char, Integer)
 chessPositionToString (char, num) = char:(show num)
+
+chessPosFromStr :: String -> ChessPosition
+chessPosFromStr posStr = ((posStrUpper !! 0), toInteger (digitToInt (posStrUpper !! 1))) 
+  where posStrUpper = (toUpperStr posStr)
 
 
 -- A Chess move from one position to the other
