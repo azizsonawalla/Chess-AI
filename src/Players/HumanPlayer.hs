@@ -63,9 +63,9 @@ handleValidPositionInput posStr chessPieceColour chessBoard =
 
 -- Checks if the given string has a valid format for a chess move
 -- Valid format = [a-h][1-8] to [a-h][1-8]
--- TODO: implement + test this (1 hour) [Aziz]
 validMoveString :: String -> Bool
-validMoveString str = False
+validMoveString str = ((length parts) == 3) && (validPositionString (parts !! 0)) && ((parts !! 1) == "to") && (validPositionString (parts !! 2))
+    where parts = split ' ' str
 
 
 -- Returns true if the given string represents a valid chess position
