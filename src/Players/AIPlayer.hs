@@ -21,7 +21,7 @@ aiMoveFunction chessPieceColour chessBoard =
 -- TODO: Second round = minmax algorithm [Aziz]
 getBestMoveRandom :: ChessBoard -> ChessPieceColour -> ChessMove
 getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = legalMoves chessBoard pieceColour   -- TODO: handle case where moves is empty
-                                                              middleIdx = div (length moves) 2
+                                                                    middleIdx = div (length moves) 2
 
 
 -- A tree representing all possible outcomes starting from the root chessboard

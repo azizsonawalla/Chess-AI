@@ -4,8 +4,6 @@ import Test.Framework
 import HumanPlayer
 import ChessUtilTypes
 import TestChessBoards
-import System.IO
-import FENotation
 
 test_stringToChessMove = 
     do
