@@ -1,6 +1,7 @@
 module AIPlayer where
 
 import ChessUtilTypes
+import Data.List (sort)
 import ChessBoard
 
 -- Makes the AI player's move on the chess board.
@@ -24,12 +25,24 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
                                                                     middleIdx = div (length moves) 2
 
 
+-- A tree representing all possible outcomes starting from the root chessboard
+-- All scores are initially 0
+type Score = Integer
+data MoveSubtree = MoveSubtree ChessMove GameTree deriving (Eq, Ord, Show)              -- a legal move from root and the resulting subtree
+data GameTree = GameTree ChessBoard Score [MoveSubtree] deriving (Ord, Show)
+instance Eq GameTree where -- 2 GameTrees are equal if the roots are equal and the children are pairwise equal
+    (GameTree c1 s1 m1) == (GameTree c2 s2 m2) = (c1 == c2) && (s1 == s2) && sameNumOfChildren && childrenAreSame
+        where sameNumOfChildren = (length m1) == (length m2)
+              childrenAreSame = foldr (\ (child1, child2) acc -> acc && (child1 == child2)) True zippedChildren
+              zippedChildren = zip (sort m1) (sort m2)
+
+
 -- Builds a GameTree of the given depth starting from the given board as root
 -- The given colour makes the next move
 -- TODO: implement + test this [Aziz]
 buildGameTree :: ChessBoard -> ChessPieceColour -> Integer -> GameTree
-buildGameTree chessBoard _ 0 = GameTree chessBoard (-1) []
-buildGameTree chessBoard colour depth = GameTree chessBoard (-1) []
+buildGameTree chessBoard _ 0 = GameTree chessBoard 0 []
+buildGameTree chessBoard colour depth = GameTree chessBoard 0 []
 
 
 -- Scores the given GameTree using a score maximizing strategy

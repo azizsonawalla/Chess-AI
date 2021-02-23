@@ -41,7 +41,7 @@ test-suite ChessPieces
 
 test-suite ChessUtilTypes
   type:              exitcode-stdio-1.0
-  other-modules:     ChessUtilTypes Util
+  other-modules:     AIPlayer ChessUtilTypes Util ChessBoard ChessPieces FENotation TestChessBoards TestGameTrees
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessUtilTypesTest.hs
   build-depends:     base, HTF
@@ -59,14 +59,14 @@ test-suite HumanPlayer
   type:              exitcode-stdio-1.0
   other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
-  main-is:           ChessPiecesTest.hs
+  main-is:           HumanPlayerTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
   
 test-suite AIPlayer
   type:              exitcode-stdio-1.0
-  other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
+  other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards TestGameTrees Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
-  main-is:           ChessPiecesTest.hs
+  main-is:           AIPlayerTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010

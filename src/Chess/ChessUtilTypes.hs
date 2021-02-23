@@ -23,19 +23,19 @@ chessPosFromStr posStr = ((posStrUpper !! 0), toInteger (digitToInt (posStrUpper
 
 
 -- A Chess move from one position to the other
-data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMove from to
+data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq, Ord)  -- ChessMove from to
 instance Show ChessMove where
   show (ChessMove start end) = (chessPositionToString start)++" to "++(chessPositionToString end)
 
 
 -- The current state of a chess game
-data GameState = Ongoing | Over deriving (Eq, Show)
+data GameState = Ongoing | Over deriving (Eq, Show, Ord)
 
 
 -- A Chess Board
 -- It comprises of a list of 2-tupes - a position on the board and the corresponding piece at that position
 -- If there is no tuple for a particular position, then there is no piece there
-data ChessBoard = ChessBoard [(ChessPosition, ChessPiece)] GameState -- deriving (Show)
+data ChessBoard = ChessBoard [(ChessPosition, ChessPiece)] GameState deriving (Ord)
 instance Eq ChessBoard where
   (ChessBoard pieces1 state1) == (ChessBoard pieces2 state2) = (state1 == state2) && ((sort pieces1) == (sort pieces2))
 
@@ -55,15 +55,3 @@ data ChessPiece =
      deriving (Eq, Show)
 instance Ord ChessPiece where
   piece1 <= piece2 = (show piece1) <= (show piece2)
-
-
--- A tree representing all possible outcomes starting from the root chessboard
--- All scores are initially -1
-type Score = Integer
-data MoveSubtree = MoveSubtree ChessMove GameTree deriving (Ord)              -- a legal move from root and the resulting subtree
-data GameTree = GameTree ChessBoard Score [MoveSubtree]
-instance Eq GameTree where -- 2 GameTrees are equal if the roots are equal and the children are pairwise equal
-    (GameTree c1 s1 m1) == (GameTree c2 s2 m2) = (c1 == c2) && (s1 == s2) && sameNumOfChildren && childrenAreSame
-        where sameNumOfChildren = (length m1) == (length m2)
-              childrenAreSame = foldr (\ (child1, child2) acc -> acc && (child1 == child2)) True zippedChildren
-              zippedChildren = zip (sort m1) (sort m2)
