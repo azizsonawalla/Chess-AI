@@ -18,6 +18,8 @@ test_GameTreeEq =
         assertEqual False (gameTree16_depth1_Black == gameTree16_depth0_Black)
 
 
+-- Will not pass until makeMove is implemented
+-- TODO: add more tests [Aziz]
 test_buildGameTree =
     do
         assertEqual gameTree16_depth0_White (buildGameTree board16 White 0)
@@ -28,7 +30,5 @@ test_buildGameTree =
 
 cloneTree (GameTree board score children) = (GameTree board score (map cloneMoveSubtree children))
 cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
-
-
 
 main = htfMain htf_thisModulesTests

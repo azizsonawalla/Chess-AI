@@ -57,7 +57,7 @@ test-suite FENotation
   
 test-suite HumanPlayer
   type:              exitcode-stdio-1.0
-  other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
+  other-modules:     HumanPlayer ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           HumanPlayerTest.hs
   build-depends:     base, HTF

@@ -10,19 +10,28 @@ import ChessBoard
 aiMoveFunction :: MoveFunction
 aiMoveFunction chessPieceColour chessBoard = 
     do 
-        putStrLn "AI's turn. Please wait."
+        putStrLn "AI's turn. Please wait."                                  -- TODO: if no legal moves are available, set game to 'over'
         let move = getBestMoveRandom chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
         return (newChessBoard, move)
 
 
--- Analyzes the board and returns the best move to make
+-- Returns a random next move
 -- chessboard (ChessBoard):    the current board
 -- colour (ChessPieceColour):  the colour/side of the current player
--- TODO: Second round = minmax algorithm [Aziz]
 getBestMoveRandom :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = legalMoves chessBoard pieceColour   -- TODO: handle case where moves is empty
+getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = legalMoves chessBoard pieceColour
                                                                     middleIdx = div (length moves) 2
+
+
+-- Analyzes the board and returns the best move to make (minmax algorithm)
+-- chessboard (ChessBoard):    the current board
+-- colour (ChessPieceColour):  the colour/side of the current player
+-- TODO: add tests [Aziz]
+getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
+getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
+    where maximizedTree = maximize gameTree pieceColour
+          gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
 
 
 -- A tree representing all possible outcomes starting from the root chessboard
@@ -42,7 +51,12 @@ instance Eq GameTree where -- 2 GameTrees are equal if the roots are equal and t
 -- TODO: implement + test this [Aziz]
 buildGameTree :: ChessBoard -> ChessPieceColour -> Integer -> GameTree
 buildGameTree chessBoard _ 0 = GameTree chessBoard 0 []
-buildGameTree chessBoard colour depth = GameTree chessBoard 0 []
+buildGameTree chessBoard colour depth = GameTree chessBoard 0 children
+    where children = map moveToMoveSubtree nextMoves
+          moveToMoveSubtree move = MoveSubtree move (buildChild move)
+          buildChild move = buildGameTree (makeMove chessBoard move) oppColour (depth-1)
+          nextMoves = legalMoves chessBoard colour
+          oppColour = oppositeColour colour
 
 
 -- Scores the given GameTree using a score maximizing strategy
