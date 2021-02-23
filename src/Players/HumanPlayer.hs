@@ -14,6 +14,7 @@ import Data.Maybe
 humanMoveFunction :: MoveFunction
 humanMoveFunction chessPieceColour chessBoard = 
     do 
+        putStrLn "\n-------------------------------------------------------------------\n"
         putStrLn (show chessBoard)                                                  -- show the user the chess board
         putStrLn "Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves: "
         input <- getLine                                                          -- get move entered by user
@@ -63,9 +64,9 @@ handleValidPositionInput posStr chessPieceColour chessBoard =
 
 -- Checks if the given string has a valid format for a chess move
 -- Valid format = [a-h][1-8] to [a-h][1-8]
--- TODO: implement + test this (1 hour) [Aziz]
 validMoveString :: String -> Bool
-validMoveString str = False
+validMoveString str = ((length parts) == 3) && (validPositionString (parts !! 0)) && ((parts !! 1) == "to") && (validPositionString (parts !! 2))
+    where parts = split ' ' str
 
 
 -- Returns true if the given string represents a valid chess position
