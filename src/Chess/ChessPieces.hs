@@ -187,38 +187,6 @@ getBottomRightDiagonal :: ChessPosition -> [ChessPosition]
 getBottomRightDiagonal position = zip (colsToRight position) (reverse (rowsBelow position))
 
 
--- Returns the list of columns to the left of the given position (not including self)
-colsToLeft :: ChessPosition -> [Char]
-colsToLeft (col, _) = if col == 'A' then [] else (init ['A'..col])
-
-
--- Returns the list of columns to the right of the given position (not including self)
-colsToRight :: ChessPosition -> [Char]
-colsToRight (col, _) = if col == 'H' then [] else (tail [col..'H'])
-
-
--- Returns the list of rows above the given position (not including self)
-rowsAbove :: ChessPosition -> [Integer]
-rowsAbove (_, row) = if row == 8 then [] else (tail [row..8])
-
-
--- Returns the list of rows below the given position (not including self)
-rowsBelow :: ChessPosition -> [Integer]
-rowsBelow (_, row) = if row == 1 then [] else (init [1..row])
-
-
--- Get positions preceding (and including) one with enemy piece, or preceding (but not including) one with friendly piece (whichever is earlier)
-filterFreeMoves :: [ChessPosition] -> ChessPiece -> ChessBoard -> [ChessPosition]
-filterFreeMoves [] _ _ = []
-filterFreeMoves (curr:rest) piece chessBoard = 
-      if (currHasEnemy || currHasFriendly)
-      then (if currHasEnemy then [curr] else [])
-      else curr:(filterFreeMoves rest piece chessBoard) 
-      where currHasEnemy = (currColour /= Nothing) && ((fromJust currColour) /= (getPieceColour piece))
-            currHasFriendly = (currColour /= Nothing) && ((fromJust currColour) == (getPieceColour piece))
-            currColour = getColourOfPieceAt curr chessBoard
-
-
 -- Returns all the squares on the top of the given position (not including self)
 getTopColumn :: ChessPosition -> [ChessPosition]
 getTopColumn (char,num) = zip (take (8 - (fromIntegral num)) (repeat char)) (rowsAbove (char,num))
