@@ -14,6 +14,7 @@ import Data.Maybe
 humanMoveFunction :: MoveFunction
 humanMoveFunction chessPieceColour chessBoard = 
     do 
+        putStrLn "\n-------------------------------------------------------------------\n"
         putStrLn (show chessBoard)                                                  -- show the user the chess board
         putStrLn "Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves: "
         input <- getLine                                                          -- get move entered by user
