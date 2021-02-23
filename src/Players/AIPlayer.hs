@@ -24,13 +24,6 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
                                                                     middleIdx = div (length moves) 2
 
 
--- A tree representing all possible outcomes starting from the root chessboard
--- All scores are initially -1
-type Score = Integer
-data MoveSubtree = MoveSubtree ChessMove GameTree               -- a legal move from root and the resulting subtree
-data GameTree = GameTree ChessBoard Score [MoveSubtree]
-
-
 -- Builds a GameTree of the given depth starting from the given board as root
 -- The given colour makes the next move
 -- TODO: implement + test this [Aziz]

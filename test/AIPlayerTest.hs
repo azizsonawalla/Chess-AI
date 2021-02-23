@@ -4,4 +4,9 @@ import Test.Framework
 import AIPlayer
 
 
+-- test_buildGameTree =
+--     do
+
+
+
 main = htfMain htf_thisModulesTests
