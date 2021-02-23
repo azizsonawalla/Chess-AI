@@ -50,7 +50,8 @@ legalNextPosForPieceAtPos (Bishop colour) chessBoard position =
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
 -- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Aziz]
-legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
+legalNextPosForPieceAtPos (Knight colour) chessBoard position = removePositionsWithColour lpaths colour chessBoard
+      where lpaths = getLPathPositions position
 
 -- The pawn moves by the following rules:
 --     - It can only move forwards
@@ -144,6 +145,21 @@ getBottomRightDiagonal :: ChessPosition -> [ChessPosition]
 getBottomRightDiagonal position = zip (colsToRight position) (reverse (rowsBelow position))
 
 
+-- Returns all the squares that make an 'L' shaped path from the given position
+getLPathPositions :: ChessPosition -> [ChessPosition]
+getLPathPositions (col, row) = toCharColumns (filterOutOfRange (applyDeltas (colNum, row) deltas))
+      where toCharColumns = map (\(colNum, row) -> (("ABCDEFGH" !! (fromInteger colNum)), row))
+            applyDeltas (colNum, row) = map (\ (deltaX, deltaY) -> (colNum+deltaX, row+deltaY))
+            filterOutOfRange list = filter (\ (colNum, row) -> (elem colNum [0..7]) && (elem row [1..8])) list
+            deltas = [((toInteger deltaX), (toInteger deltaY)) | deltaX <- [1, 2, -1, -2], deltaY <- [1, 2, -1, -2], ((abs deltaX)+(abs deltaY)==3)]
+            colNum = toInteger(fromJust (elemIndex col "ABCDEFGH"))
+
+
+-- Filters-out positions that have piece of colour
+removePositionsWithColour :: [ChessPosition] -> ChessPieceColour -> ChessBoard -> [ChessPosition]
+removePositionsWithColour positions colour board = filter (\ pos -> (getColourOfPieceAt pos board) /= (Just colour)) positions
+
+
 -- Returns the list of columns to the left of the given position (not including self)
 colsToLeft :: ChessPosition -> [Char]
 colsToLeft (col, _) = if col == 'A' then [] else (init ['A'..col])
@@ -199,4 +215,5 @@ chessPieceStrings = [((King   White), "[ K ]")
                     ,((Knight Black), "[ n ]")
                     ,((Pawn   Black), "[ p ]")]
 getPieceAsString:: ChessPosition -> ChessBoard -> [Char]
-getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"  where piece = getPieceAt position board
+getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"
+      where piece = getPieceAt position board
