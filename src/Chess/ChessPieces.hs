@@ -80,8 +80,9 @@ legalNextPosForPieceAtPos (Bishop colour) chessBoard position =
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
--- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Yiyi]
-legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
+-- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Aziz]
+legalNextPosForPieceAtPos (Knight colour) chessBoard position = removePositionsWithColour lpaths colour chessBoard
+      where lpaths = getLPathPositions position
 
 
 -- The pawn moves by the following rules:
@@ -206,24 +207,20 @@ getLeftRow (char,num) = zip (reverse (colsToLeft (char,num))) (take (length (col
 getRightRow :: ChessPosition -> [ChessPosition]
 getRightRow (char,num) = zip (colsToRight (char,num)) (take (length (colsToRight (char,num))) (repeat num))
 
--- Returns all the squares on the top-left diagonal of the given position (not including self)
-getTopLeftDiagonal :: ChessPosition -> [ChessPosition]
-getTopLeftDiagonal position = zip (reverse (colsToLeft position)) (rowsAbove position)
+
+-- Returns all the squares that make an 'L' shaped path from the given position
+getLPathPositions :: ChessPosition -> [ChessPosition]
+getLPathPositions (col, row) = toCharColumns (filterOutOfRange (applyDeltas (colNum, row) deltas))
+      where toCharColumns = map (\(colNum, row) -> (("ABCDEFGH" !! (fromInteger colNum)), row))
+            applyDeltas (colNum, row) = map (\ (deltaX, deltaY) -> (colNum+deltaX, row+deltaY))
+            filterOutOfRange list = filter (\ (colNum, row) -> (elem colNum [0..7]) && (elem row [1..8])) list
+            deltas = [((toInteger deltaX), (toInteger deltaY)) | deltaX <- [1, 2, -1, -2], deltaY <- [1, 2, -1, -2], ((abs deltaX)+(abs deltaY)==3)]
+            colNum = toInteger(fromJust (elemIndex col "ABCDEFGH"))
 
 
--- Returns all the squares on the top-right diagonal of the given position (not including self)
-getTopRightDiagonal :: ChessPosition -> [ChessPosition]
-getTopRightDiagonal position = zip (colsToRight position) (rowsAbove position)
-
-
--- Returns all the squares on the bottom-left diagonal of the given position (not including self)
-getBottomLeftDiagonal :: ChessPosition -> [ChessPosition]
-getBottomLeftDiagonal position = zip (reverse (colsToLeft position)) (reverse (rowsBelow position))
-
-
--- Returns all the squares on the bottom-right diagonal of the given position (not including self)
-getBottomRightDiagonal :: ChessPosition -> [ChessPosition]
-getBottomRightDiagonal position = zip (colsToRight position) (reverse (rowsBelow position))
+-- Filters-out positions that have piece of colour
+removePositionsWithColour :: [ChessPosition] -> ChessPieceColour -> ChessBoard -> [ChessPosition]
+removePositionsWithColour positions colour board = filter (\ pos -> (getColourOfPieceAt pos board) /= (Just colour)) positions
 
 
 -- Returns the list of columns to the left of the given position (not including self)
@@ -281,4 +278,5 @@ chessPieceStrings = [((King   White), "[ K ]")
                     ,((Knight Black), "[ n ]")
                     ,((Pawn   Black), "[ p ]")]
 getPieceAsString:: ChessPosition -> ChessBoard -> [Char]
-getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"  where piece = getPieceAt position board
+getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"
+      where piece = getPieceAt position board

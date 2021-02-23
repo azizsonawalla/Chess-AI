@@ -88,6 +88,24 @@ test_legalNextPosForPieceAtPos_Rook =
         assertEqual board13_B2 (legalNextPosForPieceAtPos (Rook White) board13 ('B', 2))
         -- C6 black rook with enemy queen on top and friendly pawn bottom left
         assertEqual board13_C6 (legalNextPosForPieceAtPos (Rook Black) board13 ('C', 6))
+test_legalNextPosForPieceAtPos_Knight = 
+    do
+        -- board 14
+        assertListsEqualAsSets board14_A1 (legalNextPosForPieceAtPos (Knight White) board14 ('A', 1))
+        assertListsEqualAsSets board14_H1 (legalNextPosForPieceAtPos (Knight White) board14 ('H', 1))
+        assertListsEqualAsSets board14_F3 (legalNextPosForPieceAtPos (Knight White) board14 ('F', 3))
+        assertListsEqualAsSets board14_D5 (legalNextPosForPieceAtPos (Knight White) board14 ('D', 5))
+        assertListsEqualAsSets board14_B6 (legalNextPosForPieceAtPos (Knight White) board14 ('B', 6))
+        assertListsEqualAsSets board14_H8 (legalNextPosForPieceAtPos (Knight White) board14 ('H', 8))
+        assertListsEqualAsSets board14_A8 (legalNextPosForPieceAtPos (Knight White) board14 ('A', 8))
+        -- board 15
+        assertListsEqualAsSets board15_A1 (legalNextPosForPieceAtPos (Knight Black) board15 ('A', 1))
+        assertListsEqualAsSets board15_H1 (legalNextPosForPieceAtPos (Knight Black) board15 ('H', 1))
+        assertListsEqualAsSets board15_F3 (legalNextPosForPieceAtPos (Knight Black) board15 ('F', 3))
+        assertListsEqualAsSets board15_D5 (legalNextPosForPieceAtPos (Knight Black) board15 ('D', 5))
+        assertListsEqualAsSets board15_B6 (legalNextPosForPieceAtPos (Knight Black) board15 ('B', 6))
+        assertListsEqualAsSets board15_H8 (legalNextPosForPieceAtPos (Knight Black) board15 ('H', 8))
+        assertListsEqualAsSets board15_A8 (legalNextPosForPieceAtPos (Knight Black) board15 ('A', 8))
 
 
 test_legalNextPosForPieceAtPos_Pawn = 

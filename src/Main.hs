@@ -5,29 +5,35 @@ import AIPlayer
 import ChessUtilTypes
 import ChessBoard
 
--- A chess player that has already been designated a colour/side
-type ChessPlayerWithSide = ChessBoard -> IO ChessBoard
+welcomeMessage = "\n===================\nWelcome to Chess-AI\n===================\n\n\n"
 
-welcomeMessage = "\n===================\nWelcome to Chess-AI\n===================\n"
-
-playChess :: ChessBoard -> ChessPlayer -> ChessPlayer-> IO ()
-playChess chessBoard firstPlayer secondPlayer = 
+startGame :: IO ()
+startGame = 
     do
-        putStrLn welcomeMessage
-        handleNextTurn chessBoard (firstPlayer White) (secondPlayer Black)   -- first player is always White
+        putStr welcomeMessage
+        putStrLn "What is your name?"
+        humanName <- getLine
+        putStrLn ("\nHi "++humanName++"!\n")
+        let humanPlayer = ChessPlayer humanName White humanMoveFunction -- human player is always white
+        let aiPlayer = ChessPlayer "AI Player" Black aiMoveFunction
+        putStrLn "\nStarting game..\n\n"
+        handleNextTurn freshBoard humanPlayer aiPlayer  -- white player always goes first
 
 
-handleNextTurn :: ChessBoard -> ChessPlayerWithSide -> ChessPlayerWithSide -> IO ()           
-handleNextTurn chessBoard currPlayer nextPlayer  = 
+handleNextTurn :: ChessBoard -> ChessPlayer -> ChessPlayer -> IO ()           
+handleNextTurn chessBoard currPlayer@(ChessPlayer name colour moveFn) nextPlayer  = 
     do
-        chessBoard <- currPlayer chessBoard                                 -- Current player makes a move
-        if (gameOver chessBoard)                                            -- If game is over, stop
+        putStrLn (name ++ "\'s turn: ("++(show colour)++")")
+        (chessBoard, move) <- moveFn colour chessBoard                  -- Current player makes a move
+        putStrLn (name++" played "++(show move))
+        if (gameOver chessBoard)                                        -- If game is over, stop
         then do
+            putStrLn (name++" wins!")
             putStrLn "Thanks for playing! Goodbye."
             return ()
         else
-            handleNextTurn chessBoard nextPlayer currPlayer                 -- Continue playing. nextPlayer is now current player. 
+            handleNextTurn chessBoard nextPlayer currPlayer             -- Continue playing. nextPlayer is now current player. 
 
 
 -- Starts a new game of chess where human player goes first (i.e. human is on white side)
-main = playChess freshBoard humanPlayer aiPlayer
+main = startGame

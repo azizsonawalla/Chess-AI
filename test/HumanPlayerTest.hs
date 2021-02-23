@@ -20,4 +20,17 @@ test_stringToChessMove =
         assertEqual (ChessMove ('b', 4) ('E', 2)) (stringToChessMove "B4 to E2")
 
 
+test_validMoveString = 
+    do
+        assertEqual True (validMoveString "a1 to a3")
+        assertEqual True (validMoveString "C1 to H3")
+        assertEqual True (validMoveString "f1 to F8")
+        assertEqual True (validMoveString "B4 to g2")
+        assertEqual False (validMoveString "z1 to a3")
+        assertEqual False (validMoveString "A1 to a20")
+        assertEqual False (validMoveString "A1 to")
+        assertEqual False (validMoveString "to a20")
+        assertEqual False (validMoveString "a20")
+
+
 main = htfMain htf_thisModulesTests
