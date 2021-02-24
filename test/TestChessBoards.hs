@@ -24,6 +24,8 @@ board1_A1 = [ ('A', 2) , ('A', 3) , ('A', 4) , ('A', 5) , ('A', 6) , ('A', 7) , 
 -- https://lichess.org/editor/3k4/8/2q2p2/8/8/8/R7/4B2N_w_-_-_0_1
 board2 = fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N"
 board2_E1 = [('F', 2), ('G', 3), ('H', 4), ('D', 2), ('C', 3), ('B', 4), ('A', 5)]
+board2_D8 = [('D', 7), ('C', 8), ('E', 8), ('C', 7), ('E', 7)]
+board2_A2 = [('A', 3), ('A', 4), ('A', 5), ('A', 6), ('A', 7), ('A', 8), ('A', 1), ('B', 2), ('C', 2), ('D', 2), ('E', 2), ('F', 2), ('G', 2), ('H', 2)]
 
 -- https://lichess.org/editor/8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8_w_-_-_0_1
 board3 = fenToChessBoard "8/p3p2p/R3Q2N/8/8/p3b2r/P3P2P/8"
@@ -34,6 +36,8 @@ board3_A7 = []
 board3_E7 = []
 board3_H7 = []
 board3_E3 = [('D', 2), ('C', 1), ('F', 2), ('G', 1), ('D', 4), ('C', 5), ('B', 6), ('F', 4), ('G', 5), ('H', 6)]
+board3_H3 = [('H', 4), ('H', 5), ('H', 6), ('H', 2), ('G', 3), ('F', 3)]
+board3_A6 = [('A', 7), ('A', 5), ('A', 4), ('A', 3), ('B', 6), ('C', 6), ('D', 6)]
 
 -- https://lichess.org/editor/8/p3p2p/p3b2r/8/8/R3Q2N/P3P2P/8_w_-_-_0_1
 board4 = fenToChessBoard "8/p3p2p/p3b2r/8/8/R3Q2N/P3P2P/8"
@@ -109,6 +113,20 @@ board11_H6 = [('G', 5), ('G', 7), ('F', 8)]
 board11_A7 = [('B', 8), ('B', 6), ('C', 5), ('D', 4), ('E', 3), ('F', 2), ('G', 1)]
 board11_C7 = [('B', 8), ('B', 6), ('A', 5), ('D', 6), ('D', 8)]
 board11_F8 = [('E', 7), ('G', 7), ('H', 6)]
+ 
+-- https://lichess.org/editor/8/P7/N2pB2p/1N2k1Pp/R3q1p1/P4rnP/2b1p3/K7_w_-_-_0_1
+board12 = fenToChessBoard "8/P7/N2pB2p/1N2k1Pp/R3q1p1/P4rnP/2b1p3/K7"
+board12_A1 = [('A', 2), ('B', 1), ('B', 2)]
+board12_E5 = [('E', 6), ('D', 5), ('F', 5), ('F', 6), ('D', 4), ('F', 4)]
+
+
+-- https://lichess.org/editor/k3B3/2Q5/2r1pP2/P2pP1p1/Pb6/1P1PN2p/1R5P/K7_w_-_-_0_1
+board13 = fenToChessBoard "k3B3/2Q5/2r1pP2/P2pP1p1/Pb6/1P1PN2p/1R5P/K7"
+board13_A1 = [('A', 2), ('B', 1)] -- white king
+board13_A8 = [('A', 7), ('B', 8), ('B', 7)] -- black king
+board13_B2 = [('B', 1), ('A', 2), ('C', 2), ('D', 2), ('E', 2), ('F', 2), ('G', 2)] -- white rook
+board13_C6 = [('C', 7), ('C', 5), ('C', 4), ('C', 3), ('C', 2), ('C', 1), ('B', 6), ('A', 6), ('D', 6)] -- black rook
+board13_F8 = [('E', 7), ('G', 7), ('H', 6)]
 
 -- https://lichess.org/editor/N5rN/2b3br/1N4Q1/3N4/8/1R3N2/2Q5/N3Kr1N_w_-_-_0_1
 board14 = fenToChessBoard "N5rN/2b3br/1N4Q1/3N4/8/1R3N2/2Q5/N3Kr1N"
@@ -129,7 +147,6 @@ board15_D5 = [('C', 3), ('E', 3), ('B', 4), ('F', 4), ('C', 7), ('E', 7), ('F', 
 board15_B6 = [('A', 4), ('C', 4), ('D', 7), ('C', 8)]
 board15_H8 = [('F', 7)]
 board15_A8 = [('C', 7)]
-
 
 -- https://lichess.org/editor/8/8/3k4/4P3/8/8/8/8_w_-_-_0_1
 board16 = fenToChessBoard "8/8/3k4/4P3/8/8/8/8"
@@ -163,3 +180,4 @@ board16_B7_Move = (ChessMove ('D', 6) ('E', 7))
 
 board16_B8_Board = fenToChessBoard "8/8/4k3/4P3/8/8/8/8"
 board16_B8_Move = (ChessMove ('D', 6) ('E', 6))
+
