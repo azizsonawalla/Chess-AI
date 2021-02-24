@@ -6,9 +6,14 @@ import ChessUtilTypes
 -- Forsyth Edwards Notation - https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
 
 
+-- Converts a chess board configuration in FEN notation to ChessBoard type with Ongoing state
+fenToChessBoard :: String -> ChessBoard
+fenToChessBoard fenStr = fenToChessBoardWithState fenStr Ongoing
+
+
 -- Converts a chess board configuration in FEN notation to ChessBoard type.
-fenToChessBoard :: String -> GameState -> ChessBoard
-fenToChessBoard fenStr state = (ChessBoard pieces state) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) fenStr))
+fenToChessBoardWithState :: String -> GameState -> ChessBoard
+fenToChessBoardWithState fenStr state = (ChessBoard pieces state) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) fenStr))
 
 
 -- The columns of a Chess Board

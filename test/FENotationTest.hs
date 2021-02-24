@@ -7,14 +7,14 @@ import FENotation
 
 test_fenToChessBoard =
     do
-        assertEqual (ChessBoard [] Ongoing) (fenToChessBoard "8/8/8/8/8/8/8/8" Ongoing)
-        assertEqual (ChessBoard [ (('A', 1), Rook White) ] Ongoing) (fenToChessBoard "8/8/8/8/8/8/8/R7" Ongoing)
+        assertEqual (ChessBoard [] Ongoing) (fenToChessBoard "8/8/8/8/8/8/8/8")
+        assertEqual (ChessBoard [ (('A', 1), Rook White) ] Ongoing) (fenToChessBoard "8/8/8/8/8/8/8/R7")
         assertEqual (ChessBoard [ (('A', 2), Rook White)
                                 , (('E', 1), Bishop White)
                                 , (('H', 1), Knight White)
                                 , (('F', 6), Pawn Black)
                                 , (('C', 6), Queen Black)
-                                , (('D', 8), King Black) ] Over) (fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N" Over)
+                                , (('D', 8), King Black) ] Ongoing) (fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N")
         assertEqual (ChessBoard [ (('A', 2), Pawn White) 
                                 , (('E', 2), Pawn White) 
                                 , (('H', 2), Pawn White) 
