@@ -42,9 +42,9 @@ legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> 
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: implement + test this (0.5 hour). You can use legalMoves above. [Yiyi]
+-- TODO: test this (0.5 hour). [Yiyi]
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
-validMove _ _ _ = False
+validMove board colour move = elem move (legalMoves board colour)
 
 
 -- Returns true if the chessboard has been closed to indicate the game is over
