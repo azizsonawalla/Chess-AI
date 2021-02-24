@@ -82,9 +82,9 @@ stringToChessMove :: String -> ChessMove
 stringToChessMove string = 
     ChessMove (readChessPosition fromPosition) (readChessPosition toPosition)
     where
-        fromPosition = take 2 [ x | x <- lowerString, x /=' ', x /='t', x/='o']
-        toPosition = drop 2 [ x | x <- lowerString, x /=' ', x /='t', x/='o'] 
-        lowerString = [toLower ch | ch <- string]
+        fromPosition = take 2 [ x | x <- upperString, x /=' ', x /='T', x/='O']
+        toPosition = drop 2 [ x | x <- upperString, x /=' ', x /='T', x/='O'] 
+        upperString = toUpperStr string
 
 readChessPosition :: [Char] -> (Char, Integer)
 readChessPosition string = (string !! 0, toInteger (digitToInt (string !! 1)))
