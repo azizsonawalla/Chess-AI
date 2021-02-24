@@ -23,19 +23,19 @@ chessPosFromStr posStr = ((posStrUpper !! 0), toInteger (digitToInt (posStrUpper
 
 
 -- A Chess move from one position to the other
-data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq)  -- ChessMove from to
+data ChessMove = ChessMove ChessPosition ChessPosition deriving (Eq, Ord)  -- ChessMove from to
 instance Show ChessMove where
   show (ChessMove start end) = (chessPositionToString start)++" to "++(chessPositionToString end)
 
 
 -- The current state of a chess game
-data GameState = Ongoing | Over deriving (Eq, Show)
+data GameState = Ongoing | Over deriving (Eq, Show, Ord)
 
 
 -- A Chess Board
 -- It comprises of a list of 2-tupes - a position on the board and the corresponding piece at that position
 -- If there is no tuple for a particular position, then there is no piece there
-data ChessBoard = ChessBoard [(ChessPosition, ChessPiece)] GameState -- deriving (Show)
+data ChessBoard = ChessBoard [(ChessPosition, ChessPiece)] GameState deriving (Ord)
 instance Eq ChessBoard where
   (ChessBoard pieces1 state1) == (ChessBoard pieces2 state2) = (state1 == state2) && ((sort pieces1) == (sort pieces2))
 
