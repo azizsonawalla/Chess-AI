@@ -31,18 +31,29 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- WARNING: Assumes given move is valid!
 -- TODO: implement + test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove cb@(ChessBoard pieces state) (ChessMove from to)
-    | (isEmpty to cb) =
-        ChessBoard ((filter (\ (position, piece) -> piece /= pieceFrom) pieces) ++ [(to, pieceFrom)]) newState
-    | otherwise =
-        ChessBoard ((filter (\ (position, piece) -> piece /= pieceFrom && piece /= fromJust (getPieceAt to cb)) pieces) ++ [(to, pieceFrom)]) newState 
-    where pieceFrom = fromJust (getPieceAt from cb)
-          newState = if (isCheckMate cb (getPieceColour pieceFrom)) then Over else state
+makeMove cb@(ChessBoard pieces state) (ChessMove from to) = 
+    ChessBoard (putPiece pieceToMove to (removePiece from pieces)) (if (isCheckMate cb (getPieceColour pieceToMove)) then Over else state)
+    where pieceToMove = fromJust(getPieceAt from cb)
+
+
+-- Removes the piece at the given position from the ChessBoard if it exists
+-- Does nothing if the position is empty
+removePiece :: ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
+removePiece chessPosition board = 
+    if (lookup chessPosition board == Nothing)
+        then board
+        else filter (\ (position, piece) -> position /= chessPosition) board
+
+
+-- Adds the given piece to the given position on the chessboard
+-- Warning! Does not remove any pieces that may be at the same position
+putPiece :: ChessPiece -> ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
+putPiece chessPiece chessPosition board = board ++ [(chessPosition, chessPiece)]
 
         
-
 isCheckMate :: ChessBoard -> ChessPieceColour -> Bool
 isCheckMate checkBoard colour = False
+
 
 -- Returns all legal moves for the given side on the given chess board
 -- TODO: test this [Aziz] -- waiting for legalNextPosForPieceAtPos implementations

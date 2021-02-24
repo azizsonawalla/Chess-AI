@@ -226,6 +226,12 @@ test_legalNextPosForPieceAtPos_Pawn =
             -- Non starting position no pieces in front
         assertListsEqualAsSets board10_B6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 6))
 
+test_legalNextPosForPieceAtPos_Queen = 
+    do
+        -- D1 white queen at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Queen White) freshBoard ('D', 1))
+        -- D8 black queen at starting position (freshboard)
+        assertEqual [] (legalNextPosForPieceAtPos (Queen Black) freshBoard ('D', 8))
 
 test_getPieceAt = 
     do 

@@ -61,7 +61,8 @@ legalNextPosForPieceAtPos (King colour) chessBoard (col, row)  =
 --     1. Replace the queen with a rook of the same colour and call legalNextPosForPieceAtPos for the rook
 --     2. Replace the queen with a bishop of the same colour and call legalNextPosForPieceAtPos for the bishop
 --     3. Return a concatenation of the moves calculated in 1 and 2
-legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
+legalNextPosForPieceAtPos (Queen colour) chessBoard position = 
+      legalNextPosForPieceAtPos (Rook colour) chessBoard position ++ legalNextPosForPieceAtPos (Bishop colour) chessBoard position
 
 
 -- Rook can move any number of vacant squares vertically or horizontally (ignore castlling for now).
