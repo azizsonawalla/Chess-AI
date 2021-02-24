@@ -126,7 +126,7 @@ board13_A1 = [('A', 2), ('B', 1)] -- white king
 board13_A8 = [('A', 7), ('B', 8), ('B', 7)] -- black king
 board13_B2 = [('B', 1), ('A', 2), ('C', 2), ('D', 2), ('E', 2), ('F', 2), ('G', 2)] -- white rook
 board13_C6 = [('C', 7), ('C', 5), ('C', 4), ('C', 3), ('C', 2), ('C', 1), ('B', 6), ('A', 6), ('D', 6)] -- black rook
-board11_F8 = [('E', 7), ('G', 7), ('H', 6)]
+board13_F8 = [('E', 7), ('G', 7), ('H', 6)]
 
 -- https://lichess.org/editor/N5rN/2b3br/1N4Q1/3N4/8/1R3N2/2Q5/N3Kr1N_w_-_-_0_1
 board14 = fenToChessBoard "N5rN/2b3br/1N4Q1/3N4/8/1R3N2/2Q5/N3Kr1N"
