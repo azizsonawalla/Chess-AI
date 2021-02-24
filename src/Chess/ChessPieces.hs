@@ -19,8 +19,39 @@ legalNextPosForPieceAtPos :: ChessPiece -> ChessBoard -> ChessPosition -> [Chess
 
 -- King can move exactly one square horizontally, vertically, or diagonally (ignore castling for now).
 -- King cannot move to a square if a piece of its own colour is blocking the way.
--- TODO: Implement + test this (moves for King at the given position) (1.5 hours) [Cynthia]
-legalNextPosForPieceAtPos (King colour) chessBoard position = []
+legalNextPosForPieceAtPos (King colour) chessBoard (col, row)  = 
+      moveUp ++ moveDown ++ moveLeft ++ moveRight ++ moveLeftUp ++ moveRightUp ++ moveLeftDown ++ moveRightDown 
+      where 
+            moveUp = if (row < 8) && (topEmpty || topHasEnemyPiece) then [(col, row+1)] else []
+            moveDown = if (row > 1) && (downEmpty || downHasEnemyPiece) then [(col, row-1)] else []
+            topEmpty = isEmpty (col, row+1) chessBoard
+            downEmpty = isEmpty (col, row-1) chessBoard
+            topHasEnemyPiece = (not (topEmpty)) && ((getColourOfPieceAt (col, row+1) chessBoard) /= (Just colour))
+            downHasEnemyPiece = (not (downEmpty)) && ((getColourOfPieceAt (col, row-1) chessBoard) /= (Just colour))
+
+            moveLeft = if (col /= 'A') && (leftEmpty || leftHasEnemyPiece) then [getLeftPos (col, row)]else []
+            moveRight = if (col /= 'H') && (rightEmpty || rightHasEnemyPiece) then [getRightPos (col, row)]else []
+            leftEmpty = isEmpty (getLeftPos (col, row)) chessBoard
+            rightEmpty = isEmpty (getRightPos (col, row)) chessBoard
+            leftHasEnemyPiece = (not (leftEmpty)) && ((getColourOfPieceAt (getLeftPos (col, row)) chessBoard) /= (Just colour))
+            rightHasEnemyPiece = (not (rightEmpty)) && ((getColourOfPieceAt (getRightPos (col, row)) chessBoard) /= (Just colour))
+
+            moveLeftUp = if (col /= 'A') && (row /= 8) && (leftUpEmpty || leftUpHasEnemyPiece) then [getTopLeftPos (col, row)] else []
+            moveRightUp = if (col /= 'H') && (row /= 8) && (rightUpEmpty || rightUpHasEnemyPiece) then [getTopRightPos (col, row)] else []
+            leftUpEmpty = isEmpty (getTopLeftPos (col, row)) chessBoard
+            rightUpEmpty = isEmpty (getTopRightPos (col, row)) chessBoard
+            leftUpHasEnemyPiece = (not (leftUpEmpty)) && ((getColourOfPieceAt (getTopLeftPos (col, row)) chessBoard) /= (Just colour))
+            rightUpHasEnemyPiece = (not (rightUpEmpty)) && ((getColourOfPieceAt (getTopRightPos (col, row)) chessBoard) /= (Just colour))
+
+            moveLeftDown = if (col /= 'A') && (row /= 1) && (leftDownEmpty || leftDownHasEnemyPiece) then [getBottomLeftPos (col, row)] else []
+            moveRightDown = if (col /= 'H') && (row /= 1) && (rightDownEmpty || rightDownHasEnemyPiece) then [getBottomRightPos (col, row)] else []
+            leftDownEmpty = isEmpty (getBottomLeftPos (col, row)) chessBoard
+            rightDownEmpty = isEmpty (getBottomRightPos (col, row)) chessBoard
+            leftDownHasEnemyPiece = (not (leftDownEmpty)) && ((getColourOfPieceAt (getBottomLeftPos (col, row)) chessBoard) /= (Just colour))
+            rightDownHasEnemyPiece = (not (rightDownEmpty)) && ((getColourOfPieceAt (getBottomRightPos (col, row)) chessBoard) /= (Just colour))
+
+
+      
 
 -- Queen can move any number of vacant squares in any direction
 -- Queen cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
@@ -32,13 +63,13 @@ legalNextPosForPieceAtPos (King colour) chessBoard position = []
 --     3. Return a concatenation of the moves calculated in 1 and 2
 legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
 
+
 -- Rook can move any number of vacant squares vertically or horizontally (ignore castlling for now).
 -- Rook cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Rook must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Rook at the given position) (2 hour) [Cynthia]
-legalNextPosForPieceAtPos (Rook colour) chessBoard position = [] -- Note: the implementation of this can be exactly the same as the Bishop's below but
-                                                                 --       instead of getBottomLeftDiagonal, getTopLeftDiagonal, etc. use functions like
-                                                                 --       getBottomColumn, getTopColumn, getLeftRow, getRightRow (you'll have to write these)
+legalNextPosForPieceAtPos (Rook colour) chessBoard position = 
+      foldl (\ allPos rowAndCol -> allPos ++ (filterFreeMoves rowAndCol (Rook colour) chessBoard)) [] rowAndCols
+      where rowAndCols = [(getTopColumn position), (getBottomColumn position), (getLeftRow position), (getRightRow position)]
 
 -- Bishop can move any number of vacant squares in any diagonal direction.
 -- Bishop cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
@@ -49,8 +80,10 @@ legalNextPosForPieceAtPos (Bishop colour) chessBoard position =
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
--- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Yiyi]
-legalNextPosForPieceAtPos (Knight colour) chessBoard position = []
+-- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Aziz]
+legalNextPosForPieceAtPos (Knight colour) chessBoard position = removePositionsWithColour lpaths colour chessBoard
+      where lpaths = getLPathPositions position
+
 
 -- The pawn moves by the following rules:
 --     - It can only move forwards
@@ -100,6 +133,17 @@ isEmpty :: ChessPosition -> ChessBoard -> Bool
 isEmpty position board = (getPieceAt position board) == Nothing
 
 
+-- Returns the position at the left of the given position
+-- Warning: given position should not be in column 'A' 
+getLeftPos :: ChessPosition -> ChessPosition
+getLeftPos (col, row) = (leftCol, row) where leftCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) - 1)
+
+-- Returns the position at the right of the given position
+-- Warning: given position should not be in column 'H'
+getRightPos :: ChessPosition -> ChessPosition
+getRightPos (col, row) = (rightCol, row) where rightCol = chessBoardCols !! ((fromJust (elemIndex col chessBoardCols)) + 1)
+
+
 -- Returns the position at the top-left diagonal of the given position
 -- Warning: given position should not be in column 'A' or in row 8
 getTopLeftPos :: ChessPosition -> ChessPosition
@@ -142,6 +186,41 @@ getBottomLeftDiagonal position = zip (reverse (colsToLeft position)) (reverse (r
 -- Returns all the squares on the bottom-right diagonal of the given position (not including self)
 getBottomRightDiagonal :: ChessPosition -> [ChessPosition]
 getBottomRightDiagonal position = zip (colsToRight position) (reverse (rowsBelow position))
+
+
+-- Returns all the squares on the top of the given position (not including self)
+getTopColumn :: ChessPosition -> [ChessPosition]
+getTopColumn (char,num) = zip (take (8 - (fromIntegral num)) (repeat char)) (rowsAbove (char,num))
+
+
+-- Returns all the squares on the bottom of the given position (not including self)
+getBottomColumn :: ChessPosition -> [ChessPosition]
+getBottomColumn (char,num) = zip ((take ((fromIntegral num) - 1) (repeat char))) (reverse (rowsBelow (char,num)))
+
+
+-- Returns all the squares on the left of the given position (not including self)
+getLeftRow :: ChessPosition -> [ChessPosition]
+getLeftRow (char,num) = zip (reverse (colsToLeft (char,num))) (take (length (colsToLeft (char,num))) (repeat num))
+
+
+-- Returns all the squares on the right of the given position (not including self)
+getRightRow :: ChessPosition -> [ChessPosition]
+getRightRow (char,num) = zip (colsToRight (char,num)) (take (length (colsToRight (char,num))) (repeat num))
+
+
+-- Returns all the squares that make an 'L' shaped path from the given position
+getLPathPositions :: ChessPosition -> [ChessPosition]
+getLPathPositions (col, row) = toCharColumns (filterOutOfRange (applyDeltas (colNum, row) deltas))
+      where toCharColumns = map (\(colNum, row) -> (("ABCDEFGH" !! (fromInteger colNum)), row))
+            applyDeltas (colNum, row) = map (\ (deltaX, deltaY) -> (colNum+deltaX, row+deltaY))
+            filterOutOfRange list = filter (\ (colNum, row) -> (elem colNum [0..7]) && (elem row [1..8])) list
+            deltas = [((toInteger deltaX), (toInteger deltaY)) | deltaX <- [1, 2, -1, -2], deltaY <- [1, 2, -1, -2], ((abs deltaX)+(abs deltaY)==3)]
+            colNum = toInteger(fromJust (elemIndex col "ABCDEFGH"))
+
+
+-- Filters-out positions that have piece of colour
+removePositionsWithColour :: [ChessPosition] -> ChessPieceColour -> ChessBoard -> [ChessPosition]
+removePositionsWithColour positions colour board = filter (\ pos -> (getColourOfPieceAt pos board) /= (Just colour)) positions
 
 
 -- Returns the list of columns to the left of the given position (not including self)
@@ -199,4 +278,5 @@ chessPieceStrings = [((King   White), "[ K ]")
                     ,((Knight Black), "[ n ]")
                     ,((Pawn   Black), "[ p ]")]
 getPieceAsString:: ChessPosition -> ChessBoard -> [Char]
-getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"  where piece = getPieceAt position board
+getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"
+      where piece = getPieceAt position board

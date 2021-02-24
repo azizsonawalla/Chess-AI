@@ -16,13 +16,14 @@ freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
 -- Returns the string representation of a chessboard
 chessBoardAsString :: ChessBoard -> [Char]
 chessBoardAsString chessBoard = 
-                        "\n    *--*--*   Current Chess Board   *--*--*\n\n"
-                        ++ "      (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) \n\n" 
-                        ++ (foldl (\boardStr rowNum -> boardStr ++ (chessBoardRowAsString rowNum chessBoard)) "" [8, 7, 6, 5, 4, 3, 2, 1])     
+                        "\n\n      (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) \n\n" 
+                        ++ (foldl (\boardStr rowNum -> boardStr ++ (chessBoardRowAsString rowNum chessBoard)) "" [8, 7, 6, 5, 4, 3, 2, 1])
+                        ++ "\n      (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) \n\n"   
                         ++ "\n" 
 
 chessBoardRowAsString :: Integer -> ChessBoard -> String
-chessBoardRowAsString rowNum chessBoard = "(" ++ (show rowNum) ++ ")  "  ++ (foldl (\ rowStr position -> rowStr ++ (getPieceAsString position chessBoard)) "" [(col, rowNum) | col <- "ABCDEFGH"]) ++ "\n"
+chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr position -> rowStr ++ (getPieceAsString position chessBoard)) "" [(col, rowNum) | col <- "ABCDEFGH"]) ++ "  " ++ rowNumStr ++ "\n"
+    where rowNumStr = "(" ++ (show rowNum) ++ ")"
 
 -- Makes the given move on the given chessboard. Returns the board with the move made
 -- If there is a piece at the destination square, then that piece will be replaced
