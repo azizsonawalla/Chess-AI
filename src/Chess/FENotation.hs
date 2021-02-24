@@ -7,8 +7,8 @@ import ChessUtilTypes
 
 
 -- Converts a chess board configuration in FEN notation to ChessBoard type.
-fenToChessBoard :: String -> ChessBoard
-fenToChessBoard fenStr = (ChessBoard pieces Ongoing) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) fenStr))
+fenToChessBoard :: String -> GameState -> ChessBoard
+fenToChessBoard fenStr state = (ChessBoard pieces state) where pieces = reverse (getFirst (foldl addPieces ([], 8, 0) fenStr))
 
 
 -- The columns of a Chess Board
