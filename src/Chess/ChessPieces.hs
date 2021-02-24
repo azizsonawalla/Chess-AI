@@ -217,3 +217,9 @@ chessPieceStrings = [((King   White), "[ K ]")
 getPieceAsString:: ChessPosition -> ChessBoard -> [Char]
 getPieceAsString position board = if piece /= Nothing then fromJust (lookup (fromJust piece) chessPieceStrings) else "[   ]"
       where piece = getPieceAt position board
+
+
+-- Returns the opposite of the given colour
+oppositeColour :: ChessPieceColour -> ChessPieceColour
+oppositeColour White = Black
+oppositeColour Black = White

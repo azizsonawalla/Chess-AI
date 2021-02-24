@@ -3,6 +3,7 @@ module AIPlayer where
 import ChessUtilTypes
 import Data.List (sort)
 import ChessBoard
+import ChessPieces
 
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
@@ -90,9 +91,3 @@ getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
 -- TODO: implement + test this [Yiyi]
 score :: ChessBoard -> ChessPieceColour -> Integer
 score chessBoard forColour = -1
-
-
--- Returns the opposite of the given colour
-oppositeColour :: ChessPieceColour -> ChessPieceColour
-oppositeColour White = Black
-oppositeColour Black = White

@@ -4,6 +4,7 @@ import ChessPieces
 import ChessUtilTypes
 import FENotation
 import Data.Maybe
+import Util
 
 
 -- -- Define Show for a ChessBoard
@@ -29,9 +30,45 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- If there is a piece at the destination square, then that piece will be replaced
 -- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
--- TODO: implement + test this (1.5 hours) [Yiyi]
+-- TODO: test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove chessBoard move = chessBoard
+makeMove chessBoard (ChessMove source dest) = updateGameStatus (putPiece cleanBoard dest pieceToMove)
+    where cleanBoard = removePiece (removePiece chessBoard dest) source
+          pieceToMove = fromJust (getPieceAt source chessBoard)
+
+
+-- Checks if there is a checkmate and updates the game status accordingly
+-- TODO: test this
+updateGameStatus chessBoard@(ChessBoard pieces state) = (ChessBoard pieces newState)
+    where newState = if whiteKingInCheckmate || blackKingInCheckmate then Over else state
+          whiteKingInCheckmate = kingInCheckmate chessBoard White
+          blackKingInCheckmate = kingInCheckmate chessBoard Black
+
+
+-- Check if the given King is in checkmate
+-- TODO: test this
+kingInCheckmate chessBoard@(ChessBoard pieces state) colour = not (kingExists && kingSafe)
+    where kingExists = (kingPos /= Nothing)
+          kingSafe = not (subset kingMoves opponentMoves)
+          kingPos = getPositionOfPiece chessBoard (King colour) 
+          kingMoves = legalMovesForPieceAtPos (King colour) chessBoard (fromJust kingPos)
+          opponentMoves = legalMoves chessBoard (oppositeColour colour)
+
+
+-- Returns the position of the given piece on the board (if multiple, returns last)
+getPositionOfPiece (ChessBoard pieces _) piece = foldl (\ result (position, currPiece) -> if currPiece == piece then Just position else result) Nothing pieces
+
+
+-- Adds the given piece at the given position
+-- Warning: if there is already a piece at the position, then there will be a duplicate entry
+-- TODO: test this
+putPiece (ChessBoard pieces state) position piece = ChessBoard ((position, piece):pieces) state
+
+
+-- Removes the piece at a given position. Does nothing if there is no piece.
+-- TODO: test this
+removePiece (ChessBoard pieces state) position = (ChessBoard newPieces state)
+    where newPieces = filter (\ (currPosition, piece) -> currPosition /= position) pieces
 
 
 -- Returns all legal moves for the given side on the given chess board
