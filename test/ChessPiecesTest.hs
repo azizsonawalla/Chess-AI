@@ -228,11 +228,15 @@ test_legalNextPosForPieceAtPos_Pawn =
 
 test_legalNextPosForPieceAtPos_Queen = 
     do
-        -- D1 white queen at starting position (freshboard)
+        -- freshboard
         assertEqual [] (legalNextPosForPieceAtPos (Queen White) freshBoard ('D', 1))
-        -- D8 black queen at starting position (freshboard)
         assertEqual [] (legalNextPosForPieceAtPos (Queen Black) freshBoard ('D', 8))
 
+        assertListsEqualAsSets board2_C6 (legalNextPosForPieceAtPos (Queen Black) board2 ('C', 6))
+        assertListsEqualAsSets board3_E6 (legalNextPosForPieceAtPos (Queen White) board3 ('E', 6))
+        assertListsEqualAsSets board4_E3 (legalNextPosForPieceAtPos (Queen White) board4 ('E', 3))
+        assertListsEqualAsSets board5_D6 (legalNextPosForPieceAtPos (Queen White) board5 ('D', 6))
+ 
 test_getPieceAt = 
     do 
         assertEqual (Just (Rook White)) (getPieceAt ('A', 1) freshBoard)
