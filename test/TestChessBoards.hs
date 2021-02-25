@@ -185,3 +185,15 @@ board16_B7_Move = (ChessMove ('D', 6) ('E', 7))
 board16_B8_Board = fenToChessBoard "8/8/4k3/4P3/8/8/8/8"
 board16_B8_Move = (ChessMove ('D', 6) ('E', 6))
 
+
+-- https://lichess.org/editor/3k4/8/5p2/2q5/8/8/R7/4B2N_w_-_-_0_1
+board17 = fenToChessBoard "3k4/8/5p2/2q5/8/8/R7/4B2N"
+
+-- https://lichess.org/editor/3k4/8/4qp2/8/8/8/R7/4B2N_w_-_-_0_1
+board18 = fenToChessBoard "3k4/8/4qp2/8/8/8/R7/4B2N"
+
+-- https://lichess.org/editor/3k4/8/5p2/8/8/8/q7/4B2N_w_-_-_0_1
+board19 = fenToChessBoard "3k4/8/5p2/8/8/8/q7/4B2N"
+
+-- https://lichess.org/editor/3q4/8/5p2/8/8/8/R7/4B2N_w_-_-_0_1
+board20 = fenToChessBoard "3q4/8/5p2/8/8/8/R7/4B2N"

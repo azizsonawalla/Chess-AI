@@ -29,7 +29,7 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- If there is a piece at the destination square, then that piece will be replaced
 -- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
--- TODO: implement + test this (1.5 hours) [Yiyi]
+-- TODO: test this [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
 makeMove cb@(ChessBoard pieces state) (ChessMove from to) = 
     ChessBoard (putPiece pieceToMove to (removePiece from pieces)) (if (isCheckMate cb (getPieceColour pieceToMove)) then Over else state)
@@ -39,18 +39,15 @@ makeMove cb@(ChessBoard pieces state) (ChessMove from to) =
 -- Removes the piece at the given position from the ChessBoard if it exists
 -- Does nothing if the position is empty
 removePiece :: ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
-removePiece chessPosition board = 
-    if (lookup chessPosition board == Nothing)
-        then board
-        else filter (\ (position, piece) -> position /= chessPosition) board
+removePiece chessPosition board = filter (\ (position, piece) -> position /= chessPosition) board
 
 
 -- Adds the given piece to the given position on the chessboard
--- Warning! Does not remove any pieces that may be at the same position
+-- If there is a piece at the given position, then that piece will be removed
 putPiece :: ChessPiece -> ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
-putPiece chessPiece chessPosition board = board ++ [(chessPosition, chessPiece)]
+putPiece chessPiece chessPosition board = (removePiece chessPosition board) ++ [(chessPosition, chessPiece)]
 
-        
+
 isCheckMate :: ChessBoard -> ChessPieceColour -> Bool
 isCheckMate checkBoard colour = False
 

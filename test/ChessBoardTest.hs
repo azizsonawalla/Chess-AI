@@ -39,4 +39,11 @@ test_chessBoardAsString =
         randomBoard2 <- readFile "test/resources/emptyboard_string.txt" 
         assertEqual randomBoard2 (chessBoardAsString (fenToChessBoard "8/8/8/8/8/8/8/8"))
 
+test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
+    do
+        assertEqual board17 (makeMove board2 (ChessMove ('C', 6) ('C', 5)))
+        assertEqual board18 (makeMove board2 (ChessMove ('C', 6) ('E', 6)))
+        assertEqual board19 (makeMove board2 (ChessMove ('C', 6) ('A', 2)))
+        assertEqual board20 (makeMove board2 (ChessMove ('C', 6) ('D', 8)))
+
 main = htfMain htf_thisModulesTests
