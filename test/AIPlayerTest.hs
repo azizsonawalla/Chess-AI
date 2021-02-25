@@ -29,6 +29,14 @@ test_buildGameTree =
 
 
 cloneTree (GameTree board score children) = (GameTree board score (map cloneMoveSubtree children))
+cloneMoveSubtree :: MoveSubtree -> MoveSubtree
 cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
+
+test_score = 
+    do
+        assertEqual (-1110) (score board2 Black)
+        assertEqual 1110 (score board2 White)
+        assertEqual (-320) (score board3 Black)
+        assertEqual 320 (score board3 White)
 
 main = htfMain htf_thisModulesTests
