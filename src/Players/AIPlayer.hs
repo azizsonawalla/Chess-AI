@@ -63,18 +63,31 @@ buildGameTree chessBoard colour depth = GameTree chessBoard 0 children
 -- If tree has no children, scores the root (using given colour) and returns new game tree with the score calculated
 -- If tree has children, calls minimize on each subtree (with the opposite colour) and returns the root where the score is the max of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
--- TODO: implement and test this [Cynthia]
 maximize :: GameTree -> ChessPieceColour -> GameTree
-maximize (GameTree chessBoard score children) colour = (GameTree chessBoard score children)
+maximize (GameTree chessBoard score children) colour
+    | null children             = GameTree chessBoard nodeScore children
+    | otherwise                 = GameTree chessBoard maxScore children
+    where   
+        nodeScore = score chessBoard colour
+        maxScore = foldr (\currMax currScore -> if currScore > currMax then currScore else currMax ) 0 allScores
+        allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
+        subtreeList = [ minimize subtree (oppositeColour colour) | (MoveSubtree move subtree) <- children ]
+
 
 
 -- Scores the given GameTree using a score minimization strategy
 -- If tree has no children, scores the root (using the opposite of the given colour) and returns new game tree with the score calculated
 -- If tree has children, calls maximize on each subtree (with the opposite colour) and returns the root where the score is the min of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
--- TODO: implement and test this [Cynthia]
 minimize :: GameTree -> ChessPieceColour -> GameTree
-minimize (GameTree chessBoard score children) colour = (GameTree chessBoard score children)
+minimize (GameTree chessBoard score children) colour 
+    | null children             = GameTree chessBoard nodeScore children
+    | otherwise                 = GameTree chessBoard minScore children
+    where   
+        nodeScore = score chessBoard (oppositeColour colour)
+        minScore = foldr (\currMin currScore -> if currScore < currMin then currScore else currMin ) 0 allScores
+        allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
+        subtreeList = [ maximize subtree (oppositeColour colour) | (MoveSubtree move subtree) <- children ]
 
 
 -- Returns the next move that maximizes the score
@@ -88,7 +101,7 @@ getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
 -- First version: score is the sum of the scores for each piece on the board of the colour minus the scores for each piece of the other colour on the board
 -- Scores per piece: https://cdn-media-1.freecodecamp.org/images/1*e4p9BrCzJUdlqx7KVGW9aA.png
 -- TODO: implement + test this [Yiyi]
-score :: ChessBoard -> ChessPieceColour -> Integer
+score :: ChessBoard -> ChessPieceColour -> Score
 score chessBoard forColour = -1
 
 
