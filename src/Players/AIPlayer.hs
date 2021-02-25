@@ -101,7 +101,7 @@ getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
 -- First version: score is the sum of the scores for each piece on the board of the colour minus the scores for each piece of the other colour on the board
 -- Scores per piece: https://cdn-media-1.freecodecamp.org/images/1*e4p9BrCzJUdlqx7KVGW9aA.png
 -- TODO: implement + test this [Yiyi]
-score :: ChessBoard -> ChessPieceColour -> Score
+score :: ChessBoard -> ChessPieceColour -> Integer
 score chessBoard forColour = -1
 
 
