@@ -3,6 +3,7 @@ module AIPlayer where
 import ChessUtilTypes
 import Data.List (sort)
 import ChessBoard
+import ChessPieces
 
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
@@ -87,10 +88,22 @@ getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
 -- The higher the score, the more advantageous the scenario is for the colour
 -- First version: score is the sum of the scores for each piece on the board of the colour minus the scores for each piece of the other colour on the board
 -- Scores per piece: https://cdn-media-1.freecodecamp.org/images/1*e4p9BrCzJUdlqx7KVGW9aA.png
--- TODO: implement + test this [Yiyi]
 score :: ChessBoard -> ChessPieceColour -> Integer
-score chessBoard forColour = -1
+score (ChessBoard pieces _) colour = scoreOfCurrColour - scoreOfOppoColour
+    where currColour = filter (\ (position, piece) -> (getPieceColour piece) == colour) pieces
+          oppoColour = filter (\ (position, piece) -> (getPieceColour piece) /= colour) pieces
+          scoreOfCurrColour = foldr (+) 0 (map (\ (position, piece) -> (pieceToScore piece)) currColour)
+          scoreOfOppoColour = foldr (+) 0 (map (\ (position, piece) -> (pieceToScore piece)) oppoColour) 
 
+
+-- Returns the score of the given piece
+pieceToScore :: ChessPiece -> Integer
+pieceToScore (King _)   = 900
+pieceToScore (Queen _)  = 90
+pieceToScore (Rook _)   = 50
+pieceToScore (Bishop _) = 30
+pieceToScore (Knight _) = 30
+pieceToScore (Pawn _)   = 10
 
 -- Returns the opposite of the given colour
 oppositeColour :: ChessPieceColour -> ChessPieceColour

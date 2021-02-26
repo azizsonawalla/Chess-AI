@@ -56,12 +56,12 @@ legalNextPosForPieceAtPos (King colour) chessBoard (col, row)  =
 -- Queen can move any number of vacant squares in any direction
 -- Queen cannot move to a square if a piece of its own colour is blocking the way (cannot jump)
 -- If a piece of another colour is blocking the way, the Queen must stop at that square (i.e. kill the piece, cannot jump)
--- TODO: Implement + test this (moves for Queen at the given position) (1 hour) [Yiyi]
 -- Note: Notice that the Queen combines the moves of the Rook and Bishop. An easy way to implement this is to:
 --     1. Replace the queen with a rook of the same colour and call legalNextPosForPieceAtPos for the rook
 --     2. Replace the queen with a bishop of the same colour and call legalNextPosForPieceAtPos for the bishop
 --     3. Return a concatenation of the moves calculated in 1 and 2
-legalNextPosForPieceAtPos (Queen colour) chessBoard position = []
+legalNextPosForPieceAtPos (Queen colour) chessBoard position = 
+      legalNextPosForPieceAtPos (Rook colour) chessBoard position ++ legalNextPosForPieceAtPos (Bishop colour) chessBoard position
 
 
 -- Rook can move any number of vacant squares vertically or horizontally (ignore castlling for now).
