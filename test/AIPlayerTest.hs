@@ -34,9 +34,9 @@ cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
 
 test_score = 
     do
-        assertEqual (-1110) (score board2 Black)
-        assertEqual 1110 (score board2 White)
-        assertEqual (-320) (score board3 Black)
-        assertEqual 320 (score board3 White)
+        assertEqual 890 (score board2 Black)
+        assertEqual (-890) (score board2 White)
+        assertEqual (-80) (score board3 Black)
+        assertEqual 80 (score board3 White)
 
 main = htfMain htf_thisModulesTests

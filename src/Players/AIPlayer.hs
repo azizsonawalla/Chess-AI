@@ -98,20 +98,12 @@ score (ChessBoard pieces _) colour = scoreOfCurrColour - scoreOfOppoColour
 
 -- Returns the score of the given piece
 pieceToScore :: ChessPiece -> Integer
-pieceToScore piece
-    | piece == King White   = 900
-    | piece == Queen White  = 90
-    | piece == Rook White   = 50
-    | piece == Bishop White = 30
-    | piece == Knight White = 30
-    | piece == Pawn White   = 10
-    | piece == King Black   = -900    
-    | piece == Queen Black  = -90
-    | piece == Rook Black   = -50
-    | piece == Bishop Black = -30
-    | piece == Knight Black = -30
-    | piece == Pawn Black   = -10
-
+pieceToScore (King _)   = 900
+pieceToScore (Queen _)  = 90
+pieceToScore (Rook _)   = 50
+pieceToScore (Bishop _) = 30
+pieceToScore (Knight _) = 30
+pieceToScore (Pawn _)   = 10
 
 -- Returns the opposite of the given colour
 oppositeColour :: ChessPieceColour -> ChessPieceColour
