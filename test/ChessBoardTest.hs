@@ -18,10 +18,10 @@ test_filter =
         assertEqual (ChessBoard [] Ongoing) (filterChessBoard board1 Black)
         assertEqual (ChessBoard [ (('A', 2), Rook White)
                                 , (('E', 1), Bishop White)
-                                , (('H', 1), Knight White)] Ongoing) (filterChessBoard board2 White)
+                                , (('H', 1), Knight White)] Over) (filterChessBoard board2 White)
         assertEqual (ChessBoard [ (('F', 6), Pawn Black)
                                 , (('C', 6), Queen Black)
-                                , (('D', 8), King Black) ] Ongoing) (filterChessBoard board2 Black)
+                                , (('D', 8), King Black) ] Over) (filterChessBoard board2 Black)
 
 
 test_chessBoardAsString = 
@@ -41,13 +41,13 @@ test_chessBoardAsString =
 
 test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
     do
-        assertEqual (fenToChessBoard "3k4/8/5p2/2q5/8/8/R7/4B2N") (makeMove board2 (ChessMove ('C', 6) ('C', 5)))
-        assertEqual (fenToChessBoard "3k4/8/4qp2/8/8/8/R7/4B2N")  (makeMove board2 (ChessMove ('C', 6) ('E', 6)))
-        assertEqual (fenToChessBoard "3k4/8/5p2/8/8/8/q7/4B2N")   (makeMove board2 (ChessMove ('C', 6) ('A', 2)))
-        assertEqual (fenToChessBoard "3q4/8/5p2/8/8/8/R7/4B2N")   (makeMove board2 (ChessMove ('C', 6) ('D', 8)))
-        assertEqual (fenToChessBoard "3k4/8/5p2/8/8/8/R7/4B2q")   (makeMove board2 (ChessMove ('C', 6) ('H', 1)))
-        assertEqual (fenToChessBoard "8/p3p2p/1R1Q2r1/8/8/1p1b1n2/P3P2P/8")   (makeMove board5 (ChessMove ('G', 3) ('G', 6)))
-        assertEqual (fenToChessBoard "8/p3p2p/3Q2N1/8/8/1R1b1nr1/P3P2P/8")   (makeMove board5 (ChessMove ('B', 6) ('B', 3)))
-        -- TODO: add checkmate tests
+        assertEqual (fenToChessBoardWithState "3k4/8/5p2/2q5/8/8/R7/4B2N" Over)             (makeMove board2 (ChessMove ('C', 6) ('C', 5)))
+        assertEqual (fenToChessBoardWithState "3k4/8/4qp2/8/8/8/R7/4B2N" Over)              (makeMove board2 (ChessMove ('C', 6) ('E', 6)))
+        assertEqual (fenToChessBoardWithState "3k4/8/5p2/8/8/8/q7/4B2N" Over)               (makeMove board2 (ChessMove ('C', 6) ('A', 2)))
+        assertEqual (fenToChessBoardWithState "3q4/8/5p2/8/8/8/R7/4B2N" Over)               (makeMove board2 (ChessMove ('C', 6) ('D', 8)))
+        assertEqual (fenToChessBoardWithState "3k4/8/5p2/8/8/8/R7/4B2q" Over)               (makeMove board2 (ChessMove ('C', 6) ('H', 1)))
+        assertEqual (fenToChessBoardWithState "8/p3p2p/1R1Q2r1/8/8/1p1b1n2/P3P2P/8" Over)   (makeMove board5 (ChessMove ('G', 3) ('G', 6)))
+        assertEqual (fenToChessBoardWithState "8/p3p2p/3Q2N1/8/8/1R1b1nr1/P3P2P/8" Over)    (makeMove board5 (ChessMove ('B', 6) ('B', 3)))
+        assertEqual (fenToChessBoardWithState "8/8/3k4/4P3/8/8/8/8" Over)     (makeMove (fenToChessBoardWithState "8/8/3k4/8/4P3/8/8/8" Ongoing) (ChessMove ('E', 4) ('E', 5)))
         
 main = htfMain htf_thisModulesTests

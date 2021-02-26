@@ -81,7 +81,7 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 -- Returns the next move that maximizes the score
 -- TODO: implement + test this [Yiyi]
 getMoveWithMaxScore :: GameTree -> ChessMove
-getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
+getMoveWithMaxScore (GameTree _ score children) = ChessMove ('A', 0) ('A', 0)
 
 
 -- Scores the given chess board based on how beneficial the positions are for the given colour
@@ -104,8 +104,3 @@ pieceToScore (Rook _)   = 50
 pieceToScore (Bishop _) = 30
 pieceToScore (Knight _) = 30
 pieceToScore (Pawn _)   = 10
-
--- Returns the opposite of the given colour
-oppositeColour :: ChessPieceColour -> ChessPieceColour
-oppositeColour White = Black
-oppositeColour Black = White

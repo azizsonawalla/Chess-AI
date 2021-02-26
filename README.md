@@ -5,16 +5,23 @@
 * GHC
 * Cabal
 
-
 ## Usage
 
-To run the game:
+### Run the Game
 
 ```
 cabal run Chess-AI
 ```
 
-To run tests:
+### Run Tests
+
+#### Install Dependencies
+
+```
+cabal install HTF --install-method=copy
+```
+
+#### Run all tests
 
 ```
 cabal test all

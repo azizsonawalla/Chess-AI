@@ -31,9 +31,9 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove cb@(ChessBoard pieces state) (ChessMove from to) = 
-    ChessBoard (putPiece pieceToMove to (removePiece from pieces)) state   -- TODO: update game status
-    where pieceToMove = fromJust(getPieceAt from cb)
+makeMove cb@(ChessBoard pieces state) (ChessMove from to) = updateGameStatus newChessBoard
+    where newChessBoard = ChessBoard (putPiece pieceToMove to (removePiece from pieces)) state
+          pieceToMove = fromJust(getPieceAt from cb)
 
 
 -- Checks if there is a checkmate and updates the game status accordingly
