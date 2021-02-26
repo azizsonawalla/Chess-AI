@@ -39,4 +39,15 @@ test_chessBoardAsString =
         randomBoard2 <- readFile "test/resources/emptyboard_string.txt" 
         assertEqual randomBoard2 (chessBoardAsString (fenToChessBoard "8/8/8/8/8/8/8/8"))
 
+test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
+    do
+        assertEqual (fenToChessBoard "3k4/8/5p2/2q5/8/8/R7/4B2N") (makeMove board2 (ChessMove ('C', 6) ('C', 5)))
+        assertEqual (fenToChessBoard "3k4/8/4qp2/8/8/8/R7/4B2N")  (makeMove board2 (ChessMove ('C', 6) ('E', 6)))
+        assertEqual (fenToChessBoard "3k4/8/5p2/8/8/8/q7/4B2N")   (makeMove board2 (ChessMove ('C', 6) ('A', 2)))
+        assertEqual (fenToChessBoard "3q4/8/5p2/8/8/8/R7/4B2N")   (makeMove board2 (ChessMove ('C', 6) ('D', 8)))
+        assertEqual (fenToChessBoard "3k4/8/5p2/8/8/8/R7/4B2q")   (makeMove board2 (ChessMove ('C', 6) ('H', 1)))
+        assertEqual (fenToChessBoard "8/p3p2p/1R1Q2r1/8/8/1p1b1n2/P3P2P/8")   (makeMove board5 (ChessMove ('G', 3) ('G', 6)))
+        assertEqual (fenToChessBoard "8/p3p2p/3Q2N1/8/8/1R1b1nr1/P3P2P/8")   (makeMove board5 (ChessMove ('B', 6) ('B', 3)))
+        -- TODO: add checkmate tests
+        
 main = htfMain htf_thisModulesTests
