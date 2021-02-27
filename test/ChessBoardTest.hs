@@ -50,7 +50,13 @@ test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
         assertEqual (fenToChessBoardWithState "8/p3p2p/1R1Q2r1/8/8/1p1b1n2/P3P2P/8" Over)   (makeMove board5 (ChessMove ('G', 3) ('G', 6)))
         assertEqual (fenToChessBoardWithState "8/p3p2p/3Q2N1/8/8/1R1b1nr1/P3P2P/8" Over)    (makeMove board5 (ChessMove ('B', 6) ('B', 3)))
         assertEqual (fenToChessBoardWithState "K7/8/3k4/4P3/8/8/8/8" Ongoing)               (makeMove (fenToChessBoardWithState "K7/8/3k4/8/4P3/8/8/8" Ongoing) (ChessMove ('E', 4) ('E', 5)))
-        assertEqual (fenToChessBoardWithState "K5B1/7Q/3k4/R3P3/8/8/8/2R5" Over)            (makeMove (fenToChessBoardWithState "K5B1/7Q/3k4/R7/4P3/8/8/2R5" Ongoing) (ChessMove ('E', 4) ('E', 5)))
+        assertEqual (fenToChessBoardWithState "4k3/4P3/3PK3/8/8/8/8/8" Over)                (makeMove (fenToChessBoardWithState "4k3/4P3/4K3/3P4/8/8/8/8" Ongoing) (ChessMove ('D', 5) ('D', 6)))
+
+
+test_kingInCheckmate = 
+    do
+        assertEqual True (kingInCheckmate (fenToChessBoard "4k3/4P3/3PK3/8/8/8/8/8") Black)
+        assertEqual False (kingInCheckmate (fenToChessBoard "4k3/4P3/3PK3/8/8/8/8/8") White)
 
 
 test_legalMoves = 

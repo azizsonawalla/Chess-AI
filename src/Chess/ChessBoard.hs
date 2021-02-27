@@ -9,7 +9,7 @@ import Util
 
 -- -- Define Show for a ChessBoard
 instance Show ChessBoard where
-    show board = chessBoardAsString board
+    show board@(ChessBoard pieces state) = (chessBoardAsString board) ++ "\nState=" ++ (show state) -- TODO: remove this
 
 -- A fresh Chess Board with all the pieces in the starting position
 freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
@@ -51,10 +51,11 @@ kingInCheckmate :: ChessBoard -> ChessPieceColour -> Bool
 kingInCheckmate chessBoard@(ChessBoard pieces state) colour = not (kingExists && kingSafe)
     where kingExists = (kingPos /= Nothing)
           kingSafe = not (subset kingMoves opponentMoves)
-          kingMoves = (fromJust kingPos):(legalNextPosForPieceAtPos (King colour) chessBoard (fromJust kingPos))
+          kingMoves = (if onlyKing then [] else [(fromJust kingPos)])++(legalNextPosForPieceAtPos (King colour) chessBoard (fromJust kingPos))
           opponentMoves = map destSquare (legalMoves chessBoard (oppositeColour colour))
           kingPos = getPositionOfPiece chessBoard (King colour)
           destSquare (ChessMove from to) = to
+          onlyKing = length (getPieces (filterChessBoard chessBoard colour)) == 1
 
 
 -- Returns the position of the given piece on the board (if multiple, returns last)
@@ -75,7 +76,6 @@ putPiece chessPiece chessPosition board = (removePiece chessPosition board) ++ [
 
 
 -- Returns all legal moves for the given side on the given chess board
--- TODO: test this [Aziz] -- waiting for legalNextPosForPieceAtPos implementations
 legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
 legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> allMoves ++ (legalMovesForPieceAtPos piece chessBoard position)) [] filteredPieces
     where (ChessBoard filteredPieces state) = filterChessBoard chessBoard chessPieceColour
@@ -89,6 +89,10 @@ validMove board colour move = elem move (legalMoves board colour)
 
 -- Returns true if the chessboard has been closed to indicate the game is over
 gameOver (ChessBoard _ state) = state == Over
+
+
+-- Returns the pieces on the ChessBoard
+getPieces (ChessBoard pieces _) = pieces
 
 
 -- Returns a version of the chessboard with only the pieces of the given colour
