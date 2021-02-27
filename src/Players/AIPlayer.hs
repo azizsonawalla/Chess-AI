@@ -30,7 +30,7 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 -- colour (ChessPieceColour):  the colour/side of the current player
 -- TODO: add tests [Aziz]
 getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
+getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree pieceColour
     where maximizedTree = maximize gameTree pieceColour
           gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
 
@@ -79,10 +79,28 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 
 
 -- Returns the next move that maximizes the score
--- TODO: implement + test this [Yiyi]
-getMoveWithMaxScore :: GameTree -> ChessMove
-getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
+-- TODO: test this [Yiyi]
+getMoveWithMaxScore :: GameTree -> ChessPieceColour -> ChessMove
+getMoveWithMaxScore (GameTree _ _ nextMoves) colour = moveOfMaxScore
+    where movesWithScore = zip allMoves scoreOfMoves
+          allMoves = [move | (MoveSubtree move _) <- nextMoves]              -- nextMoves :: [MoveSubtree]
+          scoreOfMoves = map (\ tree -> getScore tree) subGameTrees
+          subGameTrees = [gameTree | (MoveSubtree _ gameTree) <- nextMoves]
+          moveWithMaxScore = foldr (\ acc scoreOfMove -> if (isGreater scoreOfMove acc) then scoreOfMove else acc) (head movesWithScore) (tail movesWithScore)
+          moveOfMaxScore = getMove moveWithMaxScore
 
+
+-- returns the ChessMove of the given pair
+getMove :: (ChessMove, Score) -> ChessMove
+getMove (move, _) = move
+
+-- returns true if the score of the first pair is greater or equal to the second one
+isGreater :: (ChessMove, Score) -> (ChessMove, Score) -> Bool
+isGreater (_, s1) (_, s2) = s1 >= s2
+
+-- returns the score of the given tree
+getScore :: GameTree -> Score
+getScore (GameTree _ score _) = score
 
 -- Scores the given chess board based on how beneficial the positions are for the given colour
 -- The higher the score, the more advantageous the scenario is for the colour

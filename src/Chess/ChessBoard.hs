@@ -29,7 +29,6 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- If there is a piece at the destination square, then that piece will be replaced
 -- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
--- TODO: test this [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
 makeMove cb@(ChessBoard pieces state) (ChessMove from to) = 
     ChessBoard (putPiece pieceToMove to (removePiece from pieces)) (if (isCheckMate cb (getPieceColour pieceToMove)) then Over else state)
@@ -60,9 +59,9 @@ legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> 
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: implement + test this (0.5 hour). You can use legalMoves above. [Yiyi]
+-- TODO: test this [Yiyi]
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
-validMove _ _ _ = False
+validMove chessBoard colour chessMove = elem chessMove (legalMoves chessBoard colour)
 
 
 -- Returns true if the chessboard has been closed to indicate the game is over
