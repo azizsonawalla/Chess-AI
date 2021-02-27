@@ -39,6 +39,7 @@ test_chessBoardAsString =
         randomBoard2 <- readFile "test/resources/emptyboard_string.txt" 
         assertEqual randomBoard2 (chessBoardAsString (fenToChessBoard "8/8/8/8/8/8/8/8"))
 
+
 test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
     do
         assertEqual (fenToChessBoardWithState "3k4/8/5p2/2q5/8/8/R7/4B2N" Over)             (makeMove board2 (ChessMove ('C', 6) ('C', 5)))

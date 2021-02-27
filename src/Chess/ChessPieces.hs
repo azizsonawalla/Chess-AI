@@ -8,7 +8,6 @@ import Data.Maybe
 
 -- Returns all the legal moves for the given piece, at the given position, on the given chess board
 -- Warning: Assumes that the given ChessPiece is at the given ChessPosition
--- TODO: test
 legalMovesForPieceAtPos :: ChessPiece -> ChessBoard -> ChessPosition -> [ChessMove]
 legalMovesForPieceAtPos piece board startPosition = buildMoves startPosition (legalNextPosForPieceAtPos piece board startPosition)
 
@@ -80,7 +79,6 @@ legalNextPosForPieceAtPos (Bishop colour) chessBoard position =
 
 -- Knight can move in an “L” laid out at any horizontal or vertical angle. That is, two squares in any straight line 
 -- and then one at a right-angle. The knight can also jump over pieces. 
--- TODO: Implement + test this (moves for Knight at the given position) (1.5 hour) [Aziz]
 legalNextPosForPieceAtPos (Knight colour) chessBoard position = removePositionsWithColour lpaths colour chessBoard
       where lpaths = getLPathPositions position
 

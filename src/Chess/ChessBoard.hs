@@ -51,7 +51,7 @@ kingInCheckmate :: ChessBoard -> ChessPieceColour -> Bool
 kingInCheckmate chessBoard@(ChessBoard pieces state) colour = not (kingExists && kingSafe)
     where kingExists = (kingPos /= Nothing)
           kingSafe = not (subset kingMoves opponentMoves)
-          kingMoves = (fromJust kingPos):(map destSquare (legalMovesForPieceAtPos (King colour) chessBoard (fromJust kingPos)))
+          kingMoves = (fromJust kingPos):(legalNextPosForPieceAtPos (King colour) chessBoard (fromJust kingPos))
           opponentMoves = map destSquare (legalMoves chessBoard (oppositeColour colour))
           kingPos = getPositionOfPiece chessBoard (King colour)
           destSquare (ChessMove from to) = to
