@@ -9,7 +9,7 @@ import Util
 
 -- -- Define Show for a ChessBoard
 instance Show ChessBoard where
-    show board@(ChessBoard pieces state) = (chessBoardAsString board)
+    show board = (chessBoardAsString board)
 
 -- A fresh Chess Board with all the pieces in the starting position
 freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
