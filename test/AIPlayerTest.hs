@@ -28,6 +28,16 @@ test_buildGameTree =
         assertEqual gameTree16_depth1_Black (buildGameTree board16 Black 1)
 
 
+test_maximize =
+    do
+        assertEqual gameTree16_depth0_White (maximize gameTree16_depth0_White White)
+        assertEqual gameTree16_depth0_Black (maximize gameTree16_depth0_Black Black)
+
+test_minimize =
+    do
+        assertEqual gameTree16_depth0_White (minimize gameTree16_depth0_White White)
+        assertEqual gameTree16_depth0_Black (minimize gameTree16_depth0_Black Black)
+
 cloneTree (GameTree board score children) = (GameTree board score (map cloneMoveSubtree children))
 cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
 
