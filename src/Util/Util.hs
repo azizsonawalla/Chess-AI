@@ -16,4 +16,5 @@ toUpperStr str = map toUpper str
 split deliminator str = foldl (\ list char -> if char==deliminator then (list++[""]) else (init list)++[(last list)++[char]]) [""] str
 
 -- TODO: test
-subset list1 list2 = (intersect list1 list2) == list1
+subset :: (Eq a) => [a] -> [a] -> Bool
+subset list1 list2 = (list1 /= []) && ((intersect list1 list2) == list1)

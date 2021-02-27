@@ -40,7 +40,7 @@ makeMove cb@(ChessBoard pieces state) (ChessMove from to) = updateGameStatus new
 -- TODO: test this
 updateGameStatus :: ChessBoard -> ChessBoard
 updateGameStatus chessBoard@(ChessBoard pieces state) = (ChessBoard pieces newState)
-    where newState = if whiteKingInCheckmate || blackKingInCheckmate then Over else state
+    where newState = if (whiteKingInCheckmate || blackKingInCheckmate) then Over else state
           whiteKingInCheckmate = kingInCheckmate chessBoard White
           blackKingInCheckmate = kingInCheckmate chessBoard Black
 
@@ -51,9 +51,10 @@ kingInCheckmate :: ChessBoard -> ChessPieceColour -> Bool
 kingInCheckmate chessBoard@(ChessBoard pieces state) colour = not (kingExists && kingSafe)
     where kingExists = (kingPos /= Nothing)
           kingSafe = not (subset kingMoves opponentMoves)
-          kingPos = getPositionOfPiece chessBoard (King colour) 
-          kingMoves = legalMovesForPieceAtPos (King colour) chessBoard (fromJust kingPos)
-          opponentMoves = legalMoves chessBoard (oppositeColour colour)
+          kingMoves = (fromJust kingPos):(map destSquare (legalMovesForPieceAtPos (King colour) chessBoard (fromJust kingPos)))
+          opponentMoves = map destSquare (legalMoves chessBoard (oppositeColour colour))
+          kingPos = getPositionOfPiece chessBoard (King colour)
+          destSquare (ChessMove from to) = to
 
 
 -- Returns the position of the given piece on the board (if multiple, returns last)
