@@ -40,22 +40,14 @@ makeMove cb@(ChessBoard pieces state) (ChessMove from to) = updateGameStatus new
 -- TODO: test this
 updateGameStatus :: ChessBoard -> ChessBoard
 updateGameStatus chessBoard@(ChessBoard pieces state) = (ChessBoard pieces newState)
-    where newState = if (whiteKingInCheckmate || blackKingInCheckmate) then Over else state
-          whiteKingInCheckmate = kingInCheckmate chessBoard White
-          blackKingInCheckmate = kingInCheckmate chessBoard Black
+    where newState = if (whitekingDead || blackkingDead) then Over else state
+          whitekingDead = kingDead chessBoard White
+          blackkingDead = kingDead chessBoard Black
 
 
 -- Check if the given King is in checkmate
--- TODO: test this
-kingInCheckmate :: ChessBoard -> ChessPieceColour -> Bool
-kingInCheckmate chessBoard@(ChessBoard pieces state) colour = not (kingExists && kingSafe)
-    where kingExists = (kingPos /= Nothing)
-          kingSafe = not (subset kingMoves opponentMoves)
-          kingMoves = (if onlyKing then [] else [(fromJust kingPos)])++(legalNextPosForPieceAtPos (King colour) chessBoard (fromJust kingPos))
-          opponentMoves = map destSquare (legalMoves chessBoard (oppositeColour colour))
-          kingPos = getPositionOfPiece chessBoard (King colour)
-          destSquare (ChessMove from to) = to
-          onlyKing = length (getPieces (filterChessBoard chessBoard colour)) == 1
+kingDead :: ChessBoard -> ChessPieceColour -> Bool
+kingDead chessBoard colour = (getPositionOfPiece chessBoard (King colour)) == Nothing
 
 
 -- Returns the position of the given piece on the board (if multiple, returns last)
