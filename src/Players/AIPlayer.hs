@@ -30,7 +30,7 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 -- colour (ChessPieceColour):  the colour/side of the current player
 -- TODO: add tests [Aziz]
 getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree pieceColour
+getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
     where maximizedTree = maximize gameTree pieceColour
           gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
 
@@ -80,8 +80,8 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 
 -- Returns the next move that maximizes the score
 -- TODO: test this [Yiyi]
-getMoveWithMaxScore :: GameTree -> ChessPieceColour -> ChessMove
-getMoveWithMaxScore (GameTree _ _ nextMoves) colour = moveOfMaxScore
+getMoveWithMaxScore :: GameTree -> ChessMove
+getMoveWithMaxScore (GameTree _ _ nextMoves) = moveOfMaxScore
     where movesWithScore = zip allMoves scoreOfMoves
           allMoves = [move | (MoveSubtree move _) <- nextMoves]              -- nextMoves :: [MoveSubtree]
           scoreOfMoves = map (\ tree -> getScore tree) subGameTrees
