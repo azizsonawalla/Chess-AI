@@ -68,15 +68,12 @@ type ScoreColour = (ChessBoard -> Integer)
 -- If tree has children, calls minimize on each subtree (with the opposite colour) and returns the root where the score is the max of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
 maximize :: GameTree -> ScoreColour -> GameTree
-maximize (GameTree chessBoard _ children) scoreFn
-    | null children             = GameTree chessBoard nodeScore children
-    | otherwise                 = GameTree chessBoard maxScore children
-    where   
-        nodeScore = scoreFn chessBoard
-        maxScore = foldr (\currMax currScore -> if currScore > currMax then currScore else currMax ) 0 allScores
-        allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
-        subtreeList = [ minimize subtree scoreFn | (MoveSubtree move subtree) <- children ]
-
+maximize (GameTree chessBoard _ []) scoreFn = GameTree chessBoard (scoreFn chessBoard) []
+maximize (GameTree chessBoard _ children) scoreFn = GameTree chessBoard minChildScore maximizedChildren
+    where
+        maximizedChildren = map (\ (MoveSubtree move childtree) -> (MoveSubtree move (minimize childtree scoreFn))) children
+        childScores = [ childScore | (MoveSubtree _ (GameTree _ childScore _)) <- maximizedChildren ]
+        minChildScore = maximum childScores
 
 
 -- Scores the given GameTree using a score minimization strategy
@@ -84,14 +81,12 @@ maximize (GameTree chessBoard _ children) scoreFn
 -- If tree has children, calls maximize on each subtree (with the opposite colour) and returns the root where the score is the min of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
 minimize :: GameTree -> ScoreColour -> GameTree
-minimize (GameTree chessBoard _ children) scoreFn 
-    | null children             = GameTree chessBoard nodeScore children
-    | otherwise                 = GameTree chessBoard minScore children
-    where   
-        nodeScore = scoreFn chessBoard
-        minScore = foldr (\currMin currScore -> if currScore < currMin then currScore else currMin ) 0 allScores
-        allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
-        subtreeList = [ maximize subtree scoreFn | (MoveSubtree move subtree) <- children ]
+minimize (GameTree chessBoard _ []) scoreFn = GameTree chessBoard (scoreFn chessBoard) []
+minimize (GameTree chessBoard _ children) scoreFn = GameTree chessBoard minChildScore maximizedChildren
+    where
+        maximizedChildren = map (\ (MoveSubtree move childtree) -> (MoveSubtree move (maximize childtree scoreFn))) children
+        childScores = [ childScore | (MoveSubtree _ (GameTree _ childScore _)) <- maximizedChildren ]
+        minChildScore = minimum childScores
 
 
 -- Returns the next move that maximizes the score
