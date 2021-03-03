@@ -48,6 +48,29 @@ test_makeMove = -- makeMove :: ChessBoard -> ChessMove -> ChessBoard
         assertEqual (fenToChessBoard "3k4/8/5p2/8/8/8/R7/4B2q")   (makeMove board2 (ChessMove ('C', 6) ('H', 1)))
         assertEqual (fenToChessBoard "8/p3p2p/1R1Q2r1/8/8/1p1b1n2/P3P2P/8")   (makeMove board5 (ChessMove ('G', 3) ('G', 6)))
         assertEqual (fenToChessBoard "8/p3p2p/3Q2N1/8/8/1R1b1nr1/P3P2P/8")   (makeMove board5 (ChessMove ('B', 6) ('B', 3)))
-        -- TODO: add checkmate tests
-        
+
+test_validMove = 
+    do
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 4)))
+        assertEqual True (validMove freshBoard White (ChessMove ('B', 2) ('B', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('B', 2) ('B', 4)))
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('C', 2) ('C', 3)))
+        assertEqual True (validMove freshBoard White (ChessMove ('C', 2) ('C', 4)))
+        assertEqual False (validMove freshBoard White (ChessMove ('G', 1) ('H', 6)))
+        assertEqual False (validMove freshBoard White (ChessMove ('B', 8) ('C', 6)))
+        assertEqual False (validMove freshBoard White (ChessMove ('H', 7) ('H', 6)))
+
+        assertEqual True (validMove freshBoard Black (ChessMove ('A', 7) ('A', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('A', 7) ('A', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('B', 7) ('B', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('B', 7) ('B', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('C', 7) ('C', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('C', 7) ('C', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('D', 7) ('D', 6)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('A', 1) ('H', 6)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('B', 2) ('C', 1)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('H', 1) ('H', 2)))
+
 main = htfMain htf_thisModulesTests

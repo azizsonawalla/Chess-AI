@@ -79,14 +79,11 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 
 
 -- Returns the next move that maximizes the score
--- TODO: test this [Yiyi]
+-- TODO: test this  [Yiyi]
 getMoveWithMaxScore :: GameTree -> ChessPieceColour -> ChessMove
-getMoveWithMaxScore (GameTree _ _ nextMoves) colour = moveOfMaxScore
-    where movesWithScore = zip allMoves scoreOfMoves
-          allMoves = [move | (MoveSubtree move _) <- nextMoves]              -- nextMoves :: [MoveSubtree]
-          scoreOfMoves = map (\ tree -> getScore tree) subGameTrees
-          subGameTrees = [gameTree | (MoveSubtree _ gameTree) <- nextMoves]
-          moveWithMaxScore = foldr (\ acc scoreOfMove -> if (isGreater scoreOfMove acc) then scoreOfMove else acc) (head movesWithScore) (tail movesWithScore)
+getMoveWithMaxScore root@(GameTree _ _ nextMoves) colour = moveOfMaxScore
+    where movesWithScore  = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]    -- nextMoves :: [MoveSubtree]
+          moveWithMaxScore = (filter (\ (move, score) -> score == (getScore root)) movesWithScore) !! 0
           moveOfMaxScore = getMove moveWithMaxScore
 
 
@@ -94,13 +91,10 @@ getMoveWithMaxScore (GameTree _ _ nextMoves) colour = moveOfMaxScore
 getMove :: (ChessMove, Score) -> ChessMove
 getMove (move, _) = move
 
--- returns true if the score of the first pair is greater or equal to the second one
-isGreater :: (ChessMove, Score) -> (ChessMove, Score) -> Bool
-isGreater (_, s1) (_, s2) = s1 >= s2
-
 -- returns the score of the given tree
 getScore :: GameTree -> Score
 getScore (GameTree _ score _) = score
+
 
 -- Scores the given chess board based on how beneficial the positions are for the given colour
 -- The higher the score, the more advantageous the scenario is for the colour

@@ -59,7 +59,6 @@ legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> 
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: test this [Yiyi]
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
 validMove chessBoard colour chessMove = elem chessMove (legalMoves chessBoard colour)
 
