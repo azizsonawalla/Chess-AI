@@ -12,7 +12,7 @@ aiMoveFunction :: MoveFunction
 aiMoveFunction chessPieceColour chessBoard = 
     do 
         putStrLn "AI's turn. Please wait."                                  -- TODO: if no legal moves are available, set game to 'over'
-        let move = getBestMoveRandom chessBoard chessPieceColour
+        let move = getBestMoveMinMax chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
         return (newChessBoard, move)
 
@@ -32,7 +32,7 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
 getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
     where maximizedTree = maximize gameTree (score pieceColour)
-          gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
+          gameTree = buildGameTree chessBoard pieceColour 4    -- analyzes to depth=8
 
 
 -- A tree representing all possible outcomes starting from the root chessboard
