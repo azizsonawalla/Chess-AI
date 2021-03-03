@@ -107,8 +107,29 @@ test_legalMoves =
 
 test_validMove = 
     do
-        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3)))
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 4)))
+        assertEqual True (validMove freshBoard White (ChessMove ('B', 2) ('B', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('B', 2) ('B', 4)))
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3))) 
+        assertEqual True (validMove freshBoard White (ChessMove ('C', 2) ('C', 3)))
+        assertEqual True (validMove freshBoard White (ChessMove ('C', 2) ('C', 4)))
+        assertEqual False (validMove freshBoard White (ChessMove ('G', 1) ('H', 6)))
+        assertEqual False (validMove freshBoard White (ChessMove ('B', 8) ('C', 6)))
+        assertEqual False (validMove freshBoard White (ChessMove ('H', 7) ('H', 6)))
+
+        assertEqual True (validMove freshBoard Black (ChessMove ('A', 7) ('A', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('A', 7) ('A', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('B', 7) ('B', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('B', 7) ('B', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('C', 7) ('C', 6)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('C', 7) ('C', 5)))
+        assertEqual True (validMove freshBoard Black (ChessMove ('D', 7) ('D', 6)))
         assertEqual False (validMove freshBoard Black (ChessMove ('E', 2) ('E', 4)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('A', 1) ('H', 6)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('B', 2) ('C', 1)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('H', 1) ('H', 2)))
+        
         assertEqual True (validMove board2 White (ChessMove ('E', 1) ('F', 2)))
         assertEqual False (validMove board2 White (ChessMove ('E', 1) ('F', 3)))
         
