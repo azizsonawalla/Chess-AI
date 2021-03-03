@@ -82,9 +82,7 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 -- TODO: test this [Yiyi]
 getMoveWithMaxScore :: GameTree -> ChessMove
 getMoveWithMaxScore (GameTree _ _ nextMoves) = moveOfMaxScore
-    where movesWithScore = zip allMoves scoreOfMoves
-          allMoves = [move | (MoveSubtree move _) <- nextMoves]              -- nextMoves :: [MoveSubtree]
-          scoreOfMoves = map (\ tree -> getScore tree) subGameTrees
+    where movesWithScore = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]
           subGameTrees = [gameTree | (MoveSubtree _ gameTree) <- nextMoves]
           moveWithMaxScore = foldr (\ acc scoreOfMove -> if (isGreater scoreOfMove acc) then scoreOfMove else acc) (head movesWithScore) (tail movesWithScore)
           moveOfMaxScore = getMove moveWithMaxScore
