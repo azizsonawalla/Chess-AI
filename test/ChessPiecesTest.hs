@@ -236,6 +236,13 @@ test_legalNextPosForPieceAtPos_Queen =
         assertListsEqualAsSets board3_E6 (legalNextPosForPieceAtPos (Queen White) board3 ('E', 6))
         assertListsEqualAsSets board4_E3 (legalNextPosForPieceAtPos (Queen White) board4 ('E', 3))
         assertListsEqualAsSets board5_D6 (legalNextPosForPieceAtPos (Queen White) board5 ('D', 6))
+
+test_legalMovesForPieceAtPos = 
+    do
+        assertListsEqualAsSets [] (legalMovesForPieceAtPos (Bishop White) freshBoard ('C', 1))
+        assertListsEqualAsSets [(ChessMove ('A', 2) ('A', 3)), (ChessMove ('A', 2) ('A', 4))] (legalMovesForPieceAtPos (Pawn White) freshBoard ('A', 2))
+        assertListsEqualAsSets [(ChessMove ('A', 1) ('A', 2)), (ChessMove ('A', 1) ('B', 1))] (legalMovesForPieceAtPos (King White) board13 ('A', 1))
+
  
 test_getPieceAt = 
     do 
