@@ -3,6 +3,7 @@ module AIPlayer where
 import ChessUtilTypes
 import Data.List (sort)
 import ChessBoard
+import ChessPieces
 
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
@@ -64,11 +65,11 @@ buildGameTree chessBoard colour depth = GameTree chessBoard 0 children
 -- If tree has children, calls minimize on each subtree (with the opposite colour) and returns the root where the score is the max of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
 maximize :: GameTree -> ChessPieceColour -> GameTree
-maximize (GameTree chessBoard score children) colour
+maximize (GameTree chessBoard _ children) colour
     | null children             = GameTree chessBoard nodeScore children
     | otherwise                 = GameTree chessBoard maxScore children
     where   
-        nodeScore = calculateScore chessBoard colour
+        nodeScore = score chessBoard colour
         maxScore = foldr (\currMax currScore -> if currScore > currMax then currScore else currMax ) 0 allScores
         allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
         subtreeList = [ minimize subtree (oppositeColour colour) | (MoveSubtree move subtree) <- children ]
@@ -80,32 +81,53 @@ maximize (GameTree chessBoard score children) colour
 -- If tree has children, calls maximize on each subtree (with the opposite colour) and returns the root where the score is the min of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
 minimize :: GameTree -> ChessPieceColour -> GameTree
-minimize (GameTree chessBoard score children) colour 
+minimize (GameTree chessBoard _ children) colour 
     | null children             = GameTree chessBoard nodeScore children
     | otherwise                 = GameTree chessBoard minScore children
     where   
-        nodeScore = calculateScore chessBoard (oppositeColour colour)
+        nodeScore = score chessBoard (oppositeColour colour)
         minScore = foldr (\currMin currScore -> if currScore < currMin then currScore else currMin ) 0 allScores
         allScores = [ subScore | (GameTree _ subScore _) <- subtreeList ]
         subtreeList = [ maximize subtree (oppositeColour colour) | (MoveSubtree move subtree) <- children ]
 
 
 -- Returns the next move that maximizes the score
--- TODO: implement + test this [Yiyi]
 getMoveWithMaxScore :: GameTree -> ChessMove
-getMoveWithMaxScore gameTree = ChessMove ('z', -1) ('z', -1)
+getMoveWithMaxScore (GameTree _ rootScore nextMoves) = moveOfMaxScore
+    where movesWithScore = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]
+          moveWithMaxScore = (filter (\ (move, score) -> score == rootScore) movesWithScore) !! 0  -- after calling maximize, root has same score as max subtree
+          moveOfMaxScore = getMove moveWithMaxScore
 
+
+-- returns the ChessMove of the given pair
+getMove :: (ChessMove, Score) -> ChessMove
+getMove (move, _) = move
+
+-- returns true if the score of the first pair is greater or equal to the second one
+isGreater :: (ChessMove, Score) -> (ChessMove, Score) -> Bool
+isGreater (_, s1) (_, s2) = s1 >= s2
+
+-- returns the score of the given tree
+getScore :: GameTree -> Score
+getScore (GameTree _ score _) = score
 
 -- Scores the given chess board based on how beneficial the positions are for the given colour
 -- The higher the score, the more advantageous the scenario is for the colour
 -- First version: score is the sum of the scores for each piece on the board of the colour minus the scores for each piece of the other colour on the board
 -- Scores per piece: https://cdn-media-1.freecodecamp.org/images/1*e4p9BrCzJUdlqx7KVGW9aA.png
--- TODO: implement + test this [Yiyi]
-calculateScore :: ChessBoard -> ChessPieceColour -> Integer
-calculateScore chessBoard forColour = -1
+score :: ChessBoard -> ChessPieceColour -> Integer
+score (ChessBoard pieces _) colour = scoreOfCurrColour - scoreOfOppoColour
+    where currColour = filter (\ (position, piece) -> (getPieceColour piece) == colour) pieces
+          oppoColour = filter (\ (position, piece) -> (getPieceColour piece) /= colour) pieces
+          scoreOfCurrColour = foldr (+) 0 (map (\ (position, piece) -> (pieceToScore piece)) currColour)
+          scoreOfOppoColour = foldr (+) 0 (map (\ (position, piece) -> (pieceToScore piece)) oppoColour) 
 
 
--- Returns the opposite of the given colour
-oppositeColour :: ChessPieceColour -> ChessPieceColour
-oppositeColour White = Black
-oppositeColour Black = White
+-- Returns the score of the given piece
+pieceToScore :: ChessPiece -> Integer
+pieceToScore (King _)   = 900
+pieceToScore (Queen _)  = 90
+pieceToScore (Rook _)   = 50
+pieceToScore (Bishop _) = 30
+pieceToScore (Knight _) = 30
+pieceToScore (Pawn _)   = 10

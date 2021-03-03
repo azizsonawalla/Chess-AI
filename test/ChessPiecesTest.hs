@@ -226,7 +226,24 @@ test_legalNextPosForPieceAtPos_Pawn =
             -- Non starting position no pieces in front
         assertListsEqualAsSets board10_B6 (legalNextPosForPieceAtPos (Pawn Black) board10 ('B', 6))
 
+test_legalNextPosForPieceAtPos_Queen = 
+    do
+        -- freshboard
+        assertEqual [] (legalNextPosForPieceAtPos (Queen White) freshBoard ('D', 1))
+        assertEqual [] (legalNextPosForPieceAtPos (Queen Black) freshBoard ('D', 8))
 
+        assertListsEqualAsSets board2_C6 (legalNextPosForPieceAtPos (Queen Black) board2 ('C', 6))
+        assertListsEqualAsSets board3_E6 (legalNextPosForPieceAtPos (Queen White) board3 ('E', 6))
+        assertListsEqualAsSets board4_E3 (legalNextPosForPieceAtPos (Queen White) board4 ('E', 3))
+        assertListsEqualAsSets board5_D6 (legalNextPosForPieceAtPos (Queen White) board5 ('D', 6))
+
+test_legalMovesForPieceAtPos = 
+    do
+        assertListsEqualAsSets [] (legalMovesForPieceAtPos (Bishop White) freshBoard ('C', 1))
+        assertListsEqualAsSets [(ChessMove ('A', 2) ('A', 3)), (ChessMove ('A', 2) ('A', 4))] (legalMovesForPieceAtPos (Pawn White) freshBoard ('A', 2))
+        assertListsEqualAsSets [(ChessMove ('A', 1) ('A', 2)), (ChessMove ('A', 1) ('B', 1))] (legalMovesForPieceAtPos (King White) board13 ('A', 1))
+
+ 
 test_getPieceAt = 
     do 
         assertEqual (Just (Rook White)) (getPieceAt ('A', 1) freshBoard)

@@ -4,11 +4,12 @@ import ChessPieces
 import ChessUtilTypes
 import FENotation
 import Data.Maybe
+import Util
 
 
 -- -- Define Show for a ChessBoard
 instance Show ChessBoard where
-    show board = chessBoardAsString board
+    show board = (chessBoardAsString board)
 
 -- A fresh Chess Board with all the pieces in the starting position
 freshBoard = fenToChessBoard "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
@@ -29,26 +30,60 @@ chessBoardRowAsString rowNum chessBoard = rowNumStr ++ "  " ++ (foldl (\ rowStr 
 -- If there is a piece at the destination square, then that piece will be replaced
 -- If the move results in a check-mate, sets the state of the ChessBoard to Over
 -- WARNING: Assumes given move is valid!
--- TODO: implement + test this (1.5 hours) [Yiyi]
 makeMove :: ChessBoard -> ChessMove -> ChessBoard
-makeMove chessBoard move = chessBoard
+makeMove cb@(ChessBoard pieces state) (ChessMove from to) = updateGameStatus newChessBoard
+    where newChessBoard = ChessBoard (putPiece pieceToMove to (removePiece from pieces)) state
+          pieceToMove = fromJust(getPieceAt from cb)
+
+
+-- Checks if there is a checkmate and updates the game status accordingly
+-- TODO: test this
+updateGameStatus :: ChessBoard -> ChessBoard
+updateGameStatus chessBoard@(ChessBoard pieces state) = (ChessBoard pieces newState)
+    where newState = if (whitekingDead || blackkingDead) then Over else state
+          whitekingDead = kingDead chessBoard White
+          blackkingDead = kingDead chessBoard Black
+
+
+-- Check if the given King is in checkmate
+kingDead :: ChessBoard -> ChessPieceColour -> Bool
+kingDead chessBoard colour = (getPositionOfPiece chessBoard (King colour)) == Nothing
+
+
+-- Returns the position of the given piece on the board (if multiple, returns last)
+getPositionOfPiece :: ChessBoard -> ChessPiece -> Maybe ChessPosition
+getPositionOfPiece (ChessBoard pieces _) piece = foldl (\ result (position, currPiece) -> if currPiece == piece then Just position else result) Nothing pieces
+
+
+-- Removes the piece at the given position from the ChessBoard if it exists
+-- Does nothing if the position is empty
+removePiece :: ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
+removePiece chessPosition board = filter (\ (position, piece) -> position /= chessPosition) board
+
+
+-- Adds the given piece to the given position on the chessboard
+-- If there is a piece at the given position, then that piece will be removed
+putPiece :: ChessPiece -> ChessPosition -> [(ChessPosition, ChessPiece)] -> [(ChessPosition, ChessPiece)]
+putPiece chessPiece chessPosition board = (removePiece chessPosition board) ++ [(chessPosition, chessPiece)]
 
 
 -- Returns all legal moves for the given side on the given chess board
--- TODO: test this [Aziz] -- waiting for legalNextPosForPieceAtPos implementations
 legalMoves :: ChessBoard -> ChessPieceColour -> [ChessMove]
 legalMoves chessBoard chessPieceColour = foldr (\ (position, piece) allMoves -> allMoves ++ (legalMovesForPieceAtPos piece chessBoard position)) [] filteredPieces
     where (ChessBoard filteredPieces state) = filterChessBoard chessBoard chessPieceColour
 
 
 -- Returns true if the given move is valid on the given board, for the given colour
--- TODO: implement + test this (0.5 hour). You can use legalMoves above. [Yiyi]
 validMove :: ChessBoard -> ChessPieceColour -> ChessMove -> Bool
-validMove _ _ _ = False
+validMove board colour move = elem move (legalMoves board colour)
 
 
 -- Returns true if the chessboard has been closed to indicate the game is over
 gameOver (ChessBoard _ state) = state == Over
+
+
+-- Returns the pieces on the ChessBoard
+getPieces (ChessBoard pieces _) = pieces
 
 
 -- Returns a version of the chessboard with only the pieces of the given colour
