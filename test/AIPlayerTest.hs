@@ -40,10 +40,10 @@ test_buildGameTree =
 
 test_score = 
     do
-        assertEqual 890 (score board2 Black)
-        assertEqual (-890) (score board2 White)
-        assertEqual (-80) (score board3 Black)
-        assertEqual 80 (score board3 White)
+        assertEqual 890 (score Black board2)
+        assertEqual (-890) (score White board2)
+        assertEqual (-80) (score Black board3)
+        assertEqual 80 (score White board3)
 
 
 test_getMoveWithMaxScore = 
