@@ -18,7 +18,6 @@ test_GameTreeEq =
         assertEqual False (gameTree16_depth1_Black == gameTree16_depth0_Black)
 
 
--- Will not pass until makeMove is implemented
 test_buildGameTree =
     do
         assertEqual gameTree16_depth0_White (buildGameTree board16 White 0)
@@ -27,21 +26,55 @@ test_buildGameTree =
         assertEqual gameTree16_depth1_Black (buildGameTree board16 Black 1)
 
 
-cloneTree (GameTree board score children) = (GameTree board score (map cloneMoveSubtree children))
-cloneMoveSubtree :: MoveSubtree -> MoveSubtree
-cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
+test_maximize =
+    do
+        assertEqual gameTree16_depth1_White_scores_max (maximize gameTree16_depth1_White dummyScoreFn)
+        assertEqual gameTree16_depth1_Black_scores_max (maximize gameTree16_depth1_Black dummyScoreFn)
+
+
+test_minimize =
+    do
+        assertEqual gameTree16_depth1_White_scores_min (minimize gameTree16_depth1_White dummyScoreFn)
+        assertEqual gameTree16_depth1_Black_scores_min (minimize gameTree16_depth1_Black dummyScoreFn)
+
 
 test_score = 
     do
-        assertEqual 890 (score board2 Black)
-        assertEqual (-890) (score board2 White)
-        assertEqual (-80) (score board3 Black)
-        assertEqual 80 (score board3 White)
+        assertEqual 890 (score Black board2)
+        assertEqual (-890) (score White board2)
+        assertEqual (-80) (score Black board3)
+        assertEqual 80 (score White board3)
 
 
 test_getMoveWithMaxScore = 
     do 
-        assertEqual board16_W1_Move (getMoveWithMaxScore gameTree16_depth1_White_scores)
-        assertEqual board16_B8_Move (getMoveWithMaxScore gameTree16_depth1_Black_scores)
+        assertEqual board16_W1_Move (getMoveWithMaxScore gameTree16_depth1_White_scores_max)
+        assertEqual board16_B8_Move (getMoveWithMaxScore gameTree16_depth1_Black_scores_max)
+
+
+-- A dummy score function
+dummyScoreFn :: ChessBoard -> Integer
+dummyScoreFn board 
+    | board == board16_W1_Board = 50
+    | board == board16_W2_Board = -1
+    | board == board16_B1_Board = 1
+    | board == board16_B2_Board = -32
+    | board == board16_B3_Board = 50
+    | board == board16_B4_Board = -81
+    | board == board16_B5_Board = 200
+    | board == board16_B6_Board = 500
+    | board == board16_B7_Board = -800
+    | board == board16_B8_Board = 501
+    | otherwise                 = -999999
+
+-- Clone a GameTree
+cloneTree :: GameTree -> GameTree
+cloneTree (GameTree board score children) = (GameTree board score (map cloneMoveSubtree children))
+
+
+-- Clone a MoveSubtree
+cloneMoveSubtree :: MoveSubtree -> MoveSubtree
+cloneMoveSubtree (MoveSubtree move tree) = (MoveSubtree move (cloneTree tree))
+
 
 main = htfMain htf_thisModulesTests

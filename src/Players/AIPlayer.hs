@@ -12,7 +12,7 @@ aiMoveFunction :: MoveFunction
 aiMoveFunction chessPieceColour chessBoard = 
     do 
         putStrLn "AI's turn. Please wait."                                  -- TODO: if no legal moves are available, set game to 'over'
-        let move = getBestMoveRandom chessBoard chessPieceColour
+        let move = getBestMoveMinMax chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
         return (newChessBoard, move)
 
@@ -31,8 +31,8 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 -- TODO: add tests [Aziz]
 getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
 getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
-    where maximizedTree = maximize gameTree pieceColour
-          gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
+    where maximizedTree = maximize gameTree (score pieceColour)
+          gameTree = buildGameTree chessBoard pieceColour 4    -- analyzes to depth=8
 
 
 -- A tree representing all possible outcomes starting from the root chessboard
@@ -60,22 +60,33 @@ buildGameTree chessBoard colour depth = GameTree chessBoard 0 children
           oppColour = oppositeColour colour
 
 
+-- A score function for a particular colour
+type ScoreColour = (ChessBoard -> Integer)
+
 -- Scores the given GameTree using a score maximizing strategy
 -- If tree has no children, scores the root (using given colour) and returns new game tree with the score calculated
 -- If tree has children, calls minimize on each subtree (with the opposite colour) and returns the root where the score is the max of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
--- TODO: implement and test this [Cynthia]
-maximize :: GameTree -> ChessPieceColour -> GameTree
-maximize (GameTree chessBoard score children) colour = (GameTree chessBoard score children)
+maximize :: GameTree -> ScoreColour -> GameTree
+maximize (GameTree chessBoard _ []) scoreFn = GameTree chessBoard (scoreFn chessBoard) []
+maximize (GameTree chessBoard _ children) scoreFn = GameTree chessBoard minChildScore maximizedChildren
+    where
+        maximizedChildren = map (\ (MoveSubtree move childtree) -> (MoveSubtree move (minimize childtree scoreFn))) children
+        childScores = [ childScore | (MoveSubtree _ (GameTree _ childScore _)) <- maximizedChildren ]
+        minChildScore = maximum childScores
 
 
 -- Scores the given GameTree using a score minimization strategy
 -- If tree has no children, scores the root (using the opposite of the given colour) and returns new game tree with the score calculated
 -- If tree has children, calls maximize on each subtree (with the opposite colour) and returns the root where the score is the min of the children's scores
 -- Reference: https://www.javatpoint.com/mini-max-algorithm-in-ai
--- TODO: implement and test this [Cynthia]
-minimize :: GameTree -> ChessPieceColour -> GameTree
-minimize (GameTree chessBoard score children) colour = (GameTree chessBoard score children)
+minimize :: GameTree -> ScoreColour -> GameTree
+minimize (GameTree chessBoard _ []) scoreFn = GameTree chessBoard (scoreFn chessBoard) []
+minimize (GameTree chessBoard _ children) scoreFn = GameTree chessBoard minChildScore maximizedChildren
+    where
+        maximizedChildren = map (\ (MoveSubtree move childtree) -> (MoveSubtree move (maximize childtree scoreFn))) children
+        childScores = [ childScore | (MoveSubtree _ (GameTree _ childScore _)) <- maximizedChildren ]
+        minChildScore = minimum childScores
 
 
 -- Returns the next move that maximizes the score
@@ -99,8 +110,8 @@ getScore (GameTree _ score _) = score
 -- The higher the score, the more advantageous the scenario is for the colour
 -- First version: score is the sum of the scores for each piece on the board of the colour minus the scores for each piece of the other colour on the board
 -- Scores per piece: https://cdn-media-1.freecodecamp.org/images/1*e4p9BrCzJUdlqx7KVGW9aA.png
-score :: ChessBoard -> ChessPieceColour -> Integer
-score (ChessBoard pieces _) colour = scoreOfCurrColour - scoreOfOppoColour
+score :: ChessPieceColour -> ChessBoard -> Integer
+score colour (ChessBoard pieces _) = scoreOfCurrColour - scoreOfOppoColour
     where currColour = filter (\ (position, piece) -> (getPieceColour piece) == colour) pieces
           oppoColour = filter (\ (position, piece) -> (getPieceColour piece) /= colour) pieces
           scoreOfCurrColour = foldr (+) 0 (map (\ (position, piece) -> (pieceToScore piece)) currColour)
