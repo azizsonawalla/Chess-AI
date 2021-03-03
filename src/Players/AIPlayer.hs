@@ -30,7 +30,7 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 -- colour (ChessPieceColour):  the colour/side of the current player
 -- TODO: add tests [Aziz]
 getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree pieceColour
+getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
     where maximizedTree = maximize gameTree pieceColour
           gameTree = buildGameTree chessBoard pieceColour 3    -- analyzes to depth=3
 
@@ -79,11 +79,10 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 
 
 -- Returns the next move that maximizes the score
--- TODO: test this  [Yiyi]
-getMoveWithMaxScore :: GameTree -> ChessPieceColour -> ChessMove
-getMoveWithMaxScore root@(GameTree _ _ nextMoves) colour = moveOfMaxScore
-    where movesWithScore  = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]    -- nextMoves :: [MoveSubtree]
-          moveWithMaxScore = (filter (\ (move, score) -> score == (getScore root)) movesWithScore) !! 0
+getMoveWithMaxScore :: GameTree -> ChessMove
+getMoveWithMaxScore (GameTree _ rootScore nextMoves) = moveOfMaxScore
+    where movesWithScore = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]        -- nextMoves :: [MoveSubtree]
+          moveWithMaxScore = (filter (\ (move, score) -> score == rootScore) movesWithScore) !! 0  -- after calling maximize, root has same score as max subtree
           moveOfMaxScore = getMove moveWithMaxScore
 
 
@@ -116,8 +115,3 @@ pieceToScore (Rook _)   = 50
 pieceToScore (Bishop _) = 30
 pieceToScore (Knight _) = 30
 pieceToScore (Pawn _)   = 10
-
--- Returns the opposite of the given colour
-oppositeColour :: ChessPieceColour -> ChessPieceColour
-oppositeColour White = Black
-oppositeColour Black = White
