@@ -103,5 +103,13 @@ test_legalMoves =
                                ,(ChessMove ('B', 8) ('C', 6))
                                ,(ChessMove ('G', 8) ('F', 6))
                                ,(ChessMove ('G', 8) ('H', 6))] (legalMoves freshBoard Black)
+
+
+test_validMove = 
+    do
+        assertEqual True (validMove freshBoard White (ChessMove ('A', 2) ('A', 3)))
+        assertEqual False (validMove freshBoard Black (ChessMove ('E', 2) ('E', 4)))
+        assertEqual True (validMove board2 White (ChessMove ('E', 1) ('F', 2)))
+        assertEqual False (validMove board2 White (ChessMove ('E', 1) ('F', 3)))
         
 main = htfMain htf_thisModulesTests
