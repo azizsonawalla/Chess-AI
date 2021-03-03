@@ -79,7 +79,6 @@ minimize (GameTree chessBoard score children) colour = (GameTree chessBoard scor
 
 
 -- Returns the next move that maximizes the score
--- TODO: test this [Yiyi]
 getMoveWithMaxScore :: GameTree -> ChessMove
 getMoveWithMaxScore (GameTree _ rootScore nextMoves) = moveOfMaxScore
     where movesWithScore = [(move, (getScore tree)) | (MoveSubtree move tree) <- nextMoves]
