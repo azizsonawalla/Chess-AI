@@ -19,7 +19,6 @@ test_GameTreeEq =
 
 
 -- Will not pass until makeMove is implemented
--- TODO: add more tests [Aziz]
 test_buildGameTree =
     do
         assertEqual gameTree16_depth0_White (buildGameTree board16 White 0)
@@ -38,5 +37,11 @@ test_score =
         assertEqual (-890) (score board2 White)
         assertEqual (-80) (score board3 Black)
         assertEqual 80 (score board3 White)
+
+
+test_getMoveWithMaxScore = 
+    do 
+        assertEqual board16_W1_Move (getMoveWithMaxScore gameTree16_depth1_White_scores)
+        assertEqual board16_B8_Move (getMoveWithMaxScore gameTree16_depth1_Black_scores)
 
 main = htfMain htf_thisModulesTests
