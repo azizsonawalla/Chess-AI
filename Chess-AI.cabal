@@ -70,3 +70,11 @@ test-suite AIPlayer
   main-is:           AIPlayerTest.hs
   build-depends:     base, HTF
   default-language:  Haskell2010
+  
+test-suite Util
+  type:              exitcode-stdio-1.0
+  other-modules:     Util
+  hs-source-dirs:    test src src/Chess src/Players src/Util
+  main-is:           UtilTest.hs
+  build-depends:     base, HTF
+  default-language:  Haskell2010

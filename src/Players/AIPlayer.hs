@@ -122,8 +122,3 @@ pieceToScore (Rook _)   = 50
 pieceToScore (Bishop _) = 30
 pieceToScore (Knight _) = 30
 pieceToScore (Pawn _)   = 10
-
--- Returns the opposite of the given colour
-oppositeColour :: ChessPieceColour -> ChessPieceColour
-oppositeColour White = Black
-oppositeColour Black = White

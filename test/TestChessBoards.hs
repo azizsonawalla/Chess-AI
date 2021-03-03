@@ -22,7 +22,7 @@ board1_A1 = [ ('A', 2) , ('A', 3) , ('A', 4) , ('A', 5) , ('A', 6) , ('A', 7) , 
 
 
 -- https://lichess.org/editor/3k4/8/2q2p2/8/8/8/R7/4B2N_w_-_-_0_1
-board2 = fenToChessBoard "3k4/8/2q2p2/8/8/8/R7/4B2N"
+board2 = fenToChessBoardWithState "3k4/8/2q2p2/8/8/8/R7/4B2N" Over
 board2_E1 = [('F', 2), ('G', 3), ('H', 4), ('D', 2), ('C', 3), ('B', 4), ('A', 5)]
 board2_D8 = [('D', 7), ('C', 8), ('E', 8), ('C', 7), ('E', 7)]
 board2_A2 = [('A', 3), ('A', 4), ('A', 5), ('A', 6), ('A', 7), ('A', 8), ('A', 1), ('B', 2), ('C', 2), ('D', 2), ('E', 2), ('F', 2), ('G', 2), ('H', 2)]
@@ -154,34 +154,34 @@ board15_H8 = [('F', 7)]
 board15_A8 = [('C', 7)]
 
 -- https://lichess.org/editor/8/8/3k4/4P3/8/8/8/8_w_-_-_0_1
-board16 = fenToChessBoard "8/8/3k4/4P3/8/8/8/8"
+board16 = fenToChessBoardWithState "8/8/3k4/4P3/8/8/8/8" Over
 
-board16_W1_Board = fenToChessBoard "8/8/3kP3/8/8/8/8/8"
+board16_W1_Board = fenToChessBoardWithState "8/8/3kP3/8/8/8/8/8" Over
 board16_W1_Move = (ChessMove ('E', 5) ('E', 6))
 
-board16_W2_Board = fenToChessBoard "8/8/3P4/8/8/8/8/8"
+board16_W2_Board = fenToChessBoardWithState "8/8/3P4/8/8/8/8/8" Over
 board16_W2_Move = (ChessMove ('E', 5) ('D', 6))
 
-board16_B1_Board = fenToChessBoard "8/8/8/4k3/8/8/8/8"
+board16_B1_Board = fenToChessBoardWithState "8/8/8/4k3/8/8/8/8" Over
 board16_B1_Move = (ChessMove ('D', 6) ('E', 5))
 
-board16_B2_Board = fenToChessBoard "8/8/8/3kP3/8/8/8/8"
+board16_B2_Board = fenToChessBoardWithState "8/8/8/3kP3/8/8/8/8" Over
 board16_B2_Move = (ChessMove ('D', 6) ('D', 5))
 
-board16_B3_Board = fenToChessBoard "8/8/8/2k1P3/8/8/8/8"
+board16_B3_Board = fenToChessBoardWithState "8/8/8/2k1P3/8/8/8/8" Over
 board16_B3_Move = (ChessMove ('D', 6) ('C', 5))
 
-board16_B4_Board = fenToChessBoard "8/8/2k5/4P3/8/8/8/8"
+board16_B4_Board = fenToChessBoardWithState "8/8/2k5/4P3/8/8/8/8" Over
 board16_B4_Move = (ChessMove ('D', 6) ('C', 6))
 
-board16_B5_Board = fenToChessBoard "8/2k5/8/4P3/8/8/8/8"
+board16_B5_Board = fenToChessBoardWithState "8/2k5/8/4P3/8/8/8/8" Over
 board16_B5_Move = (ChessMove ('D', 6) ('C', 7))
 
-board16_B6_Board = fenToChessBoard "8/3k4/8/4P3/8/8/8/8"
+board16_B6_Board = fenToChessBoardWithState "8/3k4/8/4P3/8/8/8/8" Over
 board16_B6_Move = (ChessMove ('D', 6) ('D', 7))
 
-board16_B7_Board = fenToChessBoard "8/4k3/8/4P3/8/8/8/8"
+board16_B7_Board = fenToChessBoardWithState "8/4k3/8/4P3/8/8/8/8" Over
 board16_B7_Move = (ChessMove ('D', 6) ('E', 7))
 
-board16_B8_Board = fenToChessBoard "8/8/4k3/4P3/8/8/8/8"
+board16_B8_Board = fenToChessBoardWithState "8/8/4k3/4P3/8/8/8/8" Over
 board16_B8_Move = (ChessMove ('D', 6) ('E', 6))
