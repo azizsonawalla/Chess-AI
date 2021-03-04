@@ -185,3 +185,36 @@ board16_B7_Move = (ChessMove ('D', 6) ('E', 7))
 
 board16_B8_Board = fenToChessBoardWithState "8/8/4k3/4P3/8/8/8/8" Over
 board16_B8_Move = (ChessMove ('D', 6) ('E', 6))
+
+
+
+-- https://lichess.org/editor/2k5/5n2/8/4B3/8/8/8/8_w_-_-_0_1
+-- black king and knight with white bishop
+board17 = fenToChessBoardWithState "2k5/5n2/8/4B3/8/8/8/8" Over
+
+board17_W1_Board = fenToChessBoardWithState "2k5/5n2/5B2/8/8/8/8/8" Over
+board17_W1_Move = (ChessMove ('E', 5) ('F', 6))
+
+board17_W2_Board = fenToChessBoardWithState "2k5/5n2/3B4/8/8/8/8/8" Over
+board17_W2_Move = (ChessMove ('E', 5) ('D', 6))
+
+board17_W3_Board = fenToChessBoardWithState "2k4B/5n2/8/8/8/8/8/8" Over
+board17_W3_Move = (ChessMove ('E', 5) ('H', 8))
+
+board17_W4_Board = fenToChessBoardWithState "1Bk5/5n2/8/8/8/8/8/8" Over
+board17_W4_Move = (ChessMove ('E', 5) ('B', 8))
+
+board17_W5_Board = fenToChessBoardWithState "2k5/5n2/8/8/8/8/7B/8" Over
+board17_W5_Move = (ChessMove ('E', 5) ('H', 2))
+
+board17_B1_Board = fenToChessBoardWithState "2k5/8/8/4n3/8/8/8/8" Over
+board17_B1_Move = (ChessMove ('F', 7) ('E', 5))
+
+board17_B2_Board = fenToChessBoardWithState "2k5/8/3n4/4B3/8/8/8/8" Over
+board17_B2_Move = (ChessMove ('F', 7) ('D', 6))
+
+board17_B3_Board = fenToChessBoardWithState "8/2k2n2/8/4B3/8/8/8/8" Over
+board17_B3_Move = (ChessMove ('C', 8) ('C', 7))
+
+board17_B4_Board = fenToChessBoardWithState "8/3k1n2/8/4B3/8/8/8/8" Over
+board17_B4_Move = (ChessMove ('C', 8) ('D', 7))
