@@ -19,7 +19,7 @@ searchDepth = 4
 
 
 -- Print Tree Config
-printTree = True
+printTree = False
 pruneDepth = 3
 pruneWidth = 4
 
