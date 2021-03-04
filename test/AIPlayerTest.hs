@@ -30,12 +30,16 @@ test_maximize =
     do
         assertEqual gameTree16_depth1_White_scores_max (maximize gameTree16_depth1_White dummyScoreFn)
         assertEqual gameTree16_depth1_Black_scores_max (maximize gameTree16_depth1_Black dummyScoreFn)
+        assertEqual gameTree17_depth1_White_scores_max (maximize gameTree17_depth1_White dummyScoreFn)
+        assertEqual gameTree17_depth1_Black_scores_max (maximize gameTree17_depth1_Black dummyScoreFn)
 
 
 test_minimize =
     do
         assertEqual gameTree16_depth1_White_scores_min (minimize gameTree16_depth1_White dummyScoreFn)
         assertEqual gameTree16_depth1_Black_scores_min (minimize gameTree16_depth1_Black dummyScoreFn)
+        assertEqual gameTree17_depth1_White_scores_min (minimize gameTree17_depth1_White dummyScoreFn)
+        assertEqual gameTree17_depth1_Black_scores_min (minimize gameTree17_depth1_Black dummyScoreFn)
 
 
 test_score = 
@@ -65,6 +69,15 @@ dummyScoreFn board
     | board == board16_B6_Board = 500
     | board == board16_B7_Board = -800
     | board == board16_B8_Board = 501
+    | board == board17_W1_Board = 50
+    | board == board17_W2_Board = -1
+    | board == board17_W3_Board = -1
+    | board == board17_W4_Board = -1
+    | board == board17_W5_Board = 50
+    | board == board17_B1_Board = 800
+    | board == board17_B2_Board = -300
+    | board == board17_B3_Board = -800
+    | board == board17_B4_Board = -1
     | otherwise                 = -999999
 
 -- Clone a GameTree
