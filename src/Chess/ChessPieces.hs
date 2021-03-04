@@ -263,12 +263,12 @@ getPieceColour (Bishop colour) = colour
 getPieceColour (Knight colour) = colour
 
 
-chessPieceStrings = [((King   White), "[ K ]")
-                    ,((Queen  White), "[ Q ]")
-                    ,((Rook   White), "[ R ]")
-                    ,((Bishop White), "[ B ]")
-                    ,((Knight White), "[ N ]")
-                    ,((Pawn   White), "[ P ]")
+chessPieceStrings = [((King   White), "[-K-]")
+                    ,((Queen  White), "[-Q-]")
+                    ,((Rook   White), "[-R-]")
+                    ,((Bishop White), "[-B-]")
+                    ,((Knight White), "[-N-]")
+                    ,((Pawn   White), "[-P-]")
                     ,((King   Black), "[ k ]")
                     ,((Queen  Black), "[ q ]")
                     ,((Rook   Black), "[ r ]")
