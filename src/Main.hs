@@ -16,16 +16,18 @@ startGame =
         putStrLn ("\nHi "++humanName++"!\n")
         let humanPlayer = ChessPlayer humanName White humanMoveFunction -- human player is always white
         let aiPlayer = ChessPlayer "AI Player" Black aiMoveFunction
-        putStrLn "\nStarting game..\n\n"
+        putStrLn "\nStarting game..\n"
         handleNextTurn freshBoard humanPlayer aiPlayer  -- white player always goes first
 
 
 handleNextTurn :: ChessBoard -> ChessPlayer -> ChessPlayer -> IO ()           
 handleNextTurn chessBoard currPlayer@(ChessPlayer name colour moveFn) nextPlayer  = 
     do
-        putStrLn (name ++ "\'s turn: ("++(show colour)++")")
+        putStrLn "-------------------------------------------------------------------"
+        putStrLn (name ++ "\'s turn ("++(show colour)++"):")
         (chessBoard, move) <- moveFn colour chessBoard                  -- Current player makes a move
-        putStrLn (name++" played "++(show move))
+        putStrLn (name++" played "++(show move)++"\n")
+        putStrLn "-------------------------------------------------------------------"
         if (gameOver chessBoard)                                        -- If game is over, stop
         then do
             putStrLn (name++" wins!")

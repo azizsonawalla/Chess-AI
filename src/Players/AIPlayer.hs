@@ -2,8 +2,20 @@ module AIPlayer where
 
 import ChessUtilTypes
 import Data.List (sort)
+import Data.Tree
+import Data.Tree.Pretty
 import ChessBoard
 import ChessPieces
+
+-- A null chess move
+nullMove :: ChessMove
+nullMove = ChessMove ('Z', -1) ('Z', -1)
+
+
+-- AI Player search depth
+searchDepth :: Integer
+searchDepth = 4
+
 
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
@@ -11,8 +23,9 @@ import ChessPieces
 aiMoveFunction :: MoveFunction
 aiMoveFunction chessPieceColour chessBoard = 
     do 
-        putStrLn "AI's turn. Please wait."                                  -- TODO: if no legal moves are available, set game to 'over'
-        let move = getBestMoveMinMax chessBoard chessPieceColour
+        putStrLn (show chessBoard)                                                  -- show the user the chess board
+        putStrLn "AI's turn. Please wait."                                          -- TODO: if no legal moves are available, set game to 'over'
+        move <- getBestMoveMinMax chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
         return (newChessBoard, move)
 
@@ -28,11 +41,24 @@ getBestMoveRandom chessBoard pieceColour = moves !! middleIdx where moves = lega
 -- Analyzes the board and returns the best move to make (minmax algorithm)
 -- chessboard (ChessBoard):    the current board
 -- colour (ChessPieceColour):  the colour/side of the current player
--- TODO: add tests [Aziz]
-getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> ChessMove
-getBestMoveMinMax chessBoard pieceColour = getMoveWithMaxScore maximizedTree
-    where maximizedTree = maximize gameTree (score pieceColour)
-          gameTree = buildGameTree chessBoard pieceColour 4    -- analyzes to depth=8
+getBestMoveMinMax :: ChessBoard -> ChessPieceColour -> IO ChessMove
+getBestMoveMinMax chessBoard pieceColour = 
+    do 
+       let gameTree = buildGameTree chessBoard pieceColour searchDepth
+       let maximizedTree = maximize gameTree (score pieceColour)
+       printGameTree maximizedTree 2                                      -- print the first 2 levels of the game tree
+       return (getMoveWithMaxScore maximizedTree)
+
+
+-- Prints the AI player's game tree
+printGameTree :: GameTree -> Integer -> IO ()
+printGameTree gameTree pruneLimit = 
+    do 
+       putStrLn ("\nAI Player's Game Tree (first "++(show pruneLimit)++" levels):")                                  -- shows the AI Player's game tree
+       let prunedTree = (pruneGameTree gameTree pruneLimit)
+       let dataTree = (gameTreeToDataTree nullMove prunedTree)
+       putStrLn (drawVerticalTree dataTree)
+       return ()
 
 
 -- A tree representing all possible outcomes starting from the root chessboard
@@ -126,3 +152,16 @@ pieceToScore (Rook _)   = 50
 pieceToScore (Bishop _) = 30
 pieceToScore (Knight _) = 30
 pieceToScore (Pawn _)   = 10
+
+
+-- Prune the depth of a GameTree
+pruneGameTree :: GameTree -> Integer -> GameTree
+pruneGameTree (GameTree board score children) 1 = GameTree board score []
+pruneGameTree (GameTree board score children) depth = GameTree board score [ (MoveSubtree move (pruneGameTree childTree (depth-1))) | (MoveSubtree move childTree) <- children]
+
+
+-- Translates a GameTree to a Data.Tree
+gameTreeToDataTree :: ChessMove -> GameTree -> Tree String
+gameTreeToDataTree move (GameTree _ score children) = Node label forest 
+    where label = if move == nullMove then "current board ("++(show score)++")" else (show move)++"("++(show score)++")"
+          forest = (map (\ (MoveSubtree move gt) -> gameTreeToDataTree move gt) children)
