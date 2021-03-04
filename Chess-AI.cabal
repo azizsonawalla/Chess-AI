@@ -28,7 +28,7 @@ test-suite ChessBoard
   other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessBoardTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
 
 test-suite ChessPieces
@@ -36,7 +36,7 @@ test-suite ChessPieces
   other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessPiecesTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
 
 test-suite ChessUtilTypes
@@ -44,7 +44,7 @@ test-suite ChessUtilTypes
   other-modules:     AIPlayer ChessUtilTypes Util ChessBoard ChessPieces FENotation TestChessBoards TestGameTrees
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           ChessUtilTypesTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
 
 test-suite FENotation
@@ -52,7 +52,7 @@ test-suite FENotation
   other-modules:     ChessBoard ChessPieces ChessUtilTypes FENotation Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           FENotationTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
   
 test-suite HumanPlayer
@@ -60,7 +60,7 @@ test-suite HumanPlayer
   other-modules:     HumanPlayer ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           HumanPlayerTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
   
 test-suite AIPlayer
@@ -68,7 +68,7 @@ test-suite AIPlayer
   other-modules:     AIPlayer ChessBoard ChessPieces ChessUtilTypes FENotation TestChessBoards TestGameTrees Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           AIPlayerTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
   
 test-suite Util
@@ -76,5 +76,5 @@ test-suite Util
   other-modules:     Util
   hs-source-dirs:    test src src/Chess src/Players src/Util
   main-is:           UtilTest.hs
-  build-depends:     base, HTF
+  build-depends:     base, HTF, containers, pretty-tree
   default-language:  Haskell2010
