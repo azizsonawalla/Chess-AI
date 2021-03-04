@@ -13,6 +13,7 @@ A Haskell-based Chess Engine and AI opponent.
 
 ```
 cabal install pretty-tree --install-method=copy --lib
+cabal install sort --install-method=copy --lib
 ```
 
 ### Run the Game
@@ -50,7 +51,8 @@ cabal run Chess-AI
 
     ```
     -------------------------------------------------------------------
-    Player1's turn (White):
+
+    >> Player1's turn (White):
 
 
           (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
@@ -67,7 +69,6 @@ cabal run Chess-AI
           (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
 
 
-
     Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves:
     $
     ```
@@ -78,10 +79,10 @@ cabal run Chess-AI
     Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves:
     $ e2
 
-    You can play: [E2 to E3, E2 to E4]
+    >> You can play: [E2 to E3,E2 to E4]
 
 
-          (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
+          (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H) 
 
     (8)  [ r ][ n ][ b ][ q ][ k ][ b ][ n ][ r ]  (8)
     (7)  [ p ][ p ][ p ][ p ][ p ][ p ][ p ][ p ]  (7)
@@ -104,18 +105,18 @@ cabal run Chess-AI
     ```
     Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves:
     $ e2 to e4
-    Player1 played E2 to E4
+    >> Player1 played E2 to E4
     ```
 
 5. The AI opponent will play next. If enabled, you will see the first 2 levels of the minmax tree that the AI player uses to make decisions:
 
     ```
-    Player1 played E2 to E4
+    >> Player1 played E2 to E4
 
     -------------------------------------------------------------------
     -------------------------------------------------------------------
-    
-    AI Player's turn (Black):
+
+    >> AI Player's turn (Black):
 
 
           (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
@@ -132,15 +133,44 @@ cabal run Chess-AI
           (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
 
 
-    AI's turn. Please wait.
-    AI Player's Game Tree (first 2 levels):
-                                                                                                                                            current board (-10)
-                                                                                                                                                        |
-        --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        /              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              |              \
-    H7 to H6(-10)  H7 to H5(-10)  G7 to G6(-10)  G7 to G5(-10)  F7 to F6(-10)  F7 to F5(-10)  E7 to E6(-10)  E7 to E5(-10)  D7 to D6(-10)  D7 to D5(-10)  C7 to C6(-10)  C7 to C5(-10)  B7 to B6(-10)  B7 to B5(-20)  A7 to A6(-10)  A7 to A5(-10)  G8 to H6(-10)  G8 to F6(-10)  B8 to C6(-10)  B8 to A6(-10)
+    AI opponent calculating moves. Please wait.
 
-    AI Player played H7 to H6
+    AI Player's Game Tree:
+                                                                                                                current board (-10)
+                                                                                                                        |
+                                -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                            /                                                          |                                                           |                                                          |                               \
+                        H7 to H6(-10)                                              H7 to H5(-10)                                               G7 to G6(-10)                                              G7 to G5(-10)                        ...
+                            |                                                          |                                                           |                                                          |
+        ------------------------------------------------          --------------------------------------------------          -------------------------------------------------          -------------------------------------------------
+        /             |            |            |        \        /             |             |             |        \        /             |             |            |        \        /             |             |            |        \
+    F1 to A6(30)  E4 to E5(0)  G1 to H3(0)  G1 to F3(0)  ...  D1 to G4(90)  D1 to H5(80)  F1 to A6(20)  E4 to E5(0)  ...  D1 to H5(90)  F1 to A6(30)  E4 to E5(0)  G1 to H3(0)  ...  F1 to A6(30)  F2 to F4(10)  E4 to E5(0)  G1 to F3(0)  ...
+        |             |            |            |                 |             |             |             |                 |             |             |            |                 |             |             |            |
+        ...           ...          ...          ...               ...           ...           ...           ...               ...           ...           ...          ...               ...           ...           ...          ...
+
+    >> AI Player played H7 to H6
+
+    -------------------------------------------------------------------
+    -------------------------------------------------------------------
+
+    >> Player1's turn (White):
+
+
+          (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
+
+    (8)  [ r ][ n ][ b ][ q ][ k ][ b ][ n ][ r ]  (8)
+    (7)  [ p ][ p ][ p ][ p ][ p ][ p ][ p ][   ]  (7)
+    (6)  [   ][   ][   ][   ][   ][   ][   ][ p ]  (6)
+    (5)  [   ][   ][   ][   ][   ][   ][   ][   ]  (5)
+    (4)  [   ][   ][   ][   ][-P-][   ][   ][   ]  (4)
+    (3)  [   ][   ][   ][   ][   ][   ][   ][   ]  (3)
+    (2)  [-P-][-P-][-P-][-P-][   ][-P-][-P-][-P-]  (2)
+    (1)  [-R-][-N-][-B-][-Q-][-K-][-B-][-N-][-R-]  (1)
+
+          (A)  (B)  (C)  (D)  (E)  (F)  (G)  (H)
+
+
+    Enter a move (eg. c1 to d2) or enter a position (eg. h5) to see available moves:
     ```
 
 ## Development
@@ -149,6 +179,7 @@ cabal run Chess-AI
 
 ```
 cabal install pretty-tree --install-method=copy --lib
+cabal install sort --install-method=copy --lib
 cabal install HTF --install-method=copy
 ```
 

@@ -6,6 +6,7 @@ import ChessUtilTypes
 import ChessBoard
 
 welcomeMessage = "\n===================\nWelcome to Chess-AI\n===================\n\n\n"
+divider = "-----------------------------------------------------------------------------------------------------------------------------------------------"
 
 startGame :: IO ()
 startGame = 
@@ -23,14 +24,14 @@ startGame =
 handleNextTurn :: ChessBoard -> ChessPlayer -> ChessPlayer -> IO ()           
 handleNextTurn chessBoard currPlayer@(ChessPlayer name colour moveFn) nextPlayer  = 
     do
-        putStrLn "-------------------------------------------------------------------"
-        putStrLn (name ++ "\'s turn ("++(show colour)++"):")
+        putStrLn divider
+        putStrLn ("\n" ++ ">> "++ name ++ "\'s turn ("++(show colour)++"):")
         (chessBoard, move) <- moveFn colour chessBoard                  -- Current player makes a move
-        putStrLn (name++" played "++(show move)++"\n")
-        putStrLn "-------------------------------------------------------------------"
+        putStrLn (">> "++name++" played "++(show move)++"\n")
+        putStrLn divider
         if (gameOver chessBoard)                                        -- If game is over, stop
         then do
-            putStrLn (name++" wins!")
+            putStrLn (">> "++name++" wins!")
             putStrLn "Thanks for playing! Goodbye."
             return ()
         else

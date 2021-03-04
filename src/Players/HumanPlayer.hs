@@ -57,7 +57,7 @@ handleValidPositionInput posStr chessPieceColour chessBoard =
             (humanMoveFunction chessPieceColour chessBoard)
         else do
             let legalMovesFromPos = legalMovesForPieceAtPos (fromJust piece) chessBoard position
-            putStrLn ("\nYou can play: "++ (show legalMovesFromPos))
+            putStrLn ("\n>> You can play: "++ (show legalMovesFromPos))
             (humanMoveFunction chessPieceColour chessBoard)
 
 

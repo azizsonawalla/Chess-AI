@@ -4,6 +4,7 @@ import ChessUtilTypes
 import Data.List (sort)
 import Data.Tree
 import Data.Tree.Pretty
+import Data.Sort
 import ChessBoard
 import ChessPieces
 
@@ -17,6 +18,12 @@ searchDepth :: Integer
 searchDepth = 4
 
 
+-- Print Tree Config
+printTree = True
+pruneDepth = 3
+pruneWidth = 4
+
+
 -- Makes the AI player's move on the chess board.
 -- Calculates the best next move and changes the board accordingly.
 -- Returns the changed board after playing the move.
@@ -24,7 +31,7 @@ aiMoveFunction :: MoveFunction
 aiMoveFunction chessPieceColour chessBoard = 
     do 
         putStrLn (show chessBoard)                                                  -- show the user the chess board
-        putStrLn "AI's turn. Please wait."                                          -- TODO: if no legal moves are available, set game to 'over'
+        putStrLn "AI opponent calculating moves. Please wait."                      -- TODO: if no legal moves are available, set game to 'over'
         move <- getBestMoveMinMax chessBoard chessPieceColour
         let newChessBoard = makeMove chessBoard move
         return (newChessBoard, move)
@@ -46,18 +53,21 @@ getBestMoveMinMax chessBoard pieceColour =
     do 
        let gameTree = buildGameTree chessBoard pieceColour searchDepth
        let maximizedTree = maximize gameTree (score pieceColour)
-       printGameTree maximizedTree 2                                      -- print the first 2 levels of the game tree
+       if printTree 
+       then printGameTree maximizedTree pruneDepth pruneWidth 
+       else return () 
        return (getMoveWithMaxScore maximizedTree)
 
 
 -- Prints the AI player's game tree
-printGameTree :: GameTree -> Integer -> IO ()
-printGameTree gameTree pruneLimit = 
+printGameTree :: GameTree -> Int -> Int -> IO ()
+printGameTree gameTree pruneDepth pruneWidth = 
     do 
-       putStrLn ("\nAI Player's Game Tree (first "++(show pruneLimit)++" levels):")                                  -- shows the AI Player's game tree
-       let prunedTree = (pruneGameTree gameTree pruneLimit)
+       let prunedTree = (pruneGameTree gameTree  pruneDepth pruneWidth)
        let dataTree = (gameTreeToDataTree nullMove prunedTree)
-       putStrLn (drawVerticalTree dataTree)
+       let treeString = drawVerticalTree dataTree
+       putStrLn ("\nAI Player's Game Tree:")                                  -- shows the AI Player's game tree
+       putStrLn treeString
        return ()
 
 
@@ -155,13 +165,16 @@ pieceToScore (Pawn _)   = 10
 
 
 -- Prune the depth of a GameTree
-pruneGameTree :: GameTree -> Integer -> GameTree
-pruneGameTree (GameTree board score children) 1 = GameTree board score []
-pruneGameTree (GameTree board score children) depth = GameTree board score [ (MoveSubtree move (pruneGameTree childTree (depth-1))) | (MoveSubtree move childTree) <- children]
+pruneGameTree :: GameTree -> Int -> Int -> GameTree
+pruneGameTree (GameTree board score children) 1 _ = GameTree board score []
+pruneGameTree (GameTree board score children) depth width = GameTree board score prunedChildren
+    where prunedChildren = [ (MoveSubtree move (pruneGameTree childTree (depth-1) width)) | (MoveSubtree move childTree) <- filteredChildren]
+          filteredChildren = take width sortedChildren
+          sortedChildren = sortBy (\ (MoveSubtree _ (GameTree _ score1 _)) (MoveSubtree _ (GameTree _ score2 _)) -> if score1 < score2 then GT else LT) children
 
 
 -- Translates a GameTree to a Data.Tree
 gameTreeToDataTree :: ChessMove -> GameTree -> Tree String
 gameTreeToDataTree move (GameTree _ score children) = Node label forest 
     where label = if move == nullMove then "current board ("++(show score)++")" else (show move)++"("++(show score)++")"
-          forest = (map (\ (MoveSubtree move gt) -> gameTreeToDataTree move gt) children)
+          forest = (map (\ (MoveSubtree move gt) -> gameTreeToDataTree move gt) children) ++ [Node "..." []]
