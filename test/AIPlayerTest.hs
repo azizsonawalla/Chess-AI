@@ -54,6 +54,8 @@ test_getMoveWithMaxScore =
     do 
         assertEqual board16_W1_Move (getMoveWithMaxScore gameTree16_depth1_White_scores_max)
         assertEqual board16_B8_Move (getMoveWithMaxScore gameTree16_depth1_Black_scores_max)
+        assertEqual board17_W1_Move (getMoveWithMaxScore gameTree17_depth1_White_scores_max)
+        assertEqual board17_B1_Move (getMoveWithMaxScore gameTree17_depth1_Black_scores_max)
 
 
 -- A dummy score function
