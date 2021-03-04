@@ -18,6 +18,7 @@ cabal run Chess-AI
 #### Install Dependencies
 
 ```
+cabal install pretty-tree --install-method=copy --lib
 cabal install HTF --install-method=copy
 ```
 

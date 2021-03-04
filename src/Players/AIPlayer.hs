@@ -3,6 +3,7 @@ module AIPlayer where
 import ChessUtilTypes
 import Data.List (sort)
 import Data.Tree
+import Data.Tree.Pretty
 import ChessBoard
 import ChessPieces
 
@@ -45,8 +46,19 @@ getBestMoveMinMax chessBoard pieceColour =
     do 
        let gameTree = buildGameTree chessBoard pieceColour searchDepth
        let maximizedTree = maximize gameTree (score pieceColour)
-       putStrLn (drawTree (gameTreeToDataTree nullMove (pruneGameTree maximizedTree 2)))
+       printGameTree maximizedTree 2                                      -- print the first 2 levels of the game tree
        return (getMoveWithMaxScore maximizedTree)
+
+
+-- Prints the AI player's game tree
+printGameTree :: GameTree -> Integer -> IO ()
+printGameTree gameTree pruneLimit = 
+    do 
+       putStrLn ("\nAI Player's Game Tree (first "++(show pruneLimit)++" levels):")                                  -- shows the AI Player's game tree
+       let prunedTree = (pruneGameTree gameTree pruneLimit)
+       let dataTree = (gameTreeToDataTree nullMove prunedTree)
+       putStrLn (drawVerticalTree dataTree)
+       return ()
 
 
 -- A tree representing all possible outcomes starting from the root chessboard
@@ -151,5 +163,5 @@ pruneGameTree (GameTree board score children) depth = GameTree board score [ (Mo
 -- Translates a GameTree to a Data.Tree
 gameTreeToDataTree :: ChessMove -> GameTree -> Tree String
 gameTreeToDataTree move (GameTree _ score children) = Node label forest 
-    where label = if move == nullMove then "current board (score="++(show score)++")" else (show move)++"(score="++(show score)++")"
+    where label = if move == nullMove then "current board ("++(show score)++")" else (show move)++"("++(show score)++")"
           forest = (map (\ (MoveSubtree move gt) -> gameTreeToDataTree move gt) children)
